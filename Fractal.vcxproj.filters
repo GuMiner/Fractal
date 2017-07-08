@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="gucommon\shaders\ShaderFactory.cpp" />
+    <ClCompile Include="GuCommon\stb\stb_implementations.cpp" />
+    <ClCompile Include="ImguiRenderer.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="LineRenderer.cpp" />
+    <ClCompile Include="Viewer.cpp" />
+    <ClCompile Include="gucommon\logging\Logger.cpp">
+      <Filter>gucommon\logging</Filter>
+    </ClCompile>
+    <ClCompile Include="gucommon\strings\StringUtils.cpp">
+      <Filter>gucommon\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="Fractal.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gucommon\shaders\ShaderFactory.h" />
+    <ClInclude Include="IGlfwKeyHandler.h" />
+    <ClInclude Include="IGlfwMouseHandler.h" />
+    <ClInclude Include="ImguiRenderer.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="LineRenderer.h" />
+    <ClInclude Include="version.h" />
+    <ClInclude Include="Viewer.h" />
+    <ClInclude Include="gucommon\logging\Logger.h">
+      <Filter>gucommon\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\strings\StringUtils.h">
+      <Filter>gucommon\strings</Filter>
+    </ClInclude>
+    <ClInclude Include="Fractal.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="gucommon">
+      <UniqueIdentifier>{a41394e0-f996-48df-b3b2-c43ffb4ccefa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\logging">
+      <UniqueIdentifier>{9c5a4931-3076-4a8e-a50c-9652f3059daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\strings">
+      <UniqueIdentifier>{d0e723ad-9960-419d-bc9d-44cc7a9178ed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
