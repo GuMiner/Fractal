@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="GuCommon\stb\stb_implementations.cpp" />
     <ClCompile Include="ImguiRenderer.cpp" />
     <ClCompile Include="LineRenderer.cpp" />
     <ClCompile Include="Viewer.cpp" />
@@ -23,6 +22,9 @@
     </ClCompile>
     <ClCompile Include="OpenGlStats.cpp">
       <Filter>utility\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="GuCommon\stb\stb_implementations.cpp">
+      <Filter>utility\stb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +93,9 @@
     </Filter>
     <Filter Include="gucommon\testing">
       <UniqueIdentifier>{399e3e6a-ad92-44d2-86ca-0ebbbf1f904d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\stb">
+      <UniqueIdentifier>{826b2fe5-9592-4b39-b4cf-c2364367b1ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -47,7 +47,7 @@ void LineRenderer::Render(glm::mat4& projectionMatrix)
     // TODO should be configurable.
     glUniform1f(glslProgram.transparencyLocation, 1.0f);
 
-    glDrawArrays(isLineStrip ? GL_LINE_STRIP : GL_LINES, 0, lastBufferSize);
+    glDrawArrays(isLineStrip ? GL_LINE_STRIP : GL_LINES, 0, (GLsizei)lastBufferSize);
 }
 
 void LineRenderer::Clear()

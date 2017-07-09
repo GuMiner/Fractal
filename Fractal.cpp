@@ -108,11 +108,10 @@ void Fractal::Update(float currentTime, float frameTime)
     viewer.Update(frameTime);
     
     glm::ivec2 iMousePos = Input::GetMousePos();
-    glm::vec2 gridPos = viewer.GetGridPos(iMousePos);
     ImGui::SetNextWindowPos(ImVec2((float)iMousePos.x + 20.0f, (float)iMousePos.y));
     ImGui::Begin("Mouse Pos", nullptr, ImVec2(100, 100), 0.0f, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar);
     ImGui::SetCursorPos(ImVec2(5, 0));
-    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.1f, %.1f", gridPos.x, gridPos.y);
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i, %i", iMousePos.x, iMousePos.y);
     ImGui::End();
 
     fpsCounter.UpdateFps(frameTime);

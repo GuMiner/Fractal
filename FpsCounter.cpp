@@ -10,7 +10,7 @@ void FpsCounter::UpdateFps(float frameTime)
 {
     ++fpsFramesCounted;
     fpsTimeAggregated += frameTime;
-    if (fpsTimeAggregated > 1.0f)
+    if (fpsTimeAggregated > 0.50f)
     {
         lastFrameRate = (float)fpsFramesCounted / (float)fpsTimeAggregated;
         fpsTimeAggregated = 0;
