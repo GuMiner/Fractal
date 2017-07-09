@@ -8,6 +8,7 @@
 #include "ImguiRenderer.h"
 #include "LineRenderer.h"
 #include "Viewer.h"
+#include "FpsCounter.h"
 
 class Fractal
 {
@@ -16,15 +17,10 @@ class Fractal
     ImguiRenderer guiRenderer;
     Viewer viewer;
 
+    FpsCounter fpsCounter;
+
     // Top-level display items.
-    float fpsTimeAggregated;
-    int fpsFramesCounted;
-    float lastFrameRate;
-
-    void UpdateFps(float frameTime);
-
     bool LoadCoreGlslGraphics();
-    void LogSystemSetup();
 
     void HandleEvents(bool& focusPaused);
     void Update(float currentTime, float frameTime);

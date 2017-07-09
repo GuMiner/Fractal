@@ -1,10 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="gucommon\shaders\ShaderFactory.cpp" />
     <ClCompile Include="GuCommon\stb\stb_implementations.cpp" />
     <ClCompile Include="ImguiRenderer.cpp" />
-    <ClCompile Include="Input.cpp" />
     <ClCompile Include="LineRenderer.cpp" />
     <ClCompile Include="Viewer.cpp" />
     <ClCompile Include="gucommon\logging\Logger.cpp">
@@ -14,15 +12,22 @@
       <Filter>gucommon\strings</Filter>
     </ClCompile>
     <ClCompile Include="Fractal.cpp" />
+    <ClCompile Include="gucommon\shaders\ShaderFactory.cpp">
+      <Filter>gucommon\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsCounter.cpp">
+      <Filter>utility\fps</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGlStats.cpp">
+      <Filter>utility\opengl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gucommon\shaders\ShaderFactory.h" />
-    <ClInclude Include="IGlfwKeyHandler.h" />
-    <ClInclude Include="IGlfwMouseHandler.h" />
     <ClInclude Include="ImguiRenderer.h" />
-    <ClInclude Include="Input.h" />
     <ClInclude Include="LineRenderer.h" />
-    <ClInclude Include="version.h" />
     <ClInclude Include="Viewer.h" />
     <ClInclude Include="gucommon\logging\Logger.h">
       <Filter>gucommon\logging</Filter>
@@ -31,6 +36,30 @@
       <Filter>gucommon\strings</Filter>
     </ClInclude>
     <ClInclude Include="Fractal.h" />
+    <ClInclude Include="gucommon\shaders\ShaderFactory.h">
+      <Filter>gucommon\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="IGlfwKeyHandler.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="IGlfwMouseHandler.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>utility\versioning</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsCounter.h">
+      <Filter>utility\fps</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGlStats.h">
+      <Filter>utility\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\testing\ITestable.h">
+      <Filter>gucommon\testing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="gucommon">
@@ -41,6 +70,27 @@
     </Filter>
     <Filter Include="gucommon\strings">
       <UniqueIdentifier>{d0e723ad-9960-419d-bc9d-44cc7a9178ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\shaders">
+      <UniqueIdentifier>{a14bd6ae-0bea-4c1b-a1b3-075980e04223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{19c38540-74ac-4697-a85c-5042337f5a29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{9e8d6b8a-8d6e-4a14-8499-cf837129cf56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\versioning">
+      <UniqueIdentifier>{b6592b38-236e-4fb5-b2d6-c80398330816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\fps">
+      <UniqueIdentifier>{66452826-1fd8-4080-a681-4f49bb4c976f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\opengl">
+      <UniqueIdentifier>{0f528e46-f00e-4b76-a9ab-8b0d65704387}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\testing">
+      <UniqueIdentifier>{399e3e6a-ad92-44d2-86ca-0ebbbf1f904d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

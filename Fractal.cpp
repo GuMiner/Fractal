@@ -5,7 +5,10 @@
 #include <glm\gtx\transform.hpp>
 #include <imgui\imgui.h>
 #include "logging\Logger.h"
+#include "strings\StringUtils.h"
+#include "testing\ITestable.h"
 #include "Input.h"
+#include "OpenGlStats.h"
 #include "version.h"
 #include "Fractal.h"
 
@@ -16,28 +19,8 @@
 #pragma comment(lib, "lib/sfml-system")
 
 Fractal::Fractal()
-    : shaderFactory(), viewer(), guiRenderer(),
-      fpsTimeAggregated(0.0f), fpsFramesCounted(0), lastFrameRate(60.0f)
+    : shaderFactory(), viewer(), guiRenderer(), fpsCounter()
 {
-}
-
-void Fractal::LogSystemSetup()
-{
-    Logger::Log("OpenGL vendor: ", glGetString(GL_VENDOR), ", version ", glGetString(GL_VERSION), ", renderer ", glGetString(GL_RENDERER));
-    Logger::LogDebug("OpenGL extensions: ", glGetString(GL_EXTENSIONS));
-
-    GLint maxTextureUnits, maxUniformBlockSize;
-    GLint maxVertexUniformBlocks, maxFragmentUniformBlocks;
-    GLint maxTextureSize;
-    glGetIntegerv(GL_MAX_TEXTURE_UNITS, &maxTextureUnits);
-    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &maxVertexUniformBlocks);
-    glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &maxFragmentUniformBlocks);
-    glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &maxUniformBlockSize);
-    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
-
-    Logger::Log("Max Texture Units: ", maxTextureUnits, ", Max Uniform Size: ", (maxUniformBlockSize / 1024), " kB");
-    Logger::Log("Max Vertex Uniform Blocks: ", maxVertexUniformBlocks, ", Max Fragment Uniform Blocks: ", maxFragmentUniformBlocks);
-    Logger::Log("Max Texture Size: ", maxTextureSize);
 }
 
 bool Fractal::LoadCoreGlslGraphics()
@@ -70,7 +53,7 @@ bool Fractal::LoadCoreGlslGraphics()
     }
 
     // Log graphics information for future reference
-    LogSystemSetup();
+    OpenGlStats::LogStats();
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -119,23 +102,6 @@ void Fractal::HandleEvents(bool& focusPaused)
     focusPaused = !Input::hasFocus;
 }
 
-void Fractal::UpdateFps(float frameTime)
-{
-    ++fpsFramesCounted;
-    fpsTimeAggregated += frameTime;
-    if (fpsTimeAggregated > 1.0f)
-    {
-        lastFrameRate = (float)fpsFramesCounted / (float)fpsTimeAggregated;
-        fpsTimeAggregated = 0;
-        fpsFramesCounted = 0;
-    }
-
-    ImGui::Begin("Stats", nullptr, ImVec2(100, 100), 0.50f);
-    ImGui::SetCursorPos(ImVec2(5, 20));
-    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.1f", lastFrameRate);
-    ImGui::End();
-}
-
 void Fractal::Update(float currentTime, float frameTime)
 {
     guiRenderer.Update(currentTime, frameTime); // Must be before any IMGUI commands are passed in.
@@ -149,7 +115,7 @@ void Fractal::Update(float currentTime, float frameTime)
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.1f, %.1f", gridPos.x, gridPos.y);
     ImGui::End();
 
-    UpdateFps(frameTime);
+    fpsCounter.UpdateFps(frameTime);
 }
 
 void Fractal::Render(glm::mat4& viewMatrix)
@@ -162,6 +128,11 @@ void Fractal::Render(glm::mat4& viewMatrix)
     glClearBufferfv(GL_COLOR, 0, color);
     glClearBufferfv(GL_DEPTH, 0, &one);
 
+    // TODO render OpenGL stuff here.
+
+    fpsCounter.Render();
+
+    // Must always be last.
     guiRenderer.Render();
 }
 
@@ -238,6 +209,20 @@ int main()
 {
     Logger::Setup("fractal.log", true);
     Logger::Log(AutoVersion::GetVersionString("Fractal"));
+
+    ITestable* testables[] =
+    {
+        new StringUtils()
+    };
+
+    for (ITestable* testable : testables)
+    {
+        if (!testable->Test())
+        {
+            Logger::Log("Test failed!");
+            return 1;
+        }
+    }
 
     Fractal* fractal = new Fractal();
     if (!fractal->Initialize())

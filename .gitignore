@@ -4,6 +4,7 @@
 # Stuff to ignore
 [Ll]ib/
 [Ii]nclude/
+imgui.ini
 
 # User-specific files
 *.suo
