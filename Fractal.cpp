@@ -8,7 +8,6 @@
 #include "strings\StringUtils.h"
 #include "testing\ITestable.h"
 #include "Input.h"
-#include "OpenGlStats.h"
 #include "version.h"
 #include "Fractal.h"
 
@@ -19,64 +18,8 @@
 #pragma comment(lib, "lib/sfml-system")
 
 Fractal::Fractal()
-    : shaderFactory(), viewer(), guiRenderer(), fpsCounter()
+    : opengl(), shaderFactory(), viewer(), guiRenderer(), fpsCounter(), objectLoader()
 {
-}
-
-bool Fractal::LoadCoreGlslGraphics()
-{
-    // 24 depth bits, 8 stencil bits, 8x AA, major version 4.
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    glfwWindowHint(GLFW_DEPTH_BITS, 16);
-    glfwWindowHint(GLFW_STENCIL_BITS, 16);
-    glfwWindowHint(GLFW_SAMPLES, 8);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    window = glfwCreateWindow(viewer.ScreenWidth, viewer.ScreenHeight, "CNC Clock", nullptr, nullptr);
-    if (!window)
-    {
-        Logger::LogError("Could not create the GLFW window!");
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
-    Input::Setup(window, &viewer);
-
-    // Setup GLEW
-    GLenum err = glewInit();
-    if (err != GLEW_OK)
-    {
-        Logger::LogError("GLEW startup failure: ", err, ".");
-        return false;
-    }
-
-    // Log graphics information for future reference
-    OpenGlStats::LogStats();
-
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-    // Enable alpha blending
-    glEnable(GL_BLEND);
-    glBlendEquation(GL_FUNC_ADD);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    // Enable line, but not polygon smoothing.
-    glEnable(GL_LINE_SMOOTH);
-
-    // Let OpenGL shaders determine point sizes.
-    glEnable(GL_PROGRAM_POINT_SIZE);
-
-    // Disable face culling so that see-through flat objects and stuff at 1.0 (cube map, text) work.
-    glDisable(GL_CULL_FACE);
-    glFrontFace(GL_CW);
-
-    // Cutout faces that are hidden by other faces.
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-
-    return true;
 }
 
 bool Fractal::Initialize()
@@ -106,14 +49,8 @@ void Fractal::Update(float currentTime, float frameTime)
 {
     guiRenderer.Update(currentTime, frameTime); // Must be before any IMGUI commands are passed in.
     viewer.Update(frameTime);
-    
-    glm::ivec2 iMousePos = Input::GetMousePos();
-    ImGui::SetNextWindowPos(ImVec2((float)iMousePos.x + 20.0f, (float)iMousePos.y));
-    ImGui::Begin("Mouse Pos", nullptr, ImVec2(100, 100), 0.0f, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar);
-    ImGui::SetCursorPos(ImVec2(5, 0));
-    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%i, %i", iMousePos.x, iMousePos.y);
-    ImGui::End();
 
+    objectLoader.Update(frameTime);
     fpsCounter.UpdateFps(frameTime);
 }
 
@@ -127,8 +64,7 @@ void Fractal::Render(glm::mat4& viewMatrix)
     glClearBufferfv(GL_COLOR, 0, color);
     glClearBufferfv(GL_DEPTH, 0, &one);
 
-    // TODO render OpenGL stuff here.
-
+    objectLoader.Render(projectionMatrix);
     fpsCounter.Render();
 
     // Must always be last.
@@ -137,7 +73,7 @@ void Fractal::Render(glm::mat4& viewMatrix)
 
 bool Fractal::LoadGraphics()
 {
-    if (!LoadCoreGlslGraphics())
+    if (!opengl.Load(&viewer))
     {
         return false;
     }
@@ -153,7 +89,7 @@ bool Fractal::LoadGraphics()
         return false;
     }
 
-    if (!guiRenderer.LoadImGui(window, &shaderFactory))
+    if (!guiRenderer.LoadImGui(opengl.GetWindow(), &shaderFactory))
     {
         return false;
     }
@@ -164,9 +100,7 @@ bool Fractal::LoadGraphics()
 void Fractal::UnloadGraphics()
 {
     guiRenderer.UnloadImGui();
-
-    glfwDestroyWindow(window);
-    window = nullptr;
+    opengl.Unload();
 }
 
 bool Fractal::Run()
@@ -176,7 +110,7 @@ bool Fractal::Run()
 
     bool focusPaused = false;
 
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(opengl.GetWindow()))
     {
         HandleEvents(focusPaused);
 
@@ -186,7 +120,7 @@ bool Fractal::Run()
             Update(gameTime, lastFrameTime);
 
             Render(viewer.viewMatrix);
-            glfwSwapBuffers(window);
+            opengl.DisplayFrame();
         }
 
         float now = (float)glfwGetTime();

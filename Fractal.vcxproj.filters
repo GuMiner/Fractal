@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="ImguiRenderer.cpp" />
-    <ClCompile Include="LineRenderer.cpp" />
     <ClCompile Include="Viewer.cpp" />
     <ClCompile Include="gucommon\logging\Logger.cpp">
       <Filter>gucommon\logging</Filter>
@@ -26,10 +24,23 @@
     <ClCompile Include="GuCommon\stb\stb_implementations.cpp">
       <Filter>utility\stb</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGl.cpp">
+      <Filter>utility\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="ImguiRenderer.cpp">
+      <Filter>renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="LineRenderer.cpp">
+      <Filter>renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectLoader.cpp">
+      <Filter>objectLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCube.cpp">
+      <Filter>objectLoader\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImguiRenderer.h" />
-    <ClInclude Include="LineRenderer.h" />
     <ClInclude Include="Viewer.h" />
     <ClInclude Include="gucommon\logging\Logger.h">
       <Filter>gucommon\logging</Filter>
@@ -61,6 +72,24 @@
     </ClInclude>
     <ClInclude Include="gucommon\testing\ITestable.h">
       <Filter>gucommon\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGl.h">
+      <Filter>utility\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiRenderer.h">
+      <Filter>renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="LineRenderer.h">
+      <Filter>renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectLoader.h">
+      <Filter>objectLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="IObject.h">
+      <Filter>objectLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCube.h">
+      <Filter>objectLoader\objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +125,15 @@
     </Filter>
     <Filter Include="utility\stb">
       <UniqueIdentifier>{826b2fe5-9592-4b39-b4cf-c2364367b1ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderers">
+      <UniqueIdentifier>{a9bbffcb-d713-4d92-8277-ea092b15b09b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader">
+      <UniqueIdentifier>{f3eb0119-ff3b-48c4-84e1-cbc6d1754e2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader\objects">
+      <UniqueIdentifier>{d80127ad-210d-47f5-a374-7afd6ab0de41}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

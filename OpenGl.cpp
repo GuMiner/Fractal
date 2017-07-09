@@ -1,0 +1,80 @@
+#include "logging\Logger.h"
+#include "Input.h"
+#include "OpenGlStats.h"
+#include "OpenGl.h"
+
+OpenGl::OpenGl()
+{
+}
+
+bool OpenGl::Load(Viewer* viewer)
+{
+    // 24 depth bits, 8 stencil bits, 8x AA, major version 4.
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_DEPTH_BITS, 16);
+    glfwWindowHint(GLFW_STENCIL_BITS, 16);
+    glfwWindowHint(GLFW_SAMPLES, 8);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    window = glfwCreateWindow(viewer->ScreenWidth, viewer->ScreenHeight, "CNC Clock", nullptr, nullptr);
+    if (!window)
+    {
+        Logger::LogError("Could not create the GLFW window!");
+        return false;
+    }
+
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+    Input::Setup(window, viewer);
+
+    // Setup GLEW
+    GLenum err = glewInit();
+    if (err != GLEW_OK)
+    {
+        Logger::LogError("GLEW startup failure: ", err, ".");
+        return false;
+    }
+
+    // Log graphics information for future reference
+    OpenGlStats::LogStats();
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    // Enable alpha blending
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Enable line, but not polygon smoothing.
+    glEnable(GL_LINE_SMOOTH);
+
+    // Let OpenGL shaders determine point sizes.
+    glEnable(GL_PROGRAM_POINT_SIZE);
+
+    // Disable face culling so that see-through flat objects and stuff at 1.0 (cube map, text) work.
+    glDisable(GL_CULL_FACE);
+    glFrontFace(GL_CW);
+
+    // Cutout faces that are hidden by other faces.
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+
+    return true;
+}
+
+void OpenGl::Unload()
+{
+    glfwDestroyWindow(window);
+    window = nullptr;
+}
+
+GLFWwindow* OpenGl::GetWindow()
+{
+    return window;
+}
+
+void OpenGl::DisplayFrame()
+{
+    glfwSwapBuffers(window);
+}

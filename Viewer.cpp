@@ -9,7 +9,7 @@ Viewer::Viewer()
       ScreenWidth(1280), ScreenHeight(720), MaxFramerate(120)
 {
     position = glm::vec3(0, 0, -6.0f); // LH coordinate system, Z+ is into the screen.
-    target = glm::vec3(0, 0, 4.0f);
+    target = glm::vec3(0, 0, 0);
     up = glm::vec3(0, 1, 0);
     UpdateMatrices();
 }

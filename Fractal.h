@@ -5,22 +5,22 @@
 #include <glm\mat4x4.hpp>
 #include <glm\gtc\quaternion.hpp>
 #include "shaders\ShaderFactory.h"
+#include "FpsCounter.h"
 #include "ImguiRenderer.h"
 #include "LineRenderer.h"
+#include "ObjectLoader.h"
+#include "OpenGl.h"
 #include "Viewer.h"
-#include "FpsCounter.h"
 
 class Fractal
 {
-    GLFWwindow* window;
+    OpenGl opengl;
     ShaderFactory shaderFactory;
     ImguiRenderer guiRenderer;
     Viewer viewer;
 
+    ObjectLoader objectLoader;
     FpsCounter fpsCounter;
-
-    // Top-level display items.
-    bool LoadCoreGlslGraphics();
 
     void HandleEvents(bool& focusPaused);
     void Update(float currentTime, float frameTime);
