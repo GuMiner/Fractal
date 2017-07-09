@@ -42,7 +42,7 @@ public:
     // Helper methods for dealing with lines.
     void Clear();
     void AddXYRectangle(glm::vec3 lowerRightPos, glm::vec2 size, glm::vec3 color);
-
+    void AddLine(glm::vec3 point, glm::vec3 color, glm::vec3 point2, glm::vec3 color2);
 
     ~LineRenderer();
 };

@@ -20,7 +20,7 @@ void FpsCounter::UpdateFps(float frameTime)
 
 void FpsCounter::Render()
 {
-    ImGui::Begin("Stats", nullptr, ImVec2(100, 100), 0.50f);
+    ImGui::Begin("FPS", nullptr, ImVec2(100, 100), 0.50f);
     ImGui::SetCursorPos(ImVec2(5, 20));
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.1f", lastFrameRate);
     ImGui::End();

@@ -7,6 +7,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DescentMotionTranslator.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Fractal.cpp" />
     <ClCompile Include="gucommon\logging\Logger.cpp" />
@@ -20,9 +21,12 @@
     <ClCompile Include="OpenGl.cpp" />
     <ClCompile Include="OpenGlStats.cpp" />
     <ClCompile Include="TestCube.cpp" />
+    <ClCompile Include="TestGrid.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="DescentMotionTranslator.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Fractal.h" />
     <ClInclude Include="gucommon\logging\Logger.h" />
@@ -32,6 +36,7 @@
     <ClInclude Include="IGlfwKeyHandler.h" />
     <ClInclude Include="IGlfwMouseHandler.h" />
     <ClInclude Include="ImguiRenderer.h" />
+    <ClInclude Include="IMotionTranslator.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IObject.h" />
     <ClInclude Include="LineRenderer.h" />
@@ -39,6 +44,7 @@
     <ClInclude Include="OpenGl.h" />
     <ClInclude Include="OpenGlStats.h" />
     <ClInclude Include="TestCube.h" />
+    <ClInclude Include="TestGrid.h" />
     <ClInclude Include="version.h" />
     <ClInclude Include="Viewer.h" />
   </ItemGroup>

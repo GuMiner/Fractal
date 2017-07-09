@@ -76,6 +76,15 @@ void LineRenderer::AddXYRectangle(glm::vec3 lowerRightPos, glm::vec2 size, glm::
     }
 }
 
+void LineRenderer::AddLine(glm::vec3 point, glm::vec3 color, glm::vec3 point2, glm::vec3 color2)
+{
+    positionBuffer.vertices.push_back(point);
+    positionBuffer.vertices.push_back(point2);
+
+    colorBuffer.vertices.push_back(color);
+    colorBuffer.vertices.push_back(color2);
+}
+
 LineRenderer::~LineRenderer()
 {
     glDeleteVertexArrays(1, &vao);

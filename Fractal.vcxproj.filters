@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Viewer.cpp" />
     <ClCompile Include="gucommon\logging\Logger.cpp">
       <Filter>gucommon\logging</Filter>
     </ClCompile>
@@ -39,9 +38,17 @@
     <ClCompile Include="TestCube.cpp">
       <Filter>objectLoader\objects</Filter>
     </ClCompile>
+    <ClCompile Include="TestGrid.cpp">
+      <Filter>objectLoader\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewer.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="DescentMotionTranslator.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Viewer.h" />
     <ClInclude Include="gucommon\logging\Logger.h">
       <Filter>gucommon\logging</Filter>
     </ClInclude>
@@ -91,6 +98,21 @@
     <ClInclude Include="TestCube.h">
       <Filter>objectLoader\objects</Filter>
     </ClInclude>
+    <ClInclude Include="TestGrid.h">
+      <Filter>objectLoader\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="DescentMotionTranslator.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="IMotionTranslator.h">
+      <Filter>camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="gucommon">
@@ -134,6 +156,9 @@
     </Filter>
     <Filter Include="objectLoader\objects">
       <UniqueIdentifier>{d80127ad-210d-47f5-a374-7afd6ab0de41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="camera">
+      <UniqueIdentifier>{23777ed3-ffc7-4fed-b4e3-69e4bb8312a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

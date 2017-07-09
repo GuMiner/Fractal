@@ -1,15 +1,11 @@
 #pragma once
 #include "IObject.h"
-#include "LineRenderer.h"
 
-// Renders a basic cube used for testing purposes.
-class TestCube : public IObject
+class TestGrid : public IObject
 {
-    LineRenderer* renderer;
-
 public:
-    TestCube();
-    ~TestCube();
+    TestGrid();
+    ~TestGrid();
 
     // Inherited via IObject
     virtual std::string GetName() override;

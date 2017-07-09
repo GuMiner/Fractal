@@ -2,7 +2,10 @@
 #include <glm\vec2.hpp>
 #include <glm\vec3.hpp>
 #include <glm\mat4x4.hpp>
+#include "Camera.h"
+#include "IMotionTranslator.h"
 
+// Takes in user input and a camera to output a perspective and view matrix.
 class Viewer
 {
     float fovY;
@@ -11,12 +14,9 @@ class Viewer
     float nearPlane;
     float farPlane;
 
-    glm::vec3 position;
-    glm::vec3 target;
-    glm::vec3 up;
-
-    bool CheckMoveAxis(int posKeyId, int negKeyId, float frameTime, float* eye, float* target) const;
-    bool DialVariable(int posKeyId, int negKeyId, float dialAmount, float* value) const;
+    Camera camera;
+    IMotionTranslator* motionTranslator;
+    
     void UpdateMatrices();
 
 public:
@@ -28,6 +28,7 @@ public:
     int MaxFramerate;
 
     Viewer();
+    ~Viewer();
 
     // Updates the view position from user input.
     void Update(float frameTime);
