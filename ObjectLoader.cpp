@@ -6,7 +6,7 @@
 #include "ObjectLoader.h"
 
 ObjectLoader::ObjectLoader()
-    : objects(), objectCreationMap(), objectCreationNames(), selectedObjectToCreate(0), selectedObject(0)
+    : objects(), objectCreationMap(), objectCreationNames(), selectedObjectToCreate(0), selectedObject(0), lastSelectedObject(-1)
 {
     objectCreationMap["Test Cube"] = []() { return new TestCube(); };
     objectCreationMap["Test Grid"] = []() { return new TestGrid(); };
@@ -67,6 +67,17 @@ void ObjectLoader::DisplayLoaderDialog()
     if (objectNames.size() != 0)
     {
         ImGui::ListBox("Objects", &selectedObject, &objectNames[0], objectNames.size());
+        if (lastSelectedObject != selectedObject)
+        {
+            selectedObjectPosition = objects[selectedObject]->GetPosition();
+            lastSelectedObject = selectedObject;
+        }
+
+        if (ImGui::InputFloat3("Postion", &selectedObjectPosition.x, 2))
+        {
+            objects[selectedObject]->SetPosition(selectedObjectPosition);
+        }
+
         if (ImGui::Button("Delete"))
         {
             IObject* object = objects[selectedObject];
@@ -78,7 +89,6 @@ void ObjectLoader::DisplayLoaderDialog()
         }
     }
     
-    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.1f", 22.0f);
     ImGui::End();
 }
 

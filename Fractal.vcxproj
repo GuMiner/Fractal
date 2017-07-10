@@ -7,6 +7,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BackgroundQuadRenderer.cpp" />
+    <ClCompile Include="ColorGradient.cpp" />
     <ClCompile Include="DescentMotionTranslator.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Fractal.cpp" />
@@ -16,16 +18,20 @@
     <ClCompile Include="gucommon\strings\StringUtils.cpp" />
     <ClCompile Include="ImguiRenderer.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="JuliaFractalExtension.cpp" />
     <ClCompile Include="LineRenderer.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="OpenGl.cpp" />
     <ClCompile Include="OpenGlStats.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestCube.cpp" />
     <ClCompile Include="TestGrid.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackgroundQuadRenderer.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ColorGradient.h" />
     <ClInclude Include="DescentMotionTranslator.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Fractal.h" />
@@ -33,16 +39,19 @@
     <ClInclude Include="gucommon\shaders\ShaderFactory.h" />
     <ClInclude Include="gucommon\strings\StringUtils.h" />
     <ClInclude Include="gucommon\testing\ITestable.h" />
+    <ClInclude Include="IBackgroundRendererExtension.h" />
     <ClInclude Include="IGlfwKeyHandler.h" />
     <ClInclude Include="IGlfwMouseHandler.h" />
     <ClInclude Include="ImguiRenderer.h" />
     <ClInclude Include="IMotionTranslator.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IObject.h" />
+    <ClInclude Include="JuliaFractalExtension.h" />
     <ClInclude Include="LineRenderer.h" />
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="OpenGl.h" />
     <ClInclude Include="OpenGlStats.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestCube.h" />
     <ClInclude Include="TestGrid.h" />
     <ClInclude Include="version.h" />

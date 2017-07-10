@@ -1,7 +1,7 @@
 #include <glm\vec3.hpp>
 #include "TestCube.h"
 
-TestCube::TestCube() : renderer(new LineRenderer(false))
+TestCube::TestCube() : renderer(new LineRenderer(false)), position(glm::vec3(0, 0, 0))
 {
     // Define a cube going from black (X-, Y-, Z-) to RGB (X+, Y+, Z+), (-1, -1, -1) to (1, 1, 1)
 
@@ -45,4 +45,21 @@ void TestCube::Update(float frameTime)
 void TestCube::Render(glm::mat4 & projectionMatrix)
 {
     renderer->Render(projectionMatrix);
+}
+
+glm::vec3 TestCube::GetPosition()
+{
+    return position;
+}
+
+void TestCube::SetPosition(glm::vec3 newPosition)
+{
+    glm::vec3 difference = newPosition - position;
+    for (size_t i = 0; i < renderer->positionBuffer.vertices.size(); i++)
+    {
+        renderer->positionBuffer.vertices[i] += difference;
+    }
+
+    renderer->Update();
+    position = newPosition;
 }

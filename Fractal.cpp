@@ -18,7 +18,7 @@
 #pragma comment(lib, "lib/sfml-system")
 
 Fractal::Fractal()
-    : opengl(), shaderFactory(), viewer(), guiRenderer(), fpsCounter(), objectLoader()
+    : opengl(), shaderFactory(), viewer(), guiRenderer(), fpsCounter(), objectLoader(), terrain()
 {
 }
 
@@ -67,7 +67,9 @@ void Fractal::Render(glm::mat4& viewMatrix)
     objectLoader.Render(projectionMatrix);
     fpsCounter.Render();
 
-    // Must always be last.
+    terrain.Render();
+
+    // Must always be last in case other rendering steps add GUI elements.
     guiRenderer.Render();
 }
 
@@ -91,6 +93,12 @@ bool Fractal::LoadGraphics()
 
     if (!guiRenderer.LoadImGui(opengl.GetWindow(), &shaderFactory))
     {
+        return false;
+    }
+
+    if (!terrain.Init(&shaderFactory, &viewer))
+    {
+        Logger::LogError("Unable to setup the background renderer!");
         return false;
     }
 

@@ -47,6 +47,16 @@
     <ClCompile Include="DescentMotionTranslator.cpp">
       <Filter>camera</Filter>
     </ClCompile>
+    <ClCompile Include="ColorGradient.cpp">
+      <Filter>utility\math</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundQuadRenderer.cpp">
+      <Filter>renderers\backgroundRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="JuliaFractalExtension.cpp">
+      <Filter>renderers\backgroundRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gucommon\logging\Logger.h">
@@ -113,6 +123,19 @@
     <ClInclude Include="IMotionTranslator.h">
       <Filter>camera</Filter>
     </ClInclude>
+    <ClInclude Include="ColorGradient.h">
+      <Filter>utility\math</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundQuadRenderer.h">
+      <Filter>renderers\backgroundRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="IBackgroundRendererExtension.h">
+      <Filter>renderers\backgroundRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="JuliaFractalExtension.h">
+      <Filter>renderers\backgroundRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="gucommon">
@@ -159,6 +182,12 @@
     </Filter>
     <Filter Include="camera">
       <UniqueIdentifier>{23777ed3-ffc7-4fed-b4e3-69e4bb8312a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\math">
+      <UniqueIdentifier>{400a7b34-ad97-4cc4-b8be-93dc4ccd836a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderers\backgroundRendering">
+      <UniqueIdentifier>{33ac3430-d12c-4f9b-ac30-2a23200327e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

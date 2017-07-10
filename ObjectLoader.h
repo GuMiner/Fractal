@@ -1,4 +1,5 @@
 #pragma once
+#include <glm\vec3.hpp>
 #include <glm\mat4x4.hpp>
 #include <functional>
 #include <map>
@@ -8,6 +9,9 @@
 // Shows a menu of objects to load with a UI to load and unload them.
 class ObjectLoader
 {
+    int lastSelectedObject;
+    glm::vec3 selectedObjectPosition;
+
     int selectedObject;
     std::vector<IObject*> objects;
 
