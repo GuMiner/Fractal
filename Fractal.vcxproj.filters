@@ -57,6 +57,9 @@
       <Filter>renderers\backgroundRendering</Filter>
     </ClCompile>
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="BasicTerrainExtension.cpp">
+      <Filter>renderers\backgroundRendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gucommon\logging\Logger.h">
@@ -136,6 +139,9 @@
       <Filter>renderers\backgroundRendering</Filter>
     </ClInclude>
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="BasicTerrainExtension.h">
+      <Filter>renderers\backgroundRendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="gucommon">

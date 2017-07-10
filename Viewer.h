@@ -35,5 +35,6 @@ public:
     void SetScreenSize(int width, int height);
 
     float GetAspectRatio() const;
+    float GetFovY() const;
 };
 

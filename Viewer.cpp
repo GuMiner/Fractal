@@ -34,6 +34,11 @@ float Viewer::GetAspectRatio() const
     return aspectRatio;
 }
 
+float Viewer::GetFovY() const
+{
+    return fovY;
+}
+
 void Viewer::UpdateMatrices()
 {
     viewMatrix = glm::lookAtLH(camera.position, camera.target, camera.up);
