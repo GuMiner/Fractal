@@ -32,8 +32,10 @@ public:
 
     // Updates the view position from user input.
     void Update(float frameTime);
+    void Render();
     void SetScreenSize(int width, int height);
 
+    Camera GetCamera() const;
     float GetAspectRatio() const;
     float GetFovY() const;
 };

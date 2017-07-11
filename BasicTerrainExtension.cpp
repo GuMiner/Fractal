@@ -14,7 +14,8 @@ BasicTerrainExtension::BasicTerrainExtension(Viewer* viewer) : viewer(viewer)
 bool BasicTerrainExtension::Init(GLuint programId)
 {
     cameraPositionLocation = glGetUniformLocation(programId, "cameraPosition");
-    cameraOrientationLocation = glGetUniformLocation(programId, "cameraOrientation");
+    lookAtLocation = glGetUniformLocation(programId, "lookAt");
+    upLocation = glGetUniformLocation(programId, "up");
     aspectRatioLocation = glGetUniformLocation(programId, "aspectRatio");
     fovYLocation = glGetUniformLocation(programId, "fovY");
 
@@ -23,7 +24,10 @@ bool BasicTerrainExtension::Init(GLuint programId)
 
 void BasicTerrainExtension::Render()
 {
-    glUniformMatrix4fv(cameraOrientationLocation, 1, GL_FALSE, &viewer->viewMatrix[0][0]);
+    Camera camera = viewer->GetCamera();
+    glUniform3fv(cameraPositionLocation, 1, &camera.position[0]);
+    glUniform3fv(lookAtLocation, 1, &camera.forwards[0]);
+    glUniform3fv(upLocation, 1, &camera.up[0]);
     glUniform1f(aspectRatioLocation, viewer->GetAspectRatio());
     glUniform1f(fovYLocation, viewer->GetFovY());
 }

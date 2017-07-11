@@ -1,3 +1,4 @@
+#include <imgui\imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include "logging\Logger.h"
 #include "DescentMotionTranslator.h"
@@ -39,10 +40,24 @@ float Viewer::GetFovY() const
     return fovY;
 }
 
+Camera Viewer::GetCamera() const
+{
+    return camera;
+}
+
 void Viewer::UpdateMatrices()
 {
     viewMatrix = glm::lookAtLH(camera.position, camera.target, camera.up);
     perspectiveMatrix = glm::perspectiveLH(glm::radians(fovY), aspectRatio, nearPlane, farPlane);
     Logger::LogDebug("View Position ", camera.position, ". Target ", camera.target, ". Up ", camera.up, ".");
     Logger::LogDebug("View Projection: Aspect ", aspectRatio, ". FOV-Y: ", fovY, ". Near Plane: ", nearPlane, ". Far Plane: ", farPlane, ".");
+}
+
+void Viewer::Render()
+{
+    ImGui::Begin("Camera");
+    ImGui::InputFloat3("Position", &camera.position[0], 2);
+    ImGui::InputFloat3("Look At", &camera.forwards[0], 2);
+    ImGui::InputFloat3("Up", &camera.up[0], 2);
+    ImGui::End();
 }

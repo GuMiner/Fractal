@@ -21,7 +21,7 @@ class Fractal
     Viewer viewer;
 
     ObjectLoader objectLoader;
-    Terrain terrain;
+    Terrain* terrain;
     FpsCounter fpsCounter;
 
     void HandleEvents(bool& focusPaused);

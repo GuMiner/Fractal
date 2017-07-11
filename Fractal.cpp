@@ -18,7 +18,7 @@
 #pragma comment(lib, "lib/sfml-system")
 
 Fractal::Fractal()
-    : opengl(), shaderFactory(), viewer(), guiRenderer(), fpsCounter(), objectLoader(), terrain()
+    : opengl(), shaderFactory(), viewer(), guiRenderer(), fpsCounter(), objectLoader(), terrain(nullptr)
 {
 }
 
@@ -52,6 +52,26 @@ void Fractal::Update(float currentTime, float frameTime)
 
     objectLoader.Update(frameTime);
     fpsCounter.UpdateFps(frameTime);
+
+    // TODO temp code
+    static bool wasKeyPressed = false;
+    if (Input::IsKeyPressed(GLFW_KEY_R) && !wasKeyPressed)
+    {
+        wasKeyPressed = true;
+        delete terrain;
+        terrain = nullptr;
+
+        terrain = new Terrain();
+        if (!terrain->Init(&shaderFactory, &viewer))
+        {
+            Logger::LogError("Unable to setup the background renderer!");
+            terrain = nullptr; // Yes, we leak some data here. Don't worry about it.
+        }
+    }
+    else if (!Input::IsKeyPressed(GLFW_KEY_R))
+    {
+        wasKeyPressed = false;
+    }
 }
 
 void Fractal::Render(glm::mat4& viewMatrix)
@@ -66,8 +86,12 @@ void Fractal::Render(glm::mat4& viewMatrix)
 
     objectLoader.Render(projectionMatrix);
     fpsCounter.Render();
+    viewer.Render();
 
-    terrain.Render();
+    if (terrain != nullptr)
+    {
+        terrain->Render();
+    }
 
     // Must always be last in case other rendering steps add GUI elements.
     guiRenderer.Render();
@@ -96,10 +120,11 @@ bool Fractal::LoadGraphics()
         return false;
     }
 
-    if (!terrain.Init(&shaderFactory, &viewer))
+    terrain = new Terrain();
+    if (!terrain->Init(&shaderFactory, &viewer))
     {
         Logger::LogError("Unable to setup the background renderer!");
-        return false;
+        terrain = nullptr;
     }
 
     return true;
@@ -107,6 +132,11 @@ bool Fractal::LoadGraphics()
 
 void Fractal::UnloadGraphics()
 {
+    if (terrain != nullptr)
+    {
+        delete terrain;
+    }
+
     guiRenderer.UnloadImGui();
     opengl.Unload();
 }

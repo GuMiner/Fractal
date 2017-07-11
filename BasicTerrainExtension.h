@@ -5,7 +5,8 @@
 class BasicTerrainExtension : public IBackgroundRendererExtension
 {
     GLuint cameraPositionLocation;
-    GLuint cameraOrientationLocation;
+    GLuint lookAtLocation;
+    GLuint upLocation;
     GLuint aspectRatioLocation;
     GLuint fovYLocation;
 
