@@ -73,7 +73,20 @@ bool castRay(vec3 eye, vec3 dir, inout vec3 intersectionPoint)
         delta *= 1.002f;
     }
     
-    return false;
+    // float delta = 0.01f;
+    // for (float i = 0.10f; i < 100.0f; i += delta)
+    // {
+    //     intersectionPoint = eye + dir * i;
+    //     if (dot(intersectionPoint, intersectionPoint) < 1)
+    //     {
+    //         return true;
+    //     }
+    //     
+    //     // TODO slowly increase delta as we move laong.
+    //     delta *= 1.002f;
+    // }
+    // 
+    // return false;
 }
 
 vec3 getColor(vec3 point)
@@ -102,15 +115,11 @@ mat3 rotationMatrix(vec3 axis, float angle)
 
 void main(void)
 {
-    vec2 screenPos = vec2(fs_pos.x * 2, fs_pos.y * 2) - vec2(1, 1);
-    
-    // Our actual direction is the lookAt location rotated by our current pixel position.
-    float aspectRatioFactor = 4;
-    vec2 rotationAngles = vec2(screenPos.x * fovY * aspectRatio / aspectRatioFactor, -screenPos.y * fovY / aspectRatioFactor);
+    vec2 screenPos = vec2(fs_pos.x, fs_pos.y);
+    vec2 rotationAngles = vec2(screenPos.x * aspectRatio, -screenPos.y) * (fovY / 2.0f);
     
     vec3 right = cross(up, lookAt);
-    vec3 rotatedX = lookAt * rotationMatrix(up, radians(rotationAngles.x));
-    vec3 dir = rotatedX * rotationMatrix(right, radians(rotationAngles.y));
+    vec3 dir = lookAt * rotationMatrix(up, radians(rotationAngles.x)) * rotationMatrix(right, radians(rotationAngles.y));
     vec3 intersectionPoint;
     
     if (castRay(cameraPosition, dir, intersectionPoint))
