@@ -1,12 +1,8 @@
 #version 400 core
-
-in vec2 fs_pos;
+#include "fullScreenQuad/rayComputation.fs_frag"
 
 uniform vec3 cameraPosition;
-uniform vec3 lookAt;
-uniform vec3 up;
-uniform float aspectRatio;
-uniform float fovY;
+
 
 out vec4 color;
 
@@ -98,28 +94,9 @@ vec3 getColor(vec3 point)
     return vec3(magnitude, magnitude, magnitude);
 }
 
-// TODO simplify
-mat3 rotationMatrix(vec3 axis, float angle)
-{
-    vec3 s = axis * sin(angle);
-    float c = cos(angle);
-    vec3 oc = axis * (1 - c);
-    
-    vec3 sqd = axis * axis;
-    vec3 cross = oc * sqd + c;
-    
-    return mat3(cross.x,             oc.x * axis.y - s.z, oc.z * axis.x + s.y, 
-                oc.x * axis.y + s.z, cross.y,             oc.y * axis.z - s.x, 
-                oc.z * axis.x - s.y, oc.y * axis.z + s.x, cross.z);
-}
-
 void main(void)
 {
-    vec2 screenPos = vec2(fs_pos.x, fs_pos.y);
-    vec2 rotationAngles = vec2(screenPos.x * aspectRatio, -screenPos.y) * (fovY / 2.0f);
-    
-    vec3 right = cross(up, lookAt);
-    vec3 dir = lookAt * rotationMatrix(up, radians(rotationAngles.x)) * rotationMatrix(right, radians(rotationAngles.y));
+    vec3 dir = getRayDirection();
     vec3 intersectionPoint;
     
     if (castRay(cameraPosition, dir, intersectionPoint))
