@@ -1,0 +1,5 @@
+// Applies a standard sRGB 1/2.2 gamma correction.
+vec4 applyGammaCorrection(vec4 color)
+{
+    return vec4(pow(color.xyz, vec3(0.4545f)), 1.0f);
+}

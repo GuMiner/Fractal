@@ -1,0 +1,9 @@
+// Defines a slightly-blue, low-medium strength fog.
+// This will likely be enhanced for more realistic fogs.
+const vec3 fogColor = vec3(0.53f, 0.60f, 0.65f);
+const float fogStrength = -0.0001f;
+vec3 mixFog(vec3 color, float distance)
+{
+    float fogAmount = 1 - exp(distance * fogStrength);   
+    return mix(color, fogColor, fogAmount);
+}
