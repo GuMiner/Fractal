@@ -19,7 +19,7 @@ class BackgroundQuadRenderer
 public:
     BackgroundQuadRenderer(IBackgroundRendererExtension* extension);
     bool Init(ShaderFactory* shaderFactory, std::string shaderName);
-    void Render();
+    void Render(float gameTime);
     ~BackgroundQuadRenderer();
 };
 

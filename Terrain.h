@@ -11,7 +11,7 @@ class Terrain
 public:
     Terrain();
     bool Init(ShaderFactory* shaderFactory, Viewer* viewer);
-    void Render();
+    void Render(float gameTime);
     ~Terrain();
 };
 

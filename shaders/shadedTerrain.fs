@@ -8,7 +8,7 @@ uniform vec3 cameraPosition;
 
 out vec4 color;
 
-const float maxDistance = 500.0f;
+const float maxDistance = 10.0f;
 const vec3 terrainColor = vec3(0.2f, 0.2f, 0.2f);
 
 
@@ -37,7 +37,7 @@ bool castRay(vec3 eye, vec3 dir, inout vec3 intersectionPoint)
     
     minMax *= 2.0f;
     
-    float delta = 0.006f;
+    float delta = 0.06f;
     for (float i = 0.10f; i < minMax; i += delta)
     {
         vec3 currentPos = eye + dir * i;
@@ -54,6 +54,7 @@ bool castRay(vec3 eye, vec3 dir, inout vec3 intersectionPoint)
         
         delta *= 1.002f;
     }
+	return false;
 }
 
 void main(void)

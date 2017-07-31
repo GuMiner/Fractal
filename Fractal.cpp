@@ -74,7 +74,7 @@ void Fractal::Update(float currentTime, float frameTime)
     }
 }
 
-void Fractal::Render(glm::mat4& viewMatrix)
+void Fractal::Render(float currentTime, glm::mat4& viewMatrix)
 {
     glm::mat4 projectionMatrix = viewer.perspectiveMatrix * viewMatrix;
 
@@ -90,7 +90,7 @@ void Fractal::Render(glm::mat4& viewMatrix)
 
     if (terrain != nullptr)
     {
-        terrain->Render();
+        terrain->Render(currentTime);
     }
 
     // Must always be last in case other rendering steps add GUI elements.
@@ -157,7 +157,7 @@ bool Fractal::Run()
         {
             Update(gameTime, lastFrameTime);
 
-            Render(viewer.viewMatrix);
+            Render(gameTime, viewer.viewMatrix);
             opengl.DisplayFrame();
         }
 

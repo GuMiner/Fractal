@@ -22,7 +22,7 @@ bool BasicTerrainExtension::Init(GLuint programId)
     return true;
 }
 
-void BasicTerrainExtension::Render()
+void BasicTerrainExtension::Render(float gameTime)
 {
     Camera camera = viewer->GetCamera();
     glUniform3fv(cameraPositionLocation, 1, &camera.position[0]);

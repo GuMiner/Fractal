@@ -43,14 +43,14 @@ bool BackgroundQuadRenderer::Init(ShaderFactory* shaderFactory, std::string shad
     return true;
 }
 
-void BackgroundQuadRenderer::Render()
+void BackgroundQuadRenderer::Render(float gameTime)
 {
     glUseProgram(programId);
     glBindVertexArray(vao);
 
     if (extension != nullptr)
     {
-        extension->Render();
+        extension->Render(gameTime);
     }
 
     glDrawArrays(GL_TRIANGLES, 0, (GLsizei)vertices.size());

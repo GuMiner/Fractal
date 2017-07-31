@@ -26,7 +26,7 @@ class Fractal
 
     void HandleEvents(bool& focusPaused);
     void Update(float currentTime, float frameTime);
-    void Render(glm::mat4& viewMatrix);
+    void Render(float currentTime, glm::mat4& viewMatrix);
 
 public:
     Fractal();

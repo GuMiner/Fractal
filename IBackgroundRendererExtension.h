@@ -6,7 +6,7 @@ class IBackgroundRendererExtension
 {
 public:
     virtual bool Init(GLuint programId) = 0;
-    virtual void Render() = 0;
+    virtual void Render(float gameTime) = 0;
     
     virtual ~IBackgroundRendererExtension()
     {

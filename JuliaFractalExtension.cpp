@@ -14,6 +14,7 @@ JuliaFractalExtension::JuliaFractalExtension(Viewer* viewer) : viewer(viewer), m
 bool JuliaFractalExtension::Init(GLuint programId)
 {
     cLocation = glGetUniformLocation(programId, "c");
+    timeLocation = glGetUniformLocation(programId, "time");
     fractalGradientLocation = glGetUniformLocation(programId, "fractalGradient");
     maxIterationsLocation = glGetUniformLocation(programId, "maxIterations");
 
@@ -28,7 +29,7 @@ bool JuliaFractalExtension::Init(GLuint programId)
     return true;
 }
 
-void JuliaFractalExtension::Render()
+void JuliaFractalExtension::Render(float gameTime)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_1D, fractalGradientTextureId);
@@ -40,6 +41,7 @@ void JuliaFractalExtension::Render()
 
     glUniform2f(cLocation, cPos.x, cPos.y);
     glUniform1i(maxIterationsLocation, maxIterations);
+    glUniform1f(timeLocation, gameTime);
 }
 
 JuliaFractalExtension::~JuliaFractalExtension()

@@ -17,7 +17,7 @@ bool OpenGl::Load(Viewer* viewer)
     glfwWindowHint(GLFW_SAMPLES, 8);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(viewer->ScreenWidth, viewer->ScreenHeight, "CNC Clock", nullptr, nullptr);
+    window = glfwCreateWindow(viewer->ScreenWidth, viewer->ScreenHeight, "Fractal", nullptr, nullptr);
     if (!window)
     {
         Logger::LogError("Could not create the GLFW window!");
@@ -29,6 +29,7 @@ bool OpenGl::Load(Viewer* viewer)
     Input::Setup(window, viewer);
 
     // Setup GLEW
+    glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if (err != GLEW_OK)
     {

@@ -17,6 +17,6 @@ public:
     virtual ~BasicTerrainExtension() override;
 
     virtual bool Init(GLuint programId) override;
-    virtual void Render() override;
+    virtual void Render(float gameTime) override;
 };
 

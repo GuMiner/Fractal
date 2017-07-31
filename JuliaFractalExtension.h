@@ -5,6 +5,7 @@
 class JuliaFractalExtension : public IBackgroundRendererExtension
 {
     GLuint cLocation;
+    GLuint timeLocation;
     GLuint fractalGradientLocation;
     GLuint maxIterationsLocation;
 
@@ -19,6 +20,6 @@ public:
     virtual ~JuliaFractalExtension() override;
 
     virtual bool Init(GLuint programId) override;
-    virtual void Render() override;
+    virtual void Render(float gameTime) override;
 };
 

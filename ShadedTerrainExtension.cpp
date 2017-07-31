@@ -19,7 +19,7 @@ bool ShadedTerrainExtension::Init(GLuint programId)
     return true;
 }
 
-void ShadedTerrainExtension::Render()
+void ShadedTerrainExtension::Render(float gameTime)
 {
-    BasicTerrainExtension::Render();
+    BasicTerrainExtension::Render(gameTime);
 }
