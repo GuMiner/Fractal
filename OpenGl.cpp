@@ -1,9 +1,9 @@
 #include "logging\Logger.h"
 #include "Input.h"
-#include "OpenGlStats.h"
 #include "OpenGl.h"
 
 OpenGl::OpenGl()
+    : capabilities()
 {
 }
 
@@ -37,9 +37,6 @@ bool OpenGl::Load(Viewer* viewer)
         return false;
     }
 
-    // Log graphics information for future reference
-    OpenGlStats::LogStats();
-
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     // Enable alpha blending
@@ -61,6 +58,9 @@ bool OpenGl::Load(Viewer* viewer)
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
+    // Initialize capabilities (and log what is *actually* set by OpenGL).
+    capabilities.Initialize();
+
     return true;
 }
 
@@ -73,6 +73,11 @@ void OpenGl::Unload()
 GLFWwindow* OpenGl::GetWindow()
 {
     return window;
+}
+
+const OpenGlCapabilities & OpenGl::GetCapabilities() const
+{
+    return capabilities;
 }
 
 void OpenGl::DisplayFrame()

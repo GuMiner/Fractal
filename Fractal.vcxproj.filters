@@ -17,9 +17,6 @@
     <ClCompile Include="FpsCounter.cpp">
       <Filter>utility\fps</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGlStats.cpp">
-      <Filter>utility\opengl</Filter>
-    </ClCompile>
     <ClCompile Include="GuCommon\stb\stb_implementations.cpp">
       <Filter>utility\stb</Filter>
     </ClCompile>
@@ -61,6 +58,9 @@
       <Filter>renderers\backgroundRendering</Filter>
     </ClCompile>
     <ClCompile Include="ShadedTerrainExtension.cpp" />
+    <ClCompile Include="OpenGlCapabilities.cpp">
+      <Filter>utility\opengl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gucommon\logging\Logger.h">
@@ -87,9 +87,6 @@
     </ClInclude>
     <ClInclude Include="FpsCounter.h">
       <Filter>utility\fps</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGlStats.h">
-      <Filter>utility\opengl</Filter>
     </ClInclude>
     <ClInclude Include="gucommon\testing\ITestable.h">
       <Filter>gucommon\testing</Filter>
@@ -144,6 +141,9 @@
       <Filter>renderers\backgroundRendering</Filter>
     </ClInclude>
     <ClInclude Include="ShadedTerrainExtension.h" />
+    <ClInclude Include="OpenGlCapabilities.h">
+      <Filter>utility\opengl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="gucommon">

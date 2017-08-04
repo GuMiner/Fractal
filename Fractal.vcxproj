@@ -23,7 +23,7 @@
     <ClCompile Include="LineRenderer.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="OpenGl.cpp" />
-    <ClCompile Include="OpenGlStats.cpp" />
+    <ClCompile Include="OpenGlCapabilities.cpp" />
     <ClCompile Include="ShadedTerrainExtension.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestCube.cpp" />
@@ -53,7 +53,7 @@
     <ClInclude Include="LineRenderer.h" />
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="OpenGl.h" />
-    <ClInclude Include="OpenGlStats.h" />
+    <ClInclude Include="OpenGlCapabilities.h" />
     <ClInclude Include="ShadedTerrainExtension.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestCube.h" />
