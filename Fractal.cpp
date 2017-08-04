@@ -104,6 +104,8 @@ bool Fractal::LoadGraphics()
         return false;
     }
 
+    opengl.PerformPerformanceAnalysis();
+
     if (!LineRenderer::LoadProgram(&shaderFactory))
     {
         return false;

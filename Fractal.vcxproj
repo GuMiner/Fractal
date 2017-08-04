@@ -24,6 +24,7 @@
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="OpenGl.cpp" />
     <ClCompile Include="OpenGlCapabilities.cpp" />
+    <ClCompile Include="OpenGlPerformanceProfiler.cpp" />
     <ClCompile Include="ShadedTerrainExtension.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestCube.cpp" />
@@ -42,6 +43,11 @@
     <ClInclude Include="gucommon\shaders\ShaderFactory.h" />
     <ClInclude Include="gucommon\strings\StringUtils.h" />
     <ClInclude Include="gucommon\testing\ITestable.h" />
+    <ClInclude Include="gucommon\vertex\ColorVbo.hpp" />
+    <ClInclude Include="gucommon\vertex\NormalVbo.hpp" />
+    <ClInclude Include="gucommon\vertex\PositionVbo.hpp" />
+    <ClInclude Include="gucommon\vertex\UvVbo.hpp" />
+    <ClInclude Include="gucommon\vertex\VboBase.hpp" />
     <ClInclude Include="IBackgroundRendererExtension.h" />
     <ClInclude Include="IGlfwKeyHandler.h" />
     <ClInclude Include="IGlfwMouseHandler.h" />
@@ -54,6 +60,7 @@
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="OpenGl.h" />
     <ClInclude Include="OpenGlCapabilities.h" />
+    <ClInclude Include="OpenGlPerformanceProfiler.h" />
     <ClInclude Include="ShadedTerrainExtension.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestCube.h" />

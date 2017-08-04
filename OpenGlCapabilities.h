@@ -4,6 +4,8 @@
 
 class OpenGlCapabilities
 {
+    const int MinCoreCount = 4;
+
     void GetRendererCapabilities();
     void GetTextureCapabilities();
     void GetUniformCapabilities();
@@ -11,6 +13,8 @@ class OpenGlCapabilities
 
 public:
     // High-level capabilities
+    int logicalCoreCount;
+
     std::string vendor;
     std::string renderer;
     std::string version;
@@ -21,7 +25,7 @@ public:
     int maxCombinedTextureImageUnits;
     int maxTextureCoordinateSets;
     int maxTextureSize;
-
+    
     // Uniform capabilities
     int maxFragmentUniformBlocks;
     int maxVertexUniformBlocks;

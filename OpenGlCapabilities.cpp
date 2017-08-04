@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <sstream>
+#include <thread>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "logging\Logger.h"
@@ -43,16 +44,22 @@ void OpenGlCapabilities::GetUniformCapabilities()
 
 void OpenGlCapabilities::Initialize()
 {
+    logicalCoreCount = (int)std::thread::hardware_concurrency();
+
     GetRendererCapabilities();
     GetTextureCapabilities();
     GetUniformCapabilities();
 
     LogRetrievedInformation();
+
+    logicalCoreCount = std::max(logicalCoreCount, MinCoreCount);
 }
 
 void OpenGlCapabilities::LogRetrievedInformation()
 {
     // Renderer
+    Logger::Log("Concurrency count: ", logicalCoreCount);
+
     Logger::Log("OpenGL vendor: ", vendor, ", renderer: ", renderer, ", version: ", version);
     Logger::Log("Shading Language Versions Supported:");
     for (const std::string& version : shadingLanguageVersions)

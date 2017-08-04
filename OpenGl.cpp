@@ -3,7 +3,7 @@
 #include "OpenGl.h"
 
 OpenGl::OpenGl()
-    : capabilities()
+    : capabilities(), performanceProfiler()
 {
 }
 
@@ -78,6 +78,11 @@ GLFWwindow* OpenGl::GetWindow()
 const OpenGlCapabilities & OpenGl::GetCapabilities() const
 {
     return capabilities;
+}
+
+void OpenGl::PerformPerformanceAnalysis()
+{
+    performanceProfiler.Analyze();
 }
 
 void OpenGl::DisplayFrame()

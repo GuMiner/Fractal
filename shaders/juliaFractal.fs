@@ -1,4 +1,5 @@
 #version 400 core
+#include "lighting/gammaCorrection.fs_frag"
 
 in vec2 fs_pos;
 

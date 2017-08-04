@@ -61,6 +61,9 @@
     <ClCompile Include="OpenGlCapabilities.cpp">
       <Filter>utility\opengl</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGlPerformanceProfiler.cpp">
+      <Filter>utility\opengl\Performance</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gucommon\logging\Logger.h">
@@ -144,6 +147,24 @@
     <ClInclude Include="OpenGlCapabilities.h">
       <Filter>utility\opengl</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGlPerformanceProfiler.h">
+      <Filter>utility\opengl\Performance</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\ColorVbo.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\PositionVbo.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\UvVbo.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\VboBase.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\NormalVbo.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="gucommon">
@@ -196,6 +217,12 @@
     </Filter>
     <Filter Include="renderers\backgroundRendering">
       <UniqueIdentifier>{33ac3430-d12c-4f9b-ac30-2a23200327e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\opengl\Performance">
+      <UniqueIdentifier>{b590f98e-288f-409e-8045-c7758fa0c595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\vertex">
+      <UniqueIdentifier>{50c9475d-bb95-41bc-8093-102e916fb0ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
