@@ -1,5 +1,4 @@
 #version 400 core
-#include "lighting/gammaCorrection.fs_frag"
 
 out vec4 color;
 
