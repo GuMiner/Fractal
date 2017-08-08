@@ -7,30 +7,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="ColorGradient.cpp" />
     <ClCompile Include="DescentMotionTranslator.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Fractal.cpp" />
+    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="gucommon\logging\Logger.cpp" />
     <ClCompile Include="gucommon\shaders\ShaderFactory.cpp" />
     <ClCompile Include="GuCommon\stb\stb_implementations.cpp" />
     <ClCompile Include="gucommon\strings\StringUtils.cpp" />
     <ClCompile Include="ImguiRenderer.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Lod.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="OpenGl.cpp" />
     <ClCompile Include="OpenGlCapabilities.cpp" />
     <ClCompile Include="OpenGlPerformanceProfiler.cpp" />
+    <ClCompile Include="StandardGeometryRenderer.cpp" />
     <ClCompile Include="TestCube.cpp" />
     <ClCompile Include="TestGrid.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseObject.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorGradient.h" />
     <ClInclude Include="DescentMotionTranslator.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Fractal.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="gucommon\logging\Logger.h" />
     <ClInclude Include="gucommon\shaders\ShaderFactory.h" />
     <ClInclude Include="gucommon\strings\StringUtils.h" />
@@ -45,13 +52,18 @@
     <ClInclude Include="ImguiRenderer.h" />
     <ClInclude Include="IMotionTranslator.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Instance.h" />
     <ClInclude Include="IObject.h" />
+    <ClInclude Include="IStandardRenderer.h" />
+    <ClInclude Include="Lod.h" />
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="OpenGl.h" />
     <ClInclude Include="OpenGlCapabilities.h" />
     <ClInclude Include="OpenGlPerformanceProfiler.h" />
+    <ClInclude Include="StandardGeometryRenderer.h" />
     <ClInclude Include="TestCube.h" />
     <ClInclude Include="TestGrid.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="version.h" />
     <ClInclude Include="Viewer.h" />
   </ItemGroup>
