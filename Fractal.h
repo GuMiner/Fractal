@@ -7,10 +7,8 @@
 #include "shaders\ShaderFactory.h"
 #include "FpsCounter.h"
 #include "ImguiRenderer.h"
-#include "LineRenderer.h"
 #include "ObjectLoader.h"
 #include "OpenGl.h"
-#include "Terrain.h"
 #include "Viewer.h"
 
 class Fractal
@@ -21,7 +19,6 @@ class Fractal
     Viewer viewer;
 
     ObjectLoader objectLoader;
-    Terrain* terrain;
     FpsCounter fpsCounter;
 
     void HandleEvents(bool& focusPaused);

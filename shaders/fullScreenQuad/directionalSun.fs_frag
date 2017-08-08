@@ -1,8 +1,0 @@
-// Defines a slightly-yellow directional light
-const float sunStrength = 0.8f;
-const vec3 sunDirection = normalize(vec3(-0.50f, 1.0f, -0.25f));
-const vec3 sunColor = vec3(1.0f, 0.85f, 0.73f);
-vec3 computeSolarStrength(vec3 normal, vec3 baseColor)
-{
-    return mix(baseColor, sunColor, max(0.0f, dot(sunDirection, normal)) * sunStrength);
-}

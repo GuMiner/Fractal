@@ -26,9 +26,6 @@
     <ClCompile Include="ImguiRenderer.cpp">
       <Filter>renderers</Filter>
     </ClCompile>
-    <ClCompile Include="LineRenderer.cpp">
-      <Filter>renderers</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectLoader.cpp">
       <Filter>objectLoader</Filter>
     </ClCompile>
@@ -47,17 +44,6 @@
     <ClCompile Include="ColorGradient.cpp">
       <Filter>utility\math</Filter>
     </ClCompile>
-    <ClCompile Include="BackgroundQuadRenderer.cpp">
-      <Filter>renderers\backgroundRendering</Filter>
-    </ClCompile>
-    <ClCompile Include="JuliaFractalExtension.cpp">
-      <Filter>renderers\backgroundRendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Terrain.cpp" />
-    <ClCompile Include="BasicTerrainExtension.cpp">
-      <Filter>renderers\backgroundRendering</Filter>
-    </ClCompile>
-    <ClCompile Include="ShadedTerrainExtension.cpp" />
     <ClCompile Include="OpenGlCapabilities.cpp">
       <Filter>utility\opengl</Filter>
     </ClCompile>
@@ -100,9 +86,6 @@
     <ClInclude Include="ImguiRenderer.h">
       <Filter>renderers</Filter>
     </ClInclude>
-    <ClInclude Include="LineRenderer.h">
-      <Filter>renderers</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectLoader.h">
       <Filter>objectLoader</Filter>
     </ClInclude>
@@ -130,20 +113,6 @@
     <ClInclude Include="ColorGradient.h">
       <Filter>utility\math</Filter>
     </ClInclude>
-    <ClInclude Include="BackgroundQuadRenderer.h">
-      <Filter>renderers\backgroundRendering</Filter>
-    </ClInclude>
-    <ClInclude Include="IBackgroundRendererExtension.h">
-      <Filter>renderers\backgroundRendering</Filter>
-    </ClInclude>
-    <ClInclude Include="JuliaFractalExtension.h">
-      <Filter>renderers\backgroundRendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Terrain.h" />
-    <ClInclude Include="BasicTerrainExtension.h">
-      <Filter>renderers\backgroundRendering</Filter>
-    </ClInclude>
-    <ClInclude Include="ShadedTerrainExtension.h" />
     <ClInclude Include="OpenGlCapabilities.h">
       <Filter>utility\opengl</Filter>
     </ClInclude>
@@ -214,9 +183,6 @@
     </Filter>
     <Filter Include="utility\math">
       <UniqueIdentifier>{400a7b34-ad97-4cc4-b8be-93dc4ccd836a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="renderers\backgroundRendering">
-      <UniqueIdentifier>{33ac3430-d12c-4f9b-ac30-2a23200327e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="utility\opengl\Performance">
       <UniqueIdentifier>{b590f98e-288f-409e-8045-c7758fa0c595}</UniqueIdentifier>

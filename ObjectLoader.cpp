@@ -55,7 +55,6 @@ void ObjectLoader::UpdateObjectNames()
 
 void ObjectLoader::DisplayLoaderDialog()
 {
-    
     ImGui::Begin("Object Loader", nullptr, ImVec2(100, 100), 0.50f);
     ImGui::ListBox("Objects To Create", &selectedObjectToCreate, &objectCreationNames[0], objectCreationNames.size());
     if (ImGui::Button("Create"))

@@ -7,8 +7,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BackgroundQuadRenderer.cpp" />
-    <ClCompile Include="BasicTerrainExtension.cpp" />
     <ClCompile Include="ColorGradient.cpp" />
     <ClCompile Include="DescentMotionTranslator.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
@@ -19,21 +17,15 @@
     <ClCompile Include="gucommon\strings\StringUtils.cpp" />
     <ClCompile Include="ImguiRenderer.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="JuliaFractalExtension.cpp" />
-    <ClCompile Include="LineRenderer.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="OpenGl.cpp" />
     <ClCompile Include="OpenGlCapabilities.cpp" />
     <ClCompile Include="OpenGlPerformanceProfiler.cpp" />
-    <ClCompile Include="ShadedTerrainExtension.cpp" />
-    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestCube.cpp" />
     <ClCompile Include="TestGrid.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BackgroundQuadRenderer.h" />
-    <ClInclude Include="BasicTerrainExtension.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorGradient.h" />
     <ClInclude Include="DescentMotionTranslator.h" />
@@ -48,21 +40,16 @@
     <ClInclude Include="gucommon\vertex\PositionVbo.hpp" />
     <ClInclude Include="gucommon\vertex\UvVbo.hpp" />
     <ClInclude Include="gucommon\vertex\VboBase.hpp" />
-    <ClInclude Include="IBackgroundRendererExtension.h" />
     <ClInclude Include="IGlfwKeyHandler.h" />
     <ClInclude Include="IGlfwMouseHandler.h" />
     <ClInclude Include="ImguiRenderer.h" />
     <ClInclude Include="IMotionTranslator.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="IObject.h" />
-    <ClInclude Include="JuliaFractalExtension.h" />
-    <ClInclude Include="LineRenderer.h" />
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="OpenGl.h" />
     <ClInclude Include="OpenGlCapabilities.h" />
     <ClInclude Include="OpenGlPerformanceProfiler.h" />
-    <ClInclude Include="ShadedTerrainExtension.h" />
-    <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestCube.h" />
     <ClInclude Include="TestGrid.h" />
     <ClInclude Include="version.h" />

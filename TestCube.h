@@ -1,12 +1,9 @@
 #pragma once
 #include "IObject.h"
-#include "LineRenderer.h"
 
 // Renders a basic cube used for testing purposes.
 class TestCube : public IObject
 {
-    LineRenderer* renderer;
-
     glm::vec3 position;
 public:
     TestCube();
