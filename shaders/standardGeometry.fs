@@ -25,6 +25,7 @@ vec4 applyGammaCorrection(vec4 color)
 
 void main(void)
 {
+    // Get our base color from the texture, apply lighting, and set the color
     vec4 baseColor = texture(geometryTexture, fs_uv);
     
     vec3 normal = normalize(fs_normal);
@@ -41,6 +42,6 @@ void main(void)
         pow(max(dot(reflectSecondary, view), 0.0), specularAlbedo.w) * specularAlbedo.xyz;
     
     vec3 effColor = vec4(baseColor.xyz * (diffuse + specular), baseColor.w * diffuseAlbedo.w);
-    
+
 	color = applyGammaCorrection(effColor);
 }

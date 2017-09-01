@@ -11,11 +11,10 @@
 #include "version.h"
 #include "Fractal.h"
 
-#pragma comment(lib, "opengl32")
-#pragma comment(lib, "lib/glfw3.lib")
-#pragma comment(lib, "lib/glew32.lib")
-#pragma comment(lib, "lib/imgui.lib")
-#pragma comment(lib, "lib/sfml-system")
+#pragma comment(lib, "opengl32") // Built-in
+#pragma comment(lib, "lib/glfw3dll.lib") // v3.2.1
+#pragma comment(lib, "lib/glew32.lib") // v2.1.0
+#pragma comment(lib, "lib/imgui.lib") // v1.51
 
 Fractal::Fractal()
     : opengl(), shaderFactory(), viewer(), guiRenderer(), fpsCounter(), objectLoader()

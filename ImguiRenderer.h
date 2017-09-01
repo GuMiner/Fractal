@@ -21,12 +21,12 @@ class ImguiRenderer : public IGlfwKeyHandler, public IGlfwMouseHandler
 {
     static GLFWwindow *window;
 
-    static const char* GetClipboardText()
+    static const char* GetClipboardText(void* userData)
     {
         return glfwGetClipboardString(window);
     }
     
-    static void SetClipboardText(const char* text)
+    static void SetClipboardText(void* userData, const char* text)
     {
         glfwSetClipboardString(window, text);
     }

@@ -26,7 +26,10 @@ class Geometry
 
 public:
     Geometry();
+
+    // Swaps to this geometry and renders all isntances of it to the GPU.
     void Render(IStandardRenderer* standardRenderer);
+    int GetVertexCount() const;
     ~Geometry();
 };
 

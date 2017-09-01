@@ -5,17 +5,19 @@
 
 class Texture
 {
+    int width;
+    int height;
+    std::vector<unsigned char> textureData;
+
 public:
     int activeTextureOffset;
     GLuint textureId;
 
-    std::vector<unsigned char> textureData;
-    int width;
-    int height;
-
     Texture();
     void Initialize();
     void TransferToOpenGl();
+    int GetWidth() const;
+    int GetHeight() const;
     ~Texture();
 };
 

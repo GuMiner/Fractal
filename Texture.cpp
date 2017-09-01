@@ -17,6 +17,16 @@ void Texture::TransferToOpenGl()
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, &textureData[0]);
 }
 
+int Texture::GetWidth() const
+{
+    return width;
+}
+
+int Texture::GetHeight() const
+{
+    return height;
+}
+
 Texture::~Texture()
 {
     glDeleteTextures(1, &textureId);

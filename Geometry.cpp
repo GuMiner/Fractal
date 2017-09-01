@@ -6,7 +6,7 @@ Geometry::Geometry()
 {
 }
 
-void Geometry::Render(IStandardRenderer * standardRenderer)
+void Geometry::Render(IStandardRenderer* standardRenderer)
 {
     if (sentToOpenGl)
     {
@@ -16,6 +16,11 @@ void Geometry::Render(IStandardRenderer * standardRenderer)
             standardRenderer->RenderInstance(instance);
         }
     }
+}
+
+int Geometry::GetVertexCount() const
+{
+    return vertexCount;
 }
 
 Geometry::~Geometry()
