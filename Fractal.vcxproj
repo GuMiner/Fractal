@@ -57,6 +57,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Instance.h" />
     <ClInclude Include="IObject.h" />
+    <ClInclude Include="IPerformanceProfiler.h" />
     <ClInclude Include="IStandardRenderer.h" />
     <ClInclude Include="Lod.h" />
     <ClInclude Include="ObjectLoader.h" />

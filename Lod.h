@@ -1,10 +1,13 @@
 #pragma once
+#include <glm\vec3.hpp>
 
-// Defines a level of detail used for finding existing geometry and determining what needs to be rerendered.
+// Defines a level of detail used for finding existing geometry
 class Lod
 {
 public:
-    Lod();
-    ~Lod();
+    glm::vec3 position;
+
+    // Generates a new LOD from the given position
+    Lod(const glm::vec3 position);
 };
 

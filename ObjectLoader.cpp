@@ -56,7 +56,7 @@ void ObjectLoader::UpdateObjectNames()
 void ObjectLoader::DisplayLoaderDialog()
 {
     ImGui::Begin("Object Loader", nullptr, ImVec2(100, 100), 0.50f);
-    ImGui::ListBox("Objects To Create", &selectedObjectToCreate, &objectCreationNames[0], objectCreationNames.size());
+    ImGui::ListBox("Objects To Create", &selectedObjectToCreate, &objectCreationNames[0], (int)objectCreationNames.size());
     if (ImGui::Button("Create"))
     {
         objects.push_back(objectCreationMap[objectCreationNames[selectedObjectToCreate]]());
@@ -65,7 +65,7 @@ void ObjectLoader::DisplayLoaderDialog()
 
     if (objectNames.size() != 0)
     {
-        ImGui::ListBox("Objects", &selectedObject, &objectNames[0], objectNames.size());
+        ImGui::ListBox("Objects", &selectedObject, &objectNames[0], (int)objectNames.size());
         if (lastSelectedObject != selectedObject)
         {
             selectedObjectPosition = objects[selectedObject]->GetPosition();

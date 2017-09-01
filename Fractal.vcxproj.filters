@@ -53,9 +53,6 @@
     <ClCompile Include="BaseObject.cpp">
       <Filter>objectLoader\base</Filter>
     </ClCompile>
-    <ClCompile Include="Lod.cpp">
-      <Filter>objectLoader\base</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry.cpp">
       <Filter>objectLoader\base</Filter>
     </ClCompile>
@@ -64,6 +61,9 @@
     </ClCompile>
     <ClCompile Include="StandardGeometryRenderer.cpp">
       <Filter>renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lod.cpp">
+      <Filter>objectLoader\base\id</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +149,6 @@
     <ClInclude Include="BaseObject.h">
       <Filter>objectLoader\base</Filter>
     </ClInclude>
-    <ClInclude Include="Lod.h">
-      <Filter>objectLoader\base</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>objectLoader\base</Filter>
     </ClInclude>
@@ -169,6 +166,12 @@
     </ClInclude>
     <ClInclude Include="StandardGeometryRenderer.h">
       <Filter>renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lod.h">
+      <Filter>objectLoader\base\id</Filter>
+    </ClInclude>
+    <ClInclude Include="IPerformanceProfiler.h">
+      <Filter>utility\opengl\Performance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +231,9 @@
     </Filter>
     <Filter Include="objectLoader\base">
       <UniqueIdentifier>{d48f6d52-9346-48d8-aab7-2981f7a43e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader\base\id">
+      <UniqueIdentifier>{0c034e6f-48bc-4126-85f8-0bcdd3573229}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,10 +1,6 @@
 #include "Lod.h"
 
-Lod::Lod()
-{
-}
-
-
-Lod::~Lod()
+Lod::Lod(const glm::vec3 position)
+    : position(position)
 {
 }

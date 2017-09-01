@@ -5,9 +5,9 @@
 #include "vertex\ColorVbo.hpp"
 #include "vertex\NormalVbo.hpp"
 #include "vertex\PositionVbo.hpp"
-#include "Instance.h"
 #include "Texture.h"
 #include "IStandardRenderer.h"
+#include "IPerformanceProfiler.h"
 
 // Defines the raw geometry that is sent to OpenGL.
 class Geometry
@@ -20,16 +20,18 @@ class Geometry
     PositionVbo positionVbo;
     int vertexCount;
 
-    std::vector<Instance> instances;
-
     bool sentToOpenGl;
+    bool isGenerated;
 
 public:
+    // The number of instances that are referring to this geometry.
+    unsigned int InstanceReferences;
+    unsigned int geometryId;
+
     Geometry();
 
     // Swaps to this geometry and renders all isntances of it to the GPU.
-    void Render(IStandardRenderer* standardRenderer);
-    int GetVertexCount() const;
+    void Render(std::vector<Instance*> instances, IStandardRenderer* standardRenderer, IPerformanceProfiler* profiler) const;
     ~Geometry();
 };
 
