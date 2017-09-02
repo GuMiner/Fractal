@@ -40,11 +40,26 @@ bool World::LoadGraphics(OpenGlCapabilities capabilities, IPerformanceProfiler* 
     return true;
 }
 
+void World::Update(float gameTime, float frameTime)
+{
+    // TODO: We really want to not scan for all objects when we only have a single instance of the object in the game.
+    // The scan will probably need to be position-based (we still have a list of object types, but we don't update / render all per-frame.
+    for (BaseObjectType* baseObjectType : baseObjectTypes)
+    {
+        baseObjectType->Update(gameTime, frameTime);
+    }
+}
+
 void World::Render(const glm::mat4& projectionMatrix)
 {
+    objectLoader.Render();
+
     performanceProfiler->ResetProfileFrame();
     standardRenderer->StartRendering(projectionMatrix);
-    // TODO: render geometry
+    for (BaseObjectType* baseObjectType : baseObjectTypes)
+    {
+        baseObjectType->Render(standardRenderer, performanceProfiler);
+    }
 
     RenderPerformancePane(performanceProfiler->GetPerformancePercentages());
 }

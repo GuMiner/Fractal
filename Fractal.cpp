@@ -18,7 +18,7 @@
 
 Fractal::Fractal()
     : opengl(), shaderFactory(), guiRenderer(), viewer(), 
-      objectLoader(), world(), fpsCounter()
+      world(), fpsCounter()
 {
 }
 
@@ -48,9 +48,10 @@ void Fractal::HandleEvents(bool& focusPaused)
 void Fractal::Update(float currentTime, float frameTime)
 {
     guiRenderer.Update(currentTime, frameTime); // Must be before any IMGUI commands are passed in.
+    
     viewer.Update(frameTime);
+    world.Update(currentTime, frameTime);
 
-    objectLoader.Update(frameTime);
     fpsCounter.UpdateFps(frameTime);
 }
 
@@ -65,7 +66,6 @@ void Fractal::Render(float currentTime, glm::mat4& viewMatrix)
     glClearBufferfv(GL_DEPTH, 0, &one);
 
     world.Render(projectionMatrix);
-    objectLoader.Render(projectionMatrix);
     fpsCounter.Render();
     viewer.Render();
 

@@ -29,6 +29,7 @@ public:
     unsigned int geometryId;
 
     Geometry();
+    void SetAsGenerated();
 
     // Swaps to this geometry and renders all isntances of it to the GPU.
     void Render(std::vector<Instance*> instances, IStandardRenderer* standardRenderer, IPerformanceProfiler* profiler) const;

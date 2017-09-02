@@ -10,9 +10,10 @@
     <ProjectGuid>{699BD1D3-FA86-4146-97CC-288D84FA1A5F}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <ClCompile Include="BaseObject.cpp" />
+    <ClCompile Include="BaseObjectType.cpp" />
     <ClCompile Include="ColorGradient.cpp" />
     <ClCompile Include="DescentMotionTranslator.cpp" />
+    <ClCompile Include="QuadraticLodSummarizer.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Fractal.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -23,23 +24,23 @@
     <ClCompile Include="gucommon\strings\StringUtils.cpp" />
     <ClCompile Include="ImguiRenderer.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Lod.cpp" />
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="OpenGl.cpp" />
     <ClCompile Include="OpenGlCapabilities.cpp" />
     <ClCompile Include="OpenGlPerformanceProfiler.cpp" />
     <ClCompile Include="StandardGeometryRenderer.cpp" />
-    <ClCompile Include="TestCube.cpp" />
-    <ClCompile Include="TestGrid.cpp" />
+    <ClCompile Include="WireCube.cpp" />
+    <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Viewer.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="BaseObjectType.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorGradient.h" />
     <ClInclude Include="DescentMotionTranslator.h" />
+    <ClInclude Include="QuadraticLodSummarizer.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Fractal.h" />
     <ClInclude Include="Geometry.h" />
@@ -56,6 +57,7 @@
     <ClInclude Include="IGeometryGenerator.h" />
     <ClInclude Include="IGlfwKeyHandler.h" />
     <ClInclude Include="IGlfwMouseHandler.h" />
+    <ClInclude Include="ILodSummarizer.h" />
     <ClInclude Include="ImguiRenderer.h" />
     <ClInclude Include="IMotionTranslator.h" />
     <ClInclude Include="Input.h" />
@@ -63,14 +65,13 @@
     <ClInclude Include="IObject.h" />
     <ClInclude Include="IPerformanceProfiler.h" />
     <ClInclude Include="IStandardRenderer.h" />
-    <ClInclude Include="Lod.h" />
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="OpenGl.h" />
     <ClInclude Include="OpenGlCapabilities.h" />
     <ClInclude Include="OpenGlPerformanceProfiler.h" />
     <ClInclude Include="StandardGeometryRenderer.h" />
-    <ClInclude Include="TestCube.h" />
-    <ClInclude Include="TestGrid.h" />
+    <ClInclude Include="WireCube.h" />
+    <ClInclude Include="InfiniteGrid.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="version.h" />
     <ClInclude Include="Viewer.h" />

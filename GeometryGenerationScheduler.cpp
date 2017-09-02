@@ -37,6 +37,7 @@ void GeometryGenerationScheduler::ProcessGeometryTask()
             uniqueLock.unlock();
 
             taskData.geometryGenerator->GenerateGeometry(taskData.geometryId, taskData.geometryToPopulate);
+            taskData.geometryToPopulate->SetAsGenerated();
         }
     }
 }

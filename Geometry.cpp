@@ -7,6 +7,11 @@ Geometry::Geometry()
 {
 }
 
+void Geometry::SetAsGenerated()
+{
+    isGenerated = true;
+}
+
 void Geometry::Render(std::vector<Instance*> instances, IStandardRenderer* standardRenderer, IPerformanceProfiler* profiler) const
 {
     if (sentToOpenGl)

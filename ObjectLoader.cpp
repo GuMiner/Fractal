@@ -1,26 +1,18 @@
 #include <algorithm>
 #include <sstream>
 #include <imgui\imgui.h>
-#include "TestCube.h"
-#include "TestGrid.h"
+#include "WireCube.h"
+#include "InfiniteGrid.h"
 #include "ObjectLoader.h"
 
 ObjectLoader::ObjectLoader()
     : objects(), objectCreationMap(), objectCreationNames(), selectedObjectToCreate(0), selectedObject(0), lastSelectedObject(-1)
 {
-    objectCreationMap["Test Cube"] = []() { return new TestCube(); };
-    objectCreationMap["Test Grid"] = []() { return new TestGrid(); };
+    objectCreationMap["Test Cube"] = []() { return new WireCube(); };
+    objectCreationMap["Test Grid"] = []() { return new InfiniteGrid(); };
     for (auto it = objectCreationMap.begin(); it != objectCreationMap.end(); it++)
     {
         objectCreationNames.push_back(it->first.c_str());
-    }
-}
-
-void ObjectLoader::Update(float frameTime)
-{
-    for (IObject* object : objects)
-    {
-        object->Update(frameTime);
     }
 }
 
@@ -29,7 +21,7 @@ void ObjectLoader::UpdateObjectNames()
     std::map<std::string, int> objectNameCounter;
     
     backingObjectNames.clear();
-    for (IObject* object : objects)
+    for (BaseObjectType* object : objects)
     {
         std::string name = object->GetName();
         if (objectNameCounter.find(name) == objectNameCounter.end())
@@ -53,7 +45,7 @@ void ObjectLoader::UpdateObjectNames()
     }
 }
 
-void ObjectLoader::DisplayLoaderDialog()
+void ObjectLoader::Render()
 {
     ImGui::Begin("Object Loader", nullptr, ImVec2(100, 100), 0.50f);
     ImGui::ListBox("Objects To Create", &selectedObjectToCreate, &objectCreationNames[0], (int)objectCreationNames.size());
@@ -68,18 +60,12 @@ void ObjectLoader::DisplayLoaderDialog()
         ImGui::ListBox("Objects", &selectedObject, &objectNames[0], (int)objectNames.size());
         if (lastSelectedObject != selectedObject)
         {
-            selectedObjectPosition = objects[selectedObject]->GetPosition();
             lastSelectedObject = selectedObject;
-        }
-
-        if (ImGui::InputFloat3("Postion", &selectedObjectPosition.x, 2))
-        {
-            objects[selectedObject]->SetPosition(selectedObjectPosition);
         }
 
         if (ImGui::Button("Delete"))
         {
-            IObject* object = objects[selectedObject];
+            BaseObjectType* object = objects[selectedObject];
             objects.erase(objects.begin() + selectedObject);
             delete object;
 
@@ -89,14 +75,4 @@ void ObjectLoader::DisplayLoaderDialog()
     }
     
     ImGui::End();
-}
-
-void ObjectLoader::Render(glm::mat4& projectionMatrix)
-{
-    DisplayLoaderDialog();
-
-    for (IObject* object : objects)
-    {
-        object->Render(projectionMatrix);
-    }
 }

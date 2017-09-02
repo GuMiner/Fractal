@@ -3,23 +3,12 @@
 #include <glm\mat4x4.hpp>
 #include <string>
 
-// Defines a generically-renderable object.
-class IObject
-{
-public:
-    virtual std::string GetName() = 0;
-
-    virtual glm::vec3 GetPosition() = 0;
-    virtual void SetPosition(glm::vec3 position) = 0;
-
-    virtual void Update(float frameTime) = 0;
-    virtual void Render(glm::mat4& projectionMatrix) = 0;
-};
-
-// So how is procedurally-generated rate-limited polygon filling and rendering going to work? As my sketchy notebook notes list:
+// LOD => Geometry to generate
+// GEO => Instances for each geometry level
+// When tied together, we have a system that can find the LOD scale(s) necessary and generate geometry, the instances associated with each geometry level.
 
 // [LOD]
-// LOD is where you are and what you are looking at. Now, we filter that down to a grid and fixed set of spherical coordinates, for a total of 5 integers.
+// LOD is the object level detail, transformed by a LodSummarizer so that multiple player positions correspond to the same LOD.
 // Right now, we skip the 'what you are looking at' part and just generate everything around the user, because we can at least ensure smooth camera rotation, even at the cost of extra generation / rendering.
 // When finding objects to generate, we take a look at what we already have by a map of LOD -> Geometry
 // In order that we don't have to regenerate geometry for each position -- and also don't generate everything all the time -- we have the following activation functions and map functions:

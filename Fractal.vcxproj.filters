@@ -26,15 +26,6 @@
     <ClCompile Include="ImguiRenderer.cpp">
       <Filter>renderers</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectLoader.cpp">
-      <Filter>objectLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="TestCube.cpp">
-      <Filter>objectLoader\objects</Filter>
-    </ClCompile>
-    <ClCompile Include="TestGrid.cpp">
-      <Filter>objectLoader\objects</Filter>
-    </ClCompile>
     <ClCompile Include="Viewer.cpp">
       <Filter>camera</Filter>
     </ClCompile>
@@ -50,9 +41,6 @@
     <ClCompile Include="OpenGlPerformanceProfiler.cpp">
       <Filter>utility\opengl\Performance</Filter>
     </ClCompile>
-    <ClCompile Include="BaseObject.cpp">
-      <Filter>objectLoader\base</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry.cpp">
       <Filter>objectLoader\base</Filter>
     </ClCompile>
@@ -62,13 +50,23 @@
     <ClCompile Include="StandardGeometryRenderer.cpp">
       <Filter>renderers</Filter>
     </ClCompile>
-    <ClCompile Include="Lod.cpp">
-      <Filter>objectLoader\base\id</Filter>
-    </ClCompile>
     <ClCompile Include="GeometryGenerationScheduler.cpp">
       <Filter>objectLoader\objects\generation</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="BaseObjectType.cpp">
+      <Filter>objectLoader\base</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadraticLodSummarizer.cpp">
+      <Filter>objectLoader\base\id</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectLoader.cpp" />
+    <ClCompile Include="InfiniteGrid.cpp">
+      <Filter>objectLoader\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="WireCube.cpp">
+      <Filter>objectLoader\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gucommon\logging\Logger.h">
@@ -104,15 +102,6 @@
     </ClInclude>
     <ClInclude Include="ImguiRenderer.h">
       <Filter>renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectLoader.h">
-      <Filter>objectLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="TestCube.h">
-      <Filter>objectLoader\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="TestGrid.h">
-      <Filter>objectLoader\objects</Filter>
     </ClInclude>
     <ClInclude Include="Viewer.h">
       <Filter>camera</Filter>
@@ -150,9 +139,6 @@
     <ClInclude Include="gucommon\vertex\NormalVbo.hpp">
       <Filter>gucommon\vertex</Filter>
     </ClInclude>
-    <ClInclude Include="BaseObject.h">
-      <Filter>objectLoader\base</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>objectLoader\base</Filter>
     </ClInclude>
@@ -171,9 +157,6 @@
     <ClInclude Include="StandardGeometryRenderer.h">
       <Filter>renderers</Filter>
     </ClInclude>
-    <ClInclude Include="Lod.h">
-      <Filter>objectLoader\base\id</Filter>
-    </ClInclude>
     <ClInclude Include="IPerformanceProfiler.h">
       <Filter>utility\opengl\Performance</Filter>
     </ClInclude>
@@ -184,6 +167,22 @@
       <Filter>objectLoader\objects\generation</Filter>
     </ClInclude>
     <ClInclude Include="World.h" />
+    <ClInclude Include="BaseObjectType.h">
+      <Filter>objectLoader\base</Filter>
+    </ClInclude>
+    <ClInclude Include="ILodSummarizer.h">
+      <Filter>objectLoader\base\id</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadraticLodSummarizer.h">
+      <Filter>objectLoader\base\id</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectLoader.h" />
+    <ClInclude Include="InfiniteGrid.h">
+      <Filter>objectLoader\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="WireCube.h">
+      <Filter>objectLoader\objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="gucommon">
