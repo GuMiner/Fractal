@@ -16,6 +16,7 @@
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Fractal.cpp" />
     <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="GeometryGenerationScheduler.cpp" />
     <ClCompile Include="gucommon\logging\Logger.cpp" />
     <ClCompile Include="gucommon\shaders\ShaderFactory.cpp" />
     <ClCompile Include="GuCommon\stb\stb_implementations.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Fractal.h" />
     <ClInclude Include="Geometry.h" />
+    <ClInclude Include="GeometryGenerationScheduler.h" />
     <ClInclude Include="gucommon\logging\Logger.h" />
     <ClInclude Include="gucommon\shaders\ShaderFactory.h" />
     <ClInclude Include="gucommon\strings\StringUtils.h" />
@@ -50,6 +52,7 @@
     <ClInclude Include="gucommon\vertex\PositionVbo.hpp" />
     <ClInclude Include="gucommon\vertex\UvVbo.hpp" />
     <ClInclude Include="gucommon\vertex\VboBase.hpp" />
+    <ClInclude Include="IGeometryGenerator.h" />
     <ClInclude Include="IGlfwKeyHandler.h" />
     <ClInclude Include="IGlfwMouseHandler.h" />
     <ClInclude Include="ImguiRenderer.h" />

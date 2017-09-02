@@ -6,7 +6,7 @@
 namespace AutoVersion
 {
     static const long MAJOR_VERSION = 0;
-    static const long MINOR_VERSION = 151;
+    static const long MINOR_VERSION = 155;
 
     static std::string GetVersionString(std::string name)
     {
