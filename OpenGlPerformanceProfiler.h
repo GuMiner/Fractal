@@ -7,8 +7,8 @@ class OpenGlPerformanceProfiler : public IPerformanceProfiler
     long long maxVerticesPerFrame;
     long long maxTexelsPerFrame;
 
-    long long maxTexelsTransferredPerFrame;
     long long maxVerticesTransferredPerFrame;
+    long long maxTexelsTransferredPerFrame;
 
     long long currentVerticesInFrame;
     long long currentTexelsInFrame;
@@ -25,5 +25,6 @@ public:
     virtual bool HasFrameTransferHitLimit(int vertices, int texels) override;
     virtual bool HasFrameRenderHitLimit() override;
     virtual bool HasFrameTransferHitLimit() override;
+    virtual glm::vec4 GetPerformancePercentages() override;
 };
 

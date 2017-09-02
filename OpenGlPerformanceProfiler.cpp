@@ -42,8 +42,18 @@ bool OpenGlPerformanceProfiler::HasFrameTransferHitLimit(int vertices, int texel
     currentTexelsTransferredInFrame += texels;
     return HasFrameTransferHitLimit();
 }
+
 bool OpenGlPerformanceProfiler::HasFrameTransferHitLimit()
 {
-    return currentVerticesTransferredInFrame > maxVerticesPerFrame ||
-        currentTexelsTransferredInFrame > maxTexelsPerFrame;
+    return currentVerticesTransferredInFrame > maxVerticesTransferredPerFrame ||
+        currentTexelsTransferredInFrame > maxTexelsTransferredPerFrame;
+}
+
+glm::vec4 OpenGlPerformanceProfiler::GetPerformancePercentages()
+{
+    return glm::vec4(
+        (float)currentVerticesInFrame / (float)maxVerticesPerFrame,
+        (float)currentTexelsInFrame / (float)maxTexelsPerFrame,
+        (float)currentVerticesTransferredInFrame / (float)maxVerticesTransferredPerFrame,
+        (float)currentTexelsTransferredInFrame / (float)maxTexelsTransferredPerFrame);
 }

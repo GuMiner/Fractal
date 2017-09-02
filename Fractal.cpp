@@ -64,6 +64,7 @@ void Fractal::Render(float currentTime, glm::mat4& viewMatrix)
     glClearBufferfv(GL_COLOR, 0, color);
     glClearBufferfv(GL_DEPTH, 0, &one);
 
+    world.Render(projectionMatrix);
     objectLoader.Render(projectionMatrix);
     fpsCounter.Render();
     viewer.Render();
