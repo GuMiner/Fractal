@@ -19,7 +19,6 @@ struct GeometryGenerationTaskData
 // We use a series of worker threads to not starve our main CPU and avoid the overhead of thread spawning for new jobs.
 class GeometryGenerationScheduler
 {
-    int maxWorkerThreads;
     int runningThreads;
     std::vector<std::thread> workerThreads;
     std::deque<GeometryGenerationTaskData> geometryGenerationTasks;
@@ -32,8 +31,8 @@ class GeometryGenerationScheduler
     void ProcessGeometryTask();
 
 public:
-    GeometryGenerationScheduler(int maxWorkerThreads);
-    void StartThreads();
+    GeometryGenerationScheduler();
+    void StartThreads(int maxWorkerThreads);
 
     // Adds a geometry generation task, returning the number of items queued for generation.
     int AddGeometryGenerationTask(IGeometryGenerator* geometryGenerator, glm::ivec3 geometryId, Geometry* geometryToPopulate);

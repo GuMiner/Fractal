@@ -85,6 +85,11 @@ void OpenGl::PerformPerformanceAnalysis()
     performanceProfiler.Analyze();
 }
 
+IPerformanceProfiler* OpenGl::GetPerformanceProfiler()
+{
+    return &performanceProfiler;
+}
+
 void OpenGl::DisplayFrame()
 {
     glfwSwapBuffers(window);

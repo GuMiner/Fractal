@@ -17,7 +17,8 @@
 #pragma comment(lib, "lib/imgui.lib") // v1.51
 
 Fractal::Fractal()
-    : opengl(), shaderFactory(), viewer(), guiRenderer(), fpsCounter(), objectLoader()
+    : opengl(), shaderFactory(), guiRenderer(), viewer(), 
+      objectLoader(), world(), fpsCounter()
 {
 }
 
@@ -88,6 +89,13 @@ bool Fractal::LoadGraphics()
 
     if (!guiRenderer.LoadImGui(opengl.GetWindow(), &shaderFactory))
     {
+        Logger::LogError("Unable to load IM GUI!");
+        return false;
+    }
+
+    if (!world.LoadGraphics(opengl.GetCapabilities(), opengl.GetPerformanceProfiler(), &shaderFactory))
+    {
+        Logger::LogError("Unable to load the world graphics!");
         return false;
     }
 

@@ -1,9 +1,10 @@
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "Viewer.h"
+#include "IPerformanceProfiler.h"
 #include "OpenGlCapabilities.h"
 #include "OpenGlPerformanceProfiler.h"
+#include "Viewer.h"
 
 class OpenGl
 {
@@ -20,6 +21,7 @@ public:
     const OpenGlCapabilities& GetCapabilities() const;
 
     void PerformPerformanceAnalysis();
+    IPerformanceProfiler* GetPerformanceProfiler();
     void DisplayFrame();
 };
 

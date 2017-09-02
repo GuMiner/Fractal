@@ -36,12 +36,12 @@ void main(void)
     vec3 reflectPrimary = reflect(-primaryPL, normal);
     vec3 reflectSecondary = reflect(-secondaryPL, normal);
     
-    vec3 diffuse = max(dot(normal, primaryPL), 0.0) * diffuseAbedo.xyz + 
+    vec3 diffuse = max(dot(normal, primaryPL), 0.0) * diffuseAlbedo.xyz + 
         max(dot(normal, secondaryPL), 0.0) * diffuseAlbedo.xyz;
     vec3 specular = pow(max(dot(reflectPrimary, view), 0.0), specularAlbedo.w) * specularAlbedo.xyz +
         pow(max(dot(reflectSecondary, view), 0.0), specularAlbedo.w) * specularAlbedo.xyz;
     
-    vec3 effColor = vec4(baseColor.xyz * (diffuse + specular), baseColor.w * diffuseAlbedo.w);
+    vec4 effColor = vec4(baseColor.xyz * (diffuse + specular), baseColor.w * diffuseAlbedo.w);
 
 	color = applyGammaCorrection(effColor);
 }

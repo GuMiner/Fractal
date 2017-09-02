@@ -68,6 +68,7 @@
     <ClCompile Include="GeometryGenerationScheduler.cpp">
       <Filter>objectLoader\objects\generation</Filter>
     </ClCompile>
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gucommon\logging\Logger.h">
@@ -182,6 +183,7 @@
     <ClInclude Include="IGeometryGenerator.h">
       <Filter>objectLoader\objects\generation</Filter>
     </ClInclude>
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="gucommon">

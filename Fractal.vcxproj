@@ -33,6 +33,7 @@
     <ClCompile Include="TestGrid.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Viewer.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseObject.h" />
@@ -73,6 +74,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="version.h" />
     <ClInclude Include="Viewer.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">

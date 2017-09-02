@@ -1,11 +1,11 @@
 #include "GeometryGenerationScheduler.h"
 
-GeometryGenerationScheduler::GeometryGenerationScheduler(int maxWorkerThreads)
-    : maxWorkerThreads(maxWorkerThreads), runningThreads(0), isAlive(true)
+GeometryGenerationScheduler::GeometryGenerationScheduler()
+    : runningThreads(0), isAlive(true)
 {
 }
 
-void GeometryGenerationScheduler::StartThreads()
+void GeometryGenerationScheduler::StartThreads(int maxWorkerThreads)
 {
     runningThreads = maxWorkerThreads; // Decremented by 1 by each thread started.
     for (int i = 0; i < maxWorkerThreads; i++)
