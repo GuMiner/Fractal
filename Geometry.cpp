@@ -12,6 +12,21 @@ void Geometry::SetAsGenerated()
     isGenerated = true;
 }
 
+bool Geometry::CanSendToGpu() const
+{
+    return isGenerated && !sentToOpenGl;
+}
+
+void Geometry::SendToGpu()
+{
+    texture.TransferToOpenGl();
+    colorVbo.TransferToOpenGl();
+    normalVbo.TransferToOpenGl();
+    positionVbo.TransferToOpenGl();
+
+    sentToOpenGl = true;
+}
+
 void Geometry::Render(std::vector<Instance*> instances, IStandardRenderer* standardRenderer, IPerformanceProfiler* profiler) const
 {
     if (sentToOpenGl)

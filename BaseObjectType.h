@@ -3,37 +3,32 @@
 #include <unordered_map>
 #include <vector>
 #include <glm\vec3.hpp>
-#include "IObject.h"
-#include "IStandardRenderer.h"
+#include "BaseObject.h"
+#include "IGeometryGenerator.h"
+#include "IObjectActivator.h"
 #include "IPerformanceProfiler.h"
+#include "IStandardRenderer.h"
 #include "Geometry.h"
-
-typedef int LodX;
-typedef int LodY;
-typedef int LodZ;
-
-typedef int GeomIdX;
-typedef int GeomIdY;
-typedef int GeomIdZ;
-typedef int GeomIdW;
+#include "GeometryGenerationScheduler.h"
 
 // Defines a base object type for procedural object generation and rendering. See below for details
 class BaseObjectType
 {
-    // The mapping of LOD -> IDs of instances of geometry that must be displayed
-    std::unordered_map<LodX, std::unordered_map<LodY, std::unordered_map<LodZ, std::vector<glm::ivec4>>>> lodToGeometryInstances;
+    GeometryGenerationScheduler* scheduler;
+    IObjectActivator* objectActivator;
+    IGeometryGenerator* geometryGenerator;
 
-    // Mapping of object instance IDs -> object instances. Each geometry instance can be used by many LOD instances
-    std::unordered_map<GeomIdX, std::unordered_map<GeomIdY, std::unordered_map<GeomIdZ, std::unordered_map<GeomIdW, Instance*>>>> geometryInstanceIdToGeometryInstance;
+    // The objects stored within this base object type.
+    std::vector<BaseObject*> objects;
 
     // Mapping geometry IDs to geometries.
-    std::unordered_map<unsigned int, Geometry*> geometries;
+    std::unordered_map<long long, Geometry*> geometries;
 
     // A reverse mapping, mapping geometry types to instances. Useful for high-speed rendering.
     std::unordered_map<Geometry*, std::vector<Instance*>> geometryInstances;
 
 protected:
-    BaseObjectType();
+    BaseObjectType(IObjectActivator* objectActivator, IGeometryGenerator* geometryGenerator, GeometryGenerationScheduler* scheduler);
 
     // Performs per-instance updates. By default, performs nothing.
     virtual void Update(float gameTime, float frameTime, Instance* instance);

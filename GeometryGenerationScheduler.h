@@ -11,7 +11,7 @@
 struct GeometryGenerationTaskData
 {
     IGeometryGenerator* geometryGenerator;
-    glm::ivec3 geometryId;
+    IGeometryGenerationData* geometryGenerationData;
     Geometry* geometryToPopulate;
 };
 
@@ -35,7 +35,7 @@ public:
     void StartThreads(int maxWorkerThreads);
 
     // Adds a geometry generation task, returning the number of items queued for generation.
-    int AddGeometryGenerationTask(IGeometryGenerator* geometryGenerator, glm::ivec3 geometryId, Geometry* geometryToPopulate);
+    int AddGeometryGenerationTask(IGeometryGenerator* geometryGenerator, IGeometryGenerationData* geometryGenerationData, Geometry* geometryToPopulate);
     
     // Returns the number of jobs queued and running.
     int GetGeometryJobCount();

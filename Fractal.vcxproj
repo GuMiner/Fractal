@@ -10,10 +10,10 @@
     <ProjectGuid>{699BD1D3-FA86-4146-97CC-288D84FA1A5F}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
+    <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="BaseObjectType.cpp" />
     <ClCompile Include="ColorGradient.cpp" />
     <ClCompile Include="DescentMotionTranslator.cpp" />
-    <ClCompile Include="QuadraticLodSummarizer.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Fractal.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -36,11 +36,12 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseObject.h" />
     <ClInclude Include="BaseObjectType.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorGradient.h" />
     <ClInclude Include="DescentMotionTranslator.h" />
-    <ClInclude Include="QuadraticLodSummarizer.h" />
+    <ClInclude Include="IGeometryGenerationData.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Fractal.h" />
     <ClInclude Include="Geometry.h" />
@@ -57,7 +58,7 @@
     <ClInclude Include="IGeometryGenerator.h" />
     <ClInclude Include="IGlfwKeyHandler.h" />
     <ClInclude Include="IGlfwMouseHandler.h" />
-    <ClInclude Include="ILodSummarizer.h" />
+    <ClInclude Include="IObjectActivator.h" />
     <ClInclude Include="ImguiRenderer.h" />
     <ClInclude Include="IMotionTranslator.h" />
     <ClInclude Include="Input.h" />

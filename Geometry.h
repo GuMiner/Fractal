@@ -24,12 +24,13 @@ class Geometry
     bool isGenerated;
 
 public:
-    // The number of instances that are referring to this geometry.
-    unsigned int InstanceReferences;
-    unsigned int geometryId;
+    long long geometryId;
 
     Geometry();
     void SetAsGenerated();
+    
+    bool CanSendToGpu() const;
+    void SendToGpu();
 
     // Swaps to this geometry and renders all isntances of it to the GPU.
     void Render(std::vector<Instance*> instances, IStandardRenderer* standardRenderer, IPerformanceProfiler* profiler) const;

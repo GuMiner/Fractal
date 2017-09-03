@@ -36,18 +36,18 @@ void GeometryGenerationScheduler::ProcessGeometryTask()
             // Ensure we don't hold the mutex while running our jobs.
             uniqueLock.unlock();
 
-            taskData.geometryGenerator->GenerateGeometry(taskData.geometryId, taskData.geometryToPopulate);
+            taskData.geometryGenerator->GenerateGeometry(taskData.geometryGenerationData, taskData.geometryToPopulate);
             taskData.geometryToPopulate->SetAsGenerated();
         }
     }
 }
 
-int GeometryGenerationScheduler::AddGeometryGenerationTask(IGeometryGenerator* geometryGenerator, glm::ivec3 geometryId, Geometry* geometryToPopulate)
+int GeometryGenerationScheduler::AddGeometryGenerationTask(IGeometryGenerator* geometryGenerator, IGeometryGenerationData* geometryGenerationData, Geometry* geometryToPopulate)
 {
     // Queue
     GeometryGenerationTaskData geometryGenerationTaskData;
     geometryGenerationTaskData.geometryGenerator = geometryGenerator;
-    geometryGenerationTaskData.geometryId = geometryId;
+    geometryGenerationTaskData.geometryGenerationData = geometryGenerationData;
     geometryGenerationTaskData.geometryToPopulate = geometryToPopulate;
 
     taskQueueMutex.lock();

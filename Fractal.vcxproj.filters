@@ -57,15 +57,15 @@
     <ClCompile Include="BaseObjectType.cpp">
       <Filter>objectLoader\base</Filter>
     </ClCompile>
-    <ClCompile Include="QuadraticLodSummarizer.cpp">
-      <Filter>objectLoader\base\id</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="InfiniteGrid.cpp">
       <Filter>objectLoader\objects</Filter>
     </ClCompile>
     <ClCompile Include="WireCube.cpp">
       <Filter>objectLoader\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseObject.cpp">
+      <Filter>objectLoader\base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,18 +170,21 @@
     <ClInclude Include="BaseObjectType.h">
       <Filter>objectLoader\base</Filter>
     </ClInclude>
-    <ClInclude Include="ILodSummarizer.h">
-      <Filter>objectLoader\base\id</Filter>
-    </ClInclude>
-    <ClInclude Include="QuadraticLodSummarizer.h">
-      <Filter>objectLoader\base\id</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="InfiniteGrid.h">
       <Filter>objectLoader\objects</Filter>
     </ClInclude>
     <ClInclude Include="WireCube.h">
       <Filter>objectLoader\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseObject.h">
+      <Filter>objectLoader\base</Filter>
+    </ClInclude>
+    <ClInclude Include="IObjectActivator.h">
+      <Filter>objectLoader\base\activators</Filter>
+    </ClInclude>
+    <ClInclude Include="IGeometryGenerationData.h">
+      <Filter>objectLoader\objects\generation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,11 +245,11 @@
     <Filter Include="objectLoader\base">
       <UniqueIdentifier>{d48f6d52-9346-48d8-aab7-2981f7a43e18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="objectLoader\base\id">
-      <UniqueIdentifier>{0c034e6f-48bc-4126-85f8-0bcdd3573229}</UniqueIdentifier>
-    </Filter>
     <Filter Include="objectLoader\objects\generation">
       <UniqueIdentifier>{eae57b20-24bc-4f52-b8c2-1fd236a3cc96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader\base\activators">
+      <UniqueIdentifier>{0c034e6f-48bc-4126-85f8-0bcdd3573229}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
