@@ -50,7 +50,7 @@ void WireCubeGenerator::AddPlane(std::vector<glm::vec3>& vertices, std::vector<g
     // Lookback six items and rotate / move UVs as applicable.
     for (int i = 0; i < 6; i++)
     {
-        int itemIdx = vertices.size() - (i + 1);
+        int itemIdx = (int)vertices.size() - (i + 1);
         vertices[itemIdx] = planeRotation * vertices[itemIdx];
         normals[itemIdx] = planeRotation * normals[itemIdx];
         uvs[itemIdx] += uvTranslation;
@@ -61,7 +61,7 @@ void WireCubeGenerator::GenerateGeometry(GeometryGenerationData* geometryGenerat
 {
     // TODO: Make this dependent on LOD, gen data, etci
     Logger::Log("Wire Cube LOD: ", geometryGenerationData->lod, " Geo ID: ", geometryGenerationData->lod);
-    
+    Logger::Log("Numeric limits test: ", (int)std::numeric_limits<unsigned char>::min(), " ", (int)std::numeric_limits<unsigned char>::max());
     // Set the texture to pure randomness (easy to see)
     int width = 128;
     int height = 128;
@@ -69,13 +69,12 @@ void WireCubeGenerator::GenerateGeometry(GeometryGenerationData* geometryGenerat
     texture.resize(width * height * 4);
     for (int i = 0; i < width * height; i++)
     {
-        // This is kinda overkill -- could just use 0 and 255...
-        texture[i * 4 + 0] = glm::linearRand(std::numeric_limits<unsigned char>::min(), std::numeric_limits<unsigned char>::max());
-        texture[i * 4 + 1] = glm::linearRand(std::numeric_limits<unsigned char>::min(), std::numeric_limits<unsigned char>::max());
-        texture[i * 4 + 2] = glm::linearRand(std::numeric_limits<unsigned char>::min(), std::numeric_limits<unsigned char>::max());
+        texture[i * 4 + 0] = (unsigned char)(rand() % 256);
+        texture[i * 4 + 1] = (unsigned char)(rand() % 256);
+        texture[i * 4 + 2] = (unsigned char)(rand() % 256);
 
         // Random transparency. Should be rather interesting to observe.
-        texture[i * 4 + 3] = glm::linearRand(std::numeric_limits<unsigned char>::min(), std::numeric_limits<unsigned char>::max());
+        texture[i * 4 + 3] = (unsigned char)(rand() % 256);
     }
 
     // We're unfolding the cube manually, but we really want to do this automatically.
@@ -95,7 +94,4 @@ void WireCubeGenerator::GenerateGeometry(GeometryGenerationData* geometryGenerat
         glm::rotate(-ninetyDegrees, glm::vec3(0, 0, 1)) * glm::rotate(ninetyDegrees, glm::vec3(0, 1, 0)), glm::vec2(0.25, -0.33));
 
     geometryToGenerate->SetGeometryData(width, height, texture, vertices, normals, uvs);
-    
-    // We're done with this, we don't need it.
-    delete geometryGenerationData;
 }

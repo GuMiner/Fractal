@@ -43,10 +43,17 @@ bool Geometry::CanSendToGpu() const
     return isGenerated && !sentToOpenGl;
 }
 
-void Geometry::SendToGpu()
+void Geometry::SendToGpu(int activeTextureOffset, IPerformanceProfiler* profiler)
 {
+    if (profiler->HasFrameTransferHitLimit(vertexCount, texture.GetWidth() * texture.GetHeight()))
+    {
+        return;
+    }
+
     // TODO: update the names so this is InitializeOpenGl(), because we can send in vertex data before calling these methods.
-    texture.Initialize();
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    texture.Initialize(activeTextureOffset);
     uvVbo.Initialize();
     normalVbo.Initialize();
     positionVbo.Initialize();
@@ -80,4 +87,8 @@ void Geometry::Render(std::vector<Instance*> instances, IStandardRenderer* stand
 
 Geometry::~Geometry()
 {
+    if (sentToOpenGl)
+    {
+        glDeleteVertexArrays(1, &vao);
+    }
 }

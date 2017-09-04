@@ -34,7 +34,7 @@ public:
     void SetAsGenerated();
     
     bool CanSendToGpu() const;
-    void SendToGpu();
+    void SendToGpu(int activeTextureOffset, IPerformanceProfiler* profiler);
 
     // Swaps to this geometry and renders all instances of it to the GPU.
     void Render(std::vector<Instance*> instances, IStandardRenderer* standardRenderer, IPerformanceProfiler* profiler) const;

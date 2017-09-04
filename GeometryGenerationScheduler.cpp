@@ -1,7 +1,8 @@
 #include "GeometryGenerationScheduler.h"
 
 GeometryGenerationScheduler::GeometryGenerationScheduler()
-    : runningThreads(0), isAlive(true)
+    : runningThreads(0), workerThreads(), geometryGenerationTasks(),
+      isAlive(true), taskQueueMutex(), threadSleepCondition()
 {
 }
 
@@ -37,6 +38,14 @@ void GeometryGenerationScheduler::ProcessGeometryTask()
             uniqueLock.unlock();
 
             taskData.geometryGenerator->GenerateGeometry(taskData.geometryGenerationData, taskData.geometryToPopulate);
+            
+            // We're done with this, we don't need it.
+            if (taskData.geometryGenerationData->generationData != nullptr)
+            {
+                delete taskData.geometryGenerationData->generationData;
+            }
+            delete taskData.geometryGenerationData;
+
             taskData.geometryToPopulate->SetAsGenerated();
         }
     }

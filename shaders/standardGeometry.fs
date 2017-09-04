@@ -2,11 +2,11 @@
 
 out vec4 color;
 
-out vec2 fs_uv;
-out vec3 fs_normal;
-out vec3 fs_view;
-out vec3 fs_primaryPointLightVector;
-out vec3 fs_secondaryPointLightVector;
+in vec2 fs_uv;
+in vec3 fs_normal;
+in vec3 fs_view;
+in vec3 fs_primaryPointLightVector;
+in vec3 fs_secondaryPointLightVector;
 
 uniform vec4 diffuseAlbedo; // Also contains transparency.
 uniform vec4 specularAlbedo; // Also contains strength
@@ -20,7 +20,7 @@ uniform float directionalLightStrength;
 // Applies a standard sRGB 1/2.2 gamma correction.
 vec4 applyGammaCorrection(vec4 color)
 {
-    return vec4(pow(color.xyz, vec3(0.4545f)), 1.0f);
+    return vec4(pow(color.xyz, vec3(0.4545f)), color.w);
 }
 
 void main(void)
@@ -42,6 +42,6 @@ void main(void)
         pow(max(dot(reflectSecondary, view), 0.0), specularAlbedo.w) * specularAlbedo.xyz;
     
     vec4 effColor = vec4(baseColor.xyz * (diffuse + specular), baseColor.w * diffuseAlbedo.w);
-
+    effColor = baseColor; // TODO: Remove. Makes our texture the only color. Used for debugging for now as we have no lights.
 	color = applyGammaCorrection(effColor);
 }

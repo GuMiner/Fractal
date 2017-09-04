@@ -1,7 +1,7 @@
 #include "BaseObjectType.h"
 
 BaseObjectType::BaseObjectType(IObjectActivator* objectActivator, IGeometryGenerator* geometryGenerator, GeometryGenerationScheduler* scheduler)
-    : objectActivator(objectActivator), geometryGenerator(geometryGenerator)
+    : objectActivator(objectActivator), geometryGenerator(geometryGenerator), scheduler(scheduler)
 {
 }
 
@@ -12,6 +12,11 @@ BaseObjectType::~BaseObjectType()
 void BaseObjectType::Update(float gameTime, float frameTime, Instance* instance)
 {
     // Per-instance updates is left for base classes to perform, if desired.
+}
+
+void BaseObjectType::AddObject(BaseObject* object)
+{
+    objects.push_back(object);
 }
 
 void BaseObjectType::Update(glm::vec3 playerPosition, float gameTime, float frameTime)
@@ -101,7 +106,8 @@ void BaseObjectType::Render(IStandardRenderer* standardRenderer, IPerformancePro
     {
         if (geometrySet.first->CanSendToGpu())
         {
-            geometrySet.first->SendToGpu();
+            int activeTextureOffset = 0;// TODO Get from caps somewhere.
+            geometrySet.first->SendToGpu(activeTextureOffset, profiler);
         }
     }
 

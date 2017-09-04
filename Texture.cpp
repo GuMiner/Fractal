@@ -4,8 +4,9 @@ Texture::Texture()
 {
 }
 
-void Texture::Initialize()
+void Texture::Initialize(int activeTextureOffset)
 {
+    this->activeTextureOffset = activeTextureOffset;
     glGenTextures(1, &textureId);
 }
 
@@ -20,8 +21,8 @@ void Texture::TransferToOpenGl()
 {
     glActiveTexture(GL_TEXTURE0 + activeTextureOffset);
     glBindTexture(GL_TEXTURE_2D, textureId);
-    glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA, width, height);
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, &textureData[0]);
+    glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, width, height); // This API expects the *sized* format... 
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, &textureData[0]); // ... and this API does not.
 }
 
 int Texture::GetWidth() const

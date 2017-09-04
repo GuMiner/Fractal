@@ -14,7 +14,7 @@ public:
     GLuint textureId;
 
     Texture();
-    void Initialize();
+    void Initialize(int activeTextureOffset);
     void SetImageData(int width, int height, std::vector<unsigned char> textureData);
     void TransferToOpenGl();
     int GetWidth() const;

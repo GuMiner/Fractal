@@ -1,11 +1,29 @@
 #include <imgui\imgui.h>
 #include "logging\Logger.h"
+#include "WireCube.h"
 #include "StandardGeometryRenderer.h"
 #include "World.h"
 
 World::World()
     : geometryGenerationScheduler(), standardRenderer(new StandardGeometryRenderer()), objectLoader(&geometryGenerationScheduler)
 {
+    baseObjectTypes.push_back(new WireCube(&geometryGenerationScheduler));
+
+    // Add a series of test cubes.
+    BaseObject* testCube = new BaseObject();
+    testCube->objectPosition = glm::vec3(0, 0, 0);
+
+    baseObjectTypes[0]->AddObject(testCube);
+
+    testCube = new BaseObject();
+    testCube->objectPosition = glm::vec3(10, 0, 0);
+
+    baseObjectTypes[0]->AddObject(testCube);
+
+    testCube = new BaseObject();
+    testCube->objectPosition = glm::vec3(20, 0, 0);
+
+    baseObjectTypes[0]->AddObject(testCube);
 }
 
 void World::RenderPerformancePane(glm::vec4 performanceMetrics)
@@ -66,5 +84,11 @@ void World::Render(const glm::mat4& projectionMatrix)
 
 World::~World()
 {
+    // Get rid of all possible archetypes
+    for (BaseObjectType* type : baseObjectTypes)
+    {
+        delete type;
+    }
+
     delete standardRenderer;
 }

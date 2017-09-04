@@ -18,9 +18,6 @@ class BaseObjectType
     IObjectActivator* objectActivator;
     IGeometryGenerator* geometryGenerator;
 
-    // The objects stored within this base object type.
-    std::vector<BaseObject*> objects;
-
     // Mapping geometry IDs to geometries.
     std::unordered_map<long long, Geometry*> geometries;
 
@@ -28,6 +25,9 @@ class BaseObjectType
     std::unordered_map<Geometry*, std::vector<Instance*>> geometryInstances;
 
 protected:
+    // The objects stored within this base object type.
+    std::vector<BaseObject*> objects;
+
     BaseObjectType(IObjectActivator* objectActivator, IGeometryGenerator* geometryGenerator, GeometryGenerationScheduler* scheduler);
 
     // Performs per-instance updates. By default, performs nothing.
@@ -37,6 +37,7 @@ public:
     virtual ~BaseObjectType();
     virtual std::string GetName() = 0;
 
+    void AddObject(BaseObject* object);
     void Update(glm::vec3 playerPosition, float gameTime, float frameTime);
     void Render(IStandardRenderer* standardRenderer, IPerformanceProfiler* profiler);
 };

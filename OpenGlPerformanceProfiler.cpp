@@ -10,8 +10,8 @@ void OpenGlPerformanceProfiler::Analyze()
     maxVerticesPerFrame = 100000;
     maxTexelsPerFrame = 10000000;
 
-    maxTexelsTransferredPerFrame = 100000;
     maxVerticesTransferredPerFrame = 10000000;
+    maxTexelsTransferredPerFrame = 100000;
 }
 
 void OpenGlPerformanceProfiler::ResetProfileFrame()
