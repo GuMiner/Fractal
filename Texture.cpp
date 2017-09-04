@@ -9,6 +9,13 @@ void Texture::Initialize()
     glGenTextures(1, &textureId);
 }
 
+void Texture::SetImageData(int width, int height, std::vector<unsigned char> textureData)
+{
+    this->width = width;
+    this->height = height;
+    this->textureData = textureData;
+}
+
 void Texture::TransferToOpenGl()
 {
     glActiveTexture(GL_TEXTURE0 + activeTextureOffset);

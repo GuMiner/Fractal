@@ -14,18 +14,18 @@ void BaseObjectType::Update(float gameTime, float frameTime, Instance* instance)
     // Per-instance updates is left for base classes to perform, if desired.
 }
 
-void BaseObjectType::Update(float gameTime, float frameTime)
+void BaseObjectType::Update(glm::vec3 playerPosition, float gameTime, float frameTime)
 {
     // See what stuff should exist and queue geometry for generation if necessary
     for (BaseObject* object : objects)
     {
         // TODO: Most of our objects (single-object mode) aren't going to be near-visible. We need to be more efficient than this.
-        if (objectActivator->IsObjectVisible(object))
+        if (objectActivator->IsObjectVisible(playerPosition, object))
         {
-            std::vector<std::pair<IGeometryGenerationData*, std::vector<Instance*>>> newGeometryAndInstances =
-                objectActivator->GetNewGeometryAndInstances(object, &geometries);
+            std::vector<std::pair<GeometryGenerationData*, std::vector<Instance*>>> newGeometryAndInstances =
+                objectActivator->GetNewGeometryAndInstances(playerPosition, object, &geometries);
 
-            for (std::pair<IGeometryGenerationData*, std::vector<Instance*>> instances : newGeometryAndInstances)
+            for (std::pair<GeometryGenerationData*, std::vector<Instance*>> instances : newGeometryAndInstances)
             {
                 Geometry* geo = new Geometry();
                 geo->geometryId = instances.first->geometryId;
@@ -53,16 +53,33 @@ void BaseObjectType::Update(float gameTime, float frameTime)
             }
         }
 
-        for (int i = object->instances.size() - 1; i >= 0; i--)
+        for (int i = (int)object->instances.size() - 1; i >= 0; i--)
         {
             Instance* instance = object->instances[i];
             if (instance->flaggedForDeletion)
             {
+                // Remove the instance from associated geometry.
                 Geometry* associatedGeo = geometries[instance->geometryId];
-                // TODO: Remove the instance from this list, and remove the geometry if this is empty geometryInstances[associatedGeo]
+                for (int j = (int)geometryInstances[associatedGeo].size(); j >= 0; j--)
+                {
+                    if (geometryInstances[associatedGeo][j] == instance)
+                    {
+                        geometryInstances[associatedGeo].erase(geometryInstances[associatedGeo].begin() + j);
+                        break;
+                    }
+                }
 
+                // Remove the instance itself
                 object->instances.erase(object->instances.begin() + i);
                 delete instance;
+
+                // Remove the geometry if it is no longer referenced by any instances
+                if (geometryInstances[associatedGeo].size() == 0)
+                {
+                    geometries.erase(associatedGeo->geometryId);
+                    geometryInstances.erase(associatedGeo);
+                    delete associatedGeo;
+                }
             }
         }
     }

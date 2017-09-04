@@ -29,7 +29,7 @@ class World
 public:
     World();
     bool LoadGraphics(OpenGlCapabilities capabilities, IPerformanceProfiler* performanceProfiler, ShaderFactory* shaderFactory);
-    void Update(float gameTime, float frameTime);
+    void Update(glm::vec3 playerPosition, float gameTime, float frameTime);
     void Render(const glm::mat4& projectionMatrix);
     ~World();
 };

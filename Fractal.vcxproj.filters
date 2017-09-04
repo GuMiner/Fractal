@@ -58,14 +58,20 @@
       <Filter>objectLoader\base</Filter>
     </ClCompile>
     <ClCompile Include="ObjectLoader.cpp" />
-    <ClCompile Include="InfiniteGrid.cpp">
-      <Filter>objectLoader\objects</Filter>
-    </ClCompile>
-    <ClCompile Include="WireCube.cpp">
-      <Filter>objectLoader\objects</Filter>
-    </ClCompile>
     <ClCompile Include="BaseObject.cpp">
       <Filter>objectLoader\base</Filter>
+    </ClCompile>
+    <ClCompile Include="DistanceActivator.cpp">
+      <Filter>objectLoader\base\activators</Filter>
+    </ClCompile>
+    <ClCompile Include="InfiniteGrid.cpp">
+      <Filter>objectLoader\objects\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="WireCube.cpp">
+      <Filter>objectLoader\objects\basic\cube</Filter>
+    </ClCompile>
+    <ClCompile Include="WireCubeGenerator.cpp">
+      <Filter>objectLoader\objects\basic\cube</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,20 +177,26 @@
       <Filter>objectLoader\base</Filter>
     </ClInclude>
     <ClInclude Include="ObjectLoader.h" />
-    <ClInclude Include="InfiniteGrid.h">
-      <Filter>objectLoader\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="WireCube.h">
-      <Filter>objectLoader\objects</Filter>
-    </ClInclude>
     <ClInclude Include="BaseObject.h">
       <Filter>objectLoader\base</Filter>
     </ClInclude>
     <ClInclude Include="IObjectActivator.h">
       <Filter>objectLoader\base\activators</Filter>
     </ClInclude>
-    <ClInclude Include="IGeometryGenerationData.h">
+    <ClInclude Include="DistanceActivator.h">
+      <Filter>objectLoader\base\activators</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryGenerationData.h">
       <Filter>objectLoader\objects\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="InfiniteGrid.h">
+      <Filter>objectLoader\objects\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="WireCube.h">
+      <Filter>objectLoader\objects\basic\cube</Filter>
+    </ClInclude>
+    <ClInclude Include="WireCubeGenerator.h">
+      <Filter>objectLoader\objects\basic\cube</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +262,12 @@
     </Filter>
     <Filter Include="objectLoader\base\activators">
       <UniqueIdentifier>{0c034e6f-48bc-4126-85f8-0bcdd3573229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader\objects\basic">
+      <UniqueIdentifier>{5537b6b1-4353-4915-a01a-4d2edbdbbfe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader\objects\basic\cube">
+      <UniqueIdentifier>{a04e952c-c7b9-43a0-8bcb-6edc31d380d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

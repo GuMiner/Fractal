@@ -37,7 +37,7 @@ public:
     virtual ~BaseObjectType();
     virtual std::string GetName() = 0;
 
-    void Update(float gameTime, float frameTime);
+    void Update(glm::vec3 playerPosition, float gameTime, float frameTime);
     void Render(IStandardRenderer* standardRenderer, IPerformanceProfiler* profiler);
 };
 

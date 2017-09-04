@@ -42,7 +42,7 @@ void GeometryGenerationScheduler::ProcessGeometryTask()
     }
 }
 
-int GeometryGenerationScheduler::AddGeometryGenerationTask(IGeometryGenerator* geometryGenerator, IGeometryGenerationData* geometryGenerationData, Geometry* geometryToPopulate)
+int GeometryGenerationScheduler::AddGeometryGenerationTask(IGeometryGenerator* geometryGenerator, GeometryGenerationData* geometryGenerationData, Geometry* geometryToPopulate)
 {
     // Queue
     GeometryGenerationTaskData geometryGenerationTaskData;

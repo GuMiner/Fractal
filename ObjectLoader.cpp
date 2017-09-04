@@ -5,11 +5,11 @@
 #include "InfiniteGrid.h"
 #include "ObjectLoader.h"
 
-ObjectLoader::ObjectLoader()
+ObjectLoader::ObjectLoader(GeometryGenerationScheduler* scheduler)
     : objects(), objectCreationMap(), objectCreationNames(), selectedObjectToCreate(0), selectedObject(0), lastSelectedObject(-1)
 {
-    objectCreationMap["Test Cube"] = []() { return new WireCube(); };
-    objectCreationMap["Test Grid"] = []() { return new InfiniteGrid(); };
+    objectCreationMap["Test Cube"] = [scheduler]() { return new WireCube(scheduler); };
+    // objectCreationMap["Test Grid"] = []() { return new InfiniteGrid(); };
     for (auto it = objectCreationMap.begin(); it != objectCreationMap.end(); it++)
     {
         objectCreationNames.push_back(it->first.c_str());

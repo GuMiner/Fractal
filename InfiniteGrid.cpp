@@ -1,6 +1,7 @@
 #include "InfiniteGrid.h"
 
-InfiniteGrid::InfiniteGrid()
+InfiniteGrid::InfiniteGrid(IObjectActivator* objectActivator, IGeometryGenerator* geometryGenerator, GeometryGenerationScheduler* scheduler)
+    : BaseObjectType(objectActivator, geometryGenerator, scheduler)
 {
 }
 

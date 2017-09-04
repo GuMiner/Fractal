@@ -2,9 +2,35 @@
 #include "Geometry.h"
 
 Geometry::Geometry()
-    : colorVbo(GL_STATIC_DRAW), normalVbo(GL_STATIC_DRAW), positionVbo(GL_STATIC_DRAW),
+    : uvVbo(GL_STATIC_DRAW), normalVbo(GL_STATIC_DRAW), positionVbo(GL_STATIC_DRAW),
       vertexCount(0), sentToOpenGl(false), isGenerated(false)
 {
+}
+
+void Geometry::SetGeometryData(int width, int height, std::vector<unsigned char>& textureData,
+    std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& normals, std::vector<glm::vec2>& uvs)
+{
+    texture.SetImageData(width, height, textureData);
+    positionVbo.vertices = vertices;
+    normalVbo.vertices = normals;
+    uvVbo.vertices = uvs;
+
+    // We allow those who don't want to specify a full set of parameters to do so by defining defaults.
+    this->vertexCount = (int)(glm::max(glm::max(uvVbo.vertices.size(), positionVbo.vertices.size()), normalVbo.vertices.size()));
+    for (int i = (int)uvVbo.vertices.size(); i < this->vertexCount; i++)
+    {
+        uvVbo.vertices.push_back(glm::vec2(0.5f, 0.5f)); // Default: Texture center
+    }
+
+    for (int i = (int)normalVbo.vertices.size(); i < this->vertexCount; i++)
+    {
+        normalVbo.vertices.push_back(glm::vec3(1.0f, 0.0f, 0.0f)); // Default: X+
+    }
+
+    for (int i = (int)positionVbo.vertices.size(); i < this->vertexCount; i++)
+    {
+        positionVbo.vertices.push_back(glm::vec3(0.0f, 0.0f, 0.0f)); // Default: Center
+    }
 }
 
 void Geometry::SetAsGenerated()
@@ -19,8 +45,14 @@ bool Geometry::CanSendToGpu() const
 
 void Geometry::SendToGpu()
 {
+    // TODO: update the names so this is InitializeOpenGl(), because we can send in vertex data before calling these methods.
+    texture.Initialize();
+    uvVbo.Initialize();
+    normalVbo.Initialize();
+    positionVbo.Initialize();
+
     texture.TransferToOpenGl();
-    colorVbo.TransferToOpenGl();
+    uvVbo.TransferToOpenGl();
     normalVbo.TransferToOpenGl();
     positionVbo.TransferToOpenGl();
 

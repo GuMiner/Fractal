@@ -15,6 +15,7 @@ public:
 
     Texture();
     void Initialize();
+    void SetImageData(int width, int height, std::vector<unsigned char> textureData);
     void TransferToOpenGl();
     int GetWidth() const;
     int GetHeight() const;

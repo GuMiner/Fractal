@@ -14,6 +14,7 @@
     <ClCompile Include="BaseObjectType.cpp" />
     <ClCompile Include="ColorGradient.cpp" />
     <ClCompile Include="DescentMotionTranslator.cpp" />
+    <ClCompile Include="DistanceActivator.cpp" />
     <ClCompile Include="FpsCounter.cpp" />
     <ClCompile Include="Fractal.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -33,6 +34,7 @@
     <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Viewer.cpp" />
+    <ClCompile Include="WireCubeGenerator.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -41,7 +43,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorGradient.h" />
     <ClInclude Include="DescentMotionTranslator.h" />
-    <ClInclude Include="IGeometryGenerationData.h" />
+    <ClInclude Include="DistanceActivator.h" />
+    <ClInclude Include="GeometryGenerationData.h" />
     <ClInclude Include="FpsCounter.h" />
     <ClInclude Include="Fractal.h" />
     <ClInclude Include="Geometry.h" />
@@ -76,6 +79,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="version.h" />
     <ClInclude Include="Viewer.h" />
+    <ClInclude Include="WireCubeGenerator.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

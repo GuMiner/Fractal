@@ -25,7 +25,7 @@ class ObjectLoader
     void UpdateObjectNames();
 
 public:
-    ObjectLoader();
+    ObjectLoader(GeometryGenerationScheduler* scheduler);
     void Render();
 };
 

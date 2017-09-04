@@ -50,7 +50,7 @@ void Fractal::Update(float currentTime, float frameTime)
     guiRenderer.Update(currentTime, frameTime); // Must be before any IMGUI commands are passed in.
     
     viewer.Update(frameTime);
-    world.Update(currentTime, frameTime);
+    world.Update(viewer.GetCamera().position, currentTime, frameTime);
 
     fpsCounter.UpdateFps(frameTime);
 }
