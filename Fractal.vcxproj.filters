@@ -26,15 +26,6 @@
     <ClCompile Include="ImguiRenderer.cpp">
       <Filter>renderers</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectLoader.cpp">
-      <Filter>objectLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="TestCube.cpp">
-      <Filter>objectLoader\objects</Filter>
-    </ClCompile>
-    <ClCompile Include="TestGrid.cpp">
-      <Filter>objectLoader\objects</Filter>
-    </ClCompile>
     <ClCompile Include="Viewer.cpp">
       <Filter>camera</Filter>
     </ClCompile>
@@ -50,12 +41,6 @@
     <ClCompile Include="OpenGlPerformanceProfiler.cpp">
       <Filter>utility\opengl\Performance</Filter>
     </ClCompile>
-    <ClCompile Include="BaseObject.cpp">
-      <Filter>objectLoader\base</Filter>
-    </ClCompile>
-    <ClCompile Include="Lod.cpp">
-      <Filter>objectLoader\base</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry.cpp">
       <Filter>objectLoader\base</Filter>
     </ClCompile>
@@ -64,6 +49,29 @@
     </ClCompile>
     <ClCompile Include="StandardGeometryRenderer.cpp">
       <Filter>renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryGenerationScheduler.cpp">
+      <Filter>objectLoader\objects\generation</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp" />
+    <ClCompile Include="BaseObjectType.cpp">
+      <Filter>objectLoader\base</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectLoader.cpp" />
+    <ClCompile Include="BaseObject.cpp">
+      <Filter>objectLoader\base</Filter>
+    </ClCompile>
+    <ClCompile Include="DistanceActivator.cpp">
+      <Filter>objectLoader\base\activators</Filter>
+    </ClCompile>
+    <ClCompile Include="InfiniteGrid.cpp">
+      <Filter>objectLoader\objects\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="WireCube.cpp">
+      <Filter>objectLoader\objects\basic\cube</Filter>
+    </ClCompile>
+    <ClCompile Include="WireCubeGenerator.cpp">
+      <Filter>objectLoader\objects\basic\cube</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,15 +109,6 @@
     <ClInclude Include="ImguiRenderer.h">
       <Filter>renderers</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectLoader.h">
-      <Filter>objectLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="TestCube.h">
-      <Filter>objectLoader\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="TestGrid.h">
-      <Filter>objectLoader\objects</Filter>
-    </ClInclude>
     <ClInclude Include="Viewer.h">
       <Filter>camera</Filter>
     </ClInclude>
@@ -146,12 +145,6 @@
     <ClInclude Include="gucommon\vertex\NormalVbo.hpp">
       <Filter>gucommon\vertex</Filter>
     </ClInclude>
-    <ClInclude Include="BaseObject.h">
-      <Filter>objectLoader\base</Filter>
-    </ClInclude>
-    <ClInclude Include="Lod.h">
-      <Filter>objectLoader\base</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>objectLoader\base</Filter>
     </ClInclude>
@@ -169,6 +162,41 @@
     </ClInclude>
     <ClInclude Include="StandardGeometryRenderer.h">
       <Filter>renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="IPerformanceProfiler.h">
+      <Filter>utility\opengl\Performance</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryGenerationScheduler.h">
+      <Filter>objectLoader\objects\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="IGeometryGenerator.h">
+      <Filter>objectLoader\objects\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h" />
+    <ClInclude Include="BaseObjectType.h">
+      <Filter>objectLoader\base</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectLoader.h" />
+    <ClInclude Include="BaseObject.h">
+      <Filter>objectLoader\base</Filter>
+    </ClInclude>
+    <ClInclude Include="IObjectActivator.h">
+      <Filter>objectLoader\base\activators</Filter>
+    </ClInclude>
+    <ClInclude Include="DistanceActivator.h">
+      <Filter>objectLoader\base\activators</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryGenerationData.h">
+      <Filter>objectLoader\objects\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="InfiniteGrid.h">
+      <Filter>objectLoader\objects\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="WireCube.h">
+      <Filter>objectLoader\objects\basic\cube</Filter>
+    </ClInclude>
+    <ClInclude Include="WireCubeGenerator.h">
+      <Filter>objectLoader\objects\basic\cube</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +256,18 @@
     </Filter>
     <Filter Include="objectLoader\base">
       <UniqueIdentifier>{d48f6d52-9346-48d8-aab7-2981f7a43e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader\objects\generation">
+      <UniqueIdentifier>{eae57b20-24bc-4f52-b8c2-1fd236a3cc96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader\base\activators">
+      <UniqueIdentifier>{0c034e6f-48bc-4126-85f8-0bcdd3573229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader\objects\basic">
+      <UniqueIdentifier>{5537b6b1-4353-4915-a01a-4d2edbdbbfe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectLoader\objects\basic\cube">
+      <UniqueIdentifier>{a04e952c-c7b9-43a0-8bcb-6edc31d380d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

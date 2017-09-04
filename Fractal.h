@@ -7,9 +7,9 @@
 #include "shaders\ShaderFactory.h"
 #include "FpsCounter.h"
 #include "ImguiRenderer.h"
-#include "ObjectLoader.h"
 #include "OpenGl.h"
 #include "Viewer.h"
+#include "World.h"
 
 class Fractal
 {
@@ -18,7 +18,7 @@ class Fractal
     ImguiRenderer guiRenderer;
     Viewer viewer;
 
-    ObjectLoader objectLoader;
+    World world;
     FpsCounter fpsCounter;
 
     void HandleEvents(bool& focusPaused);

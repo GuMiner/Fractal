@@ -1,13 +1,15 @@
 #pragma once
+#include <vector>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm\vec3.hpp>
 #include <glm\vec4.hpp>
-#include "vertex\ColorVbo.hpp"
+#include "vertex\UvVbo.hpp"
 #include "vertex\NormalVbo.hpp"
 #include "vertex\PositionVbo.hpp"
-#include "Instance.h"
 #include "Texture.h"
 #include "IStandardRenderer.h"
+#include "IPerformanceProfiler.h"
 
 // Defines the raw geometry that is sent to OpenGL.
 class Geometry
@@ -15,21 +17,27 @@ class Geometry
     GLuint vao;
     
     Texture texture;
-    ColorVbo colorVbo;
+    UvVbo uvVbo;
     NormalVbo normalVbo;
     PositionVbo positionVbo;
     int vertexCount;
 
-    std::vector<Instance> instances;
-
     bool sentToOpenGl;
+    bool isGenerated;
 
 public:
-    Geometry();
+    long long geometryId;
 
-    // Swaps to this geometry and renders all isntances of it to the GPU.
-    void Render(IStandardRenderer* standardRenderer);
-    int GetVertexCount() const;
+    Geometry();
+    void SetGeometryData(int width, int height, std::vector<unsigned char>& textureData, 
+        std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& normals, std::vector<glm::vec2>& uvs);
+    void SetAsGenerated();
+    
+    bool CanSendToGpu() const;
+    void SendToGpu(int activeTextureOffset, IPerformanceProfiler* profiler);
+
+    // Swaps to this geometry and renders all instances of it to the GPU.
+    void Render(std::vector<Instance*> instances, IStandardRenderer* standardRenderer, IPerformanceProfiler* profiler) const;
     ~Geometry();
 };
 

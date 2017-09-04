@@ -23,6 +23,6 @@ public:
     // Inherited via IStandardRenderer
     virtual void StartRendering(const glm::mat4& projectionMatrix) override;
     virtual void SwapToGeometry(GLuint vao, int activeTextureOffset, GLuint textureId, int vertexCount) override;
-    virtual void RenderInstance(const Instance& instance) override;
+    virtual void RenderInstance(const Instance* instance) override;
 };
 

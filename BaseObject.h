@@ -1,21 +1,19 @@
 #pragma once
-#include <string>
-#include <map>
-#include "IObject.h"
-#include "Lod.h"
-#include "Geometry.h"
+#include <glm\vec3.hpp>
+#include <vector>
+#include "Instance.h"
 
+// Defines the minimal subset of data ann object needs 
 class BaseObject
 {
-    std::map<Lod, Geometry> generatedLods;
+public:
+    glm::vec3 objectPosition;
+    // TODO need rotation and other core stuff to be here.
 
-    std::string name;
-protected:
-    BaseObject(std::string name);
+    // The physical geometric instances that make up this object.
+    std::vector<Instance*> instances;
+
+    BaseObject();
     ~BaseObject();
-
-    std::string GetName();
-    // virtual void Update(float frameTime) override;
-    // virtual void Render(glm::mat4 & projectionMatrix) override;
 };
 

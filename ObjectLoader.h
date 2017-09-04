@@ -4,7 +4,7 @@
 #include <functional>
 #include <map>
 #include <vector>
-#include "IObject.h"
+#include "BaseObjectType.h"
 
 // Shows a menu of objects to load with a UI to load and unload them.
 class ObjectLoader
@@ -13,21 +13,19 @@ class ObjectLoader
     glm::vec3 selectedObjectPosition;
 
     int selectedObject;
-    std::vector<IObject*> objects;
+    std::vector<BaseObjectType*> objects;
 
     std::vector<std::string> backingObjectNames;
     std::vector<const char*> objectNames;
 
     int selectedObjectToCreate;
     std::vector<const char*> objectCreationNames;
-    std::map<std::string, std::function<IObject*()>> objectCreationMap;
+    std::map<std::string, std::function<BaseObjectType*()>> objectCreationMap;
 
     void UpdateObjectNames();
-    void DisplayLoaderDialog();
 
 public:
-    ObjectLoader();
-    void Update(float frameTime);
-    void Render(glm::mat4& projectionMatrix);
+    ObjectLoader(GeometryGenerationScheduler* scheduler);
+    void Render();
 };
 

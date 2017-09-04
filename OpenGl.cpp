@@ -54,8 +54,8 @@ bool OpenGl::Load(Viewer* viewer)
     glDisable(GL_CULL_FACE);
     glFrontFace(GL_CW);
 
-    // Cutout faces that are hidden by other faces.
-    glEnable(GL_DEPTH_TEST);
+    // Cutout faces that are hidden by other faces must also be disabled.
+    glDisable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
     // Initialize capabilities (and log what is *actually* set by OpenGL).
@@ -83,6 +83,11 @@ const OpenGlCapabilities & OpenGl::GetCapabilities() const
 void OpenGl::PerformPerformanceAnalysis()
 {
     performanceProfiler.Analyze();
+}
+
+IPerformanceProfiler* OpenGl::GetPerformanceProfiler()
+{
+    return &performanceProfiler;
 }
 
 void OpenGl::DisplayFrame()

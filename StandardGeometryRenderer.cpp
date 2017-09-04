@@ -41,10 +41,10 @@ void StandardGeometryRenderer::SwapToGeometry(GLuint vao, int activeTextureOffse
     glUniform1i(geometryTextureLocation, activeTextureOffset);
 }
 
-void StandardGeometryRenderer::RenderInstance(const Instance& instance)
+void StandardGeometryRenderer::RenderInstance(const Instance* instance)
 {
-    glUniform4fv(diffuseAlbedoLocation, 1, &instance.diffuseAlbedo[0]);
-    glUniform4fv(specularAlbedoLocation, 1, &instance.specularAlbedo[0]);
-    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &instance.transformation[0][0]);
+    glUniform4fv(diffuseAlbedoLocation, 1, &instance->diffuseAlbedo[0]);
+    glUniform4fv(specularAlbedoLocation, 1, &instance->specularAlbedo[0]);
+    glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &instance->transformation[0][0]);
     glDrawArrays(GL_TRIANGLES, 0, currentGeometryVertexCount);
 }

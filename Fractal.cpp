@@ -17,7 +17,8 @@
 #pragma comment(lib, "lib/imgui.lib") // v1.51
 
 Fractal::Fractal()
-    : opengl(), shaderFactory(), viewer(), guiRenderer(), fpsCounter(), objectLoader()
+    : opengl(), shaderFactory(), guiRenderer(), viewer(), 
+      world(), fpsCounter()
 {
 }
 
@@ -47,9 +48,10 @@ void Fractal::HandleEvents(bool& focusPaused)
 void Fractal::Update(float currentTime, float frameTime)
 {
     guiRenderer.Update(currentTime, frameTime); // Must be before any IMGUI commands are passed in.
+    
     viewer.Update(frameTime);
+    world.Update(viewer.GetCamera().position, currentTime, frameTime);
 
-    objectLoader.Update(frameTime);
     fpsCounter.UpdateFps(frameTime);
 }
 
@@ -63,7 +65,7 @@ void Fractal::Render(float currentTime, glm::mat4& viewMatrix)
     glClearBufferfv(GL_COLOR, 0, color);
     glClearBufferfv(GL_DEPTH, 0, &one);
 
-    objectLoader.Render(projectionMatrix);
+    world.Render(projectionMatrix);
     fpsCounter.Render();
     viewer.Render();
 
@@ -88,6 +90,13 @@ bool Fractal::LoadGraphics()
 
     if (!guiRenderer.LoadImGui(opengl.GetWindow(), &shaderFactory))
     {
+        Logger::LogError("Unable to load IM GUI!");
+        return false;
+    }
+
+    if (!world.LoadGraphics(opengl.GetCapabilities(), opengl.GetPerformanceProfiler(), &shaderFactory))
+    {
+        Logger::LogError("Unable to load the world graphics!");
         return false;
     }
 
