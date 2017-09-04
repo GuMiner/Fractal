@@ -13,7 +13,7 @@ bool DistanceActivator::IsObjectVisible(glm::vec3 playerPosition, BaseObject* ba
 }
 
 std::vector<std::pair<GeometryGenerationData*, std::vector<Instance*>>> DistanceActivator::GetNewGeometryAndInstances(
-    glm::vec3 playerPosition, BaseObject* baseObject, std::unordered_map<long long, Geometry*>* existingGeometreis)
+    glm::vec3 playerPosition, BaseObject* baseObject, std::unordered_map<long long, Geometry*>* existingGeometries)
 {
     std::vector<std::pair<GeometryGenerationData*, std::vector<Instance*>>> newGeometry;
     // TODO this only works for single-object mode.
@@ -22,13 +22,6 @@ std::vector<std::pair<GeometryGenerationData*, std::vector<Instance*>>> Distance
     // If visible, we should have a single instance.
     if (baseObject->instances.size() == 0)
     {
-        GeometryGenerationData* genData = new GeometryGenerationData();
-        genData->generationData = nullptr; // TODO: This really should be defined by *child* classes, such as a wireframe distance activator.
-        genData->lod = 1;
-        genData->geometryId = 1; // Each activator defines what this means, in concert with the geometry generator. For a wireframe cube, we only have LOD == 1, with ID = this.
-        // We may get rid of the geometry ID and just use LOD, and add a mapping of LOD - item.
-
-        std::vector<Instance*> newInstances;
         Instance* instance = new Instance();
 
         // Set material to all a single type
@@ -36,8 +29,22 @@ std::vector<std::pair<GeometryGenerationData*, std::vector<Instance*>>> Distance
         instance->specularAlbedo = glm::vec4(0.50f, 0.50f, 0.50f, 1.0f);
         instance->transformation = glm::translate(baseObject->objectPosition); // TODO: Get rotation in here.
         instance->flaggedForDeletion = false;
-        newInstances.push_back(instance);
 
+        long long geometryId = 1; // Each activator defines what this means, in concert with the geometry generator. For a wireframe cube, we only have LOD == 1, with ID = this.
+        // We may get rid of the geometry ID and just use LOD, and add a mapping of LOD - item.
+
+        if (existingGeometries->find(1) != existingGeometries->end())
+        {
+            // TODO reuse existing geometry. We also need more data hooks here to properly setup the fact that we're reusing the geometry.
+        }
+
+        GeometryGenerationData* genData = new GeometryGenerationData();
+        genData->generationData = nullptr; // TODO: This really should be defined by *child* classes, such as a wireframe distance activator.
+        genData->lod = 1;
+        genData->geometryId = 1; 
+
+        std::vector<Instance*> newInstances;
+        newInstances.push_back(instance);
         newGeometry.push_back(std::make_pair(genData, newInstances));
     }
 

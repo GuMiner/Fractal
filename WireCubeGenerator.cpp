@@ -63,8 +63,8 @@ void WireCubeGenerator::GenerateGeometry(GeometryGenerationData* geometryGenerat
     Logger::Log("Wire Cube LOD: ", geometryGenerationData->lod, " Geo ID: ", geometryGenerationData->lod);
     Logger::Log("Numeric limits test: ", (int)std::numeric_limits<unsigned char>::min(), " ", (int)std::numeric_limits<unsigned char>::max());
     // Set the texture to pure randomness (easy to see)
-    int width = 128;
-    int height = 128;
+    int width = 512;
+    int height = 512;
     std::vector<unsigned char> texture;
     texture.resize(width * height * 4);
     for (int i = 0; i < width * height; i++)

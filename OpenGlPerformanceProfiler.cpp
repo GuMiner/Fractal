@@ -7,11 +7,11 @@ OpenGlPerformanceProfiler::OpenGlPerformanceProfiler()
 void OpenGlPerformanceProfiler::Analyze()
 {
     // TODO actually implement and judge the usefulness of these.
-    maxVerticesPerFrame = 100000;
+    maxVerticesPerFrame = 10000000;
     maxTexelsPerFrame = 10000000;
 
     maxVerticesTransferredPerFrame = 10000000;
-    maxTexelsTransferredPerFrame = 100000;
+    maxTexelsTransferredPerFrame = 10000000;
 }
 
 void OpenGlPerformanceProfiler::ResetProfileFrame()
