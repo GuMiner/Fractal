@@ -41,37 +41,67 @@
     <ClCompile Include="OpenGlPerformanceProfiler.cpp">
       <Filter>utility\opengl\Performance</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry.cpp">
-      <Filter>objectLoader\base</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>objectLoader\base</Filter>
-    </ClCompile>
     <ClCompile Include="StandardGeometryRenderer.cpp">
       <Filter>renderers</Filter>
     </ClCompile>
     <ClCompile Include="GeometryGenerationScheduler.cpp">
-      <Filter>objectLoader\objects\generation</Filter>
+      <Filter>objectGeneration\objects\generation</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp" />
     <ClCompile Include="BaseObjectType.cpp">
-      <Filter>objectLoader\base</Filter>
+      <Filter>objectGeneration\core</Filter>
     </ClCompile>
     <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="BaseObject.cpp">
-      <Filter>objectLoader\base</Filter>
+      <Filter>objectGeneration\core</Filter>
     </ClCompile>
     <ClCompile Include="DistanceActivator.cpp">
-      <Filter>objectLoader\base\activators</Filter>
+      <Filter>objectGeneration\core\activators</Filter>
     </ClCompile>
     <ClCompile Include="InfiniteGrid.cpp">
-      <Filter>objectLoader\objects\basic</Filter>
+      <Filter>objectGeneration\objects\basic</Filter>
     </ClCompile>
     <ClCompile Include="WireCube.cpp">
-      <Filter>objectLoader\objects\basic\cube</Filter>
+      <Filter>objectGeneration\objects\basic\cube</Filter>
     </ClCompile>
     <ClCompile Include="WireCubeGenerator.cpp">
-      <Filter>objectLoader\objects\basic\cube</Filter>
+      <Filter>objectGeneration\objects\basic\cube</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereShape.cpp">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry.cpp">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreGeometry.cpp">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="UnionOperation.cpp">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="IntersectionOperation.cpp">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="DifferenceOperation.cpp">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeShape.cpp">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="CylinderShape.cpp">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="EllipseShape.cpp">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="TorusShape.cpp">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="UvMapper.cpp">
+      <Filter>objectGeneration\csg\general</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,20 +175,14 @@
     <ClInclude Include="gucommon\vertex\NormalVbo.hpp">
       <Filter>gucommon\vertex</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry.h">
-      <Filter>objectLoader\base</Filter>
-    </ClInclude>
     <ClInclude Include="IObject.h">
-      <Filter>objectLoader</Filter>
+      <Filter>objectGeneration</Filter>
     </ClInclude>
     <ClInclude Include="IStandardRenderer.h">
       <Filter>renderers</Filter>
     </ClInclude>
     <ClInclude Include="Instance.h">
-      <Filter>objectLoader\base</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>objectLoader\base</Filter>
+      <Filter>objectGeneration\core</Filter>
     </ClInclude>
     <ClInclude Include="StandardGeometryRenderer.h">
       <Filter>renderers</Filter>
@@ -167,36 +191,78 @@
       <Filter>utility\opengl\Performance</Filter>
     </ClInclude>
     <ClInclude Include="GeometryGenerationScheduler.h">
-      <Filter>objectLoader\objects\generation</Filter>
+      <Filter>objectGeneration\objects\generation</Filter>
     </ClInclude>
     <ClInclude Include="IGeometryGenerator.h">
-      <Filter>objectLoader\objects\generation</Filter>
+      <Filter>objectGeneration\objects\generation</Filter>
     </ClInclude>
     <ClInclude Include="World.h" />
     <ClInclude Include="BaseObjectType.h">
-      <Filter>objectLoader\base</Filter>
+      <Filter>objectGeneration\core</Filter>
     </ClInclude>
     <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="BaseObject.h">
-      <Filter>objectLoader\base</Filter>
+      <Filter>objectGeneration\core</Filter>
     </ClInclude>
     <ClInclude Include="IObjectActivator.h">
-      <Filter>objectLoader\base\activators</Filter>
+      <Filter>objectGeneration\core\activators</Filter>
     </ClInclude>
     <ClInclude Include="DistanceActivator.h">
-      <Filter>objectLoader\base\activators</Filter>
+      <Filter>objectGeneration\core\activators</Filter>
     </ClInclude>
     <ClInclude Include="GeometryGenerationData.h">
-      <Filter>objectLoader\objects\generation</Filter>
+      <Filter>objectGeneration\objects\generation</Filter>
     </ClInclude>
     <ClInclude Include="InfiniteGrid.h">
-      <Filter>objectLoader\objects\basic</Filter>
+      <Filter>objectGeneration\objects\basic</Filter>
     </ClInclude>
     <ClInclude Include="WireCube.h">
-      <Filter>objectLoader\objects\basic\cube</Filter>
+      <Filter>objectGeneration\objects\basic\cube</Filter>
     </ClInclude>
     <ClInclude Include="WireCubeGenerator.h">
-      <Filter>objectLoader\objects\basic\cube</Filter>
+      <Filter>objectGeneration\objects\basic\cube</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereShape.h">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreGeometry.h">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="UnionOperation.h">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="IOperation.h">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="DifferenceOperation.h">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="IntersectionOperation.h">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="IShape.h">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeShape.h">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="CylinderShape.h">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="EllipseShape.h">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="TorusShape.h">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="UvMapper.h">
+      <Filter>objectGeneration\csg\general</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,12 +302,6 @@
     <Filter Include="renderers">
       <UniqueIdentifier>{a9bbffcb-d713-4d92-8277-ea092b15b09b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="objectLoader">
-      <UniqueIdentifier>{f3eb0119-ff3b-48c4-84e1-cbc6d1754e2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="objectLoader\objects">
-      <UniqueIdentifier>{d80127ad-210d-47f5-a374-7afd6ab0de41}</UniqueIdentifier>
-    </Filter>
     <Filter Include="camera">
       <UniqueIdentifier>{23777ed3-ffc7-4fed-b4e3-69e4bb8312a3}</UniqueIdentifier>
     </Filter>
@@ -254,20 +314,41 @@
     <Filter Include="gucommon\vertex">
       <UniqueIdentifier>{50c9475d-bb95-41bc-8093-102e916fb0ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="objectLoader\base">
-      <UniqueIdentifier>{d48f6d52-9346-48d8-aab7-2981f7a43e18}</UniqueIdentifier>
+    <Filter Include="objectGeneration">
+      <UniqueIdentifier>{f3eb0119-ff3b-48c4-84e1-cbc6d1754e2f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="objectLoader\objects\generation">
+    <Filter Include="objectGeneration\objects">
+      <UniqueIdentifier>{d80127ad-210d-47f5-a374-7afd6ab0de41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\objects\generation">
       <UniqueIdentifier>{eae57b20-24bc-4f52-b8c2-1fd236a3cc96}</UniqueIdentifier>
     </Filter>
-    <Filter Include="objectLoader\base\activators">
-      <UniqueIdentifier>{0c034e6f-48bc-4126-85f8-0bcdd3573229}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="objectLoader\objects\basic">
+    <Filter Include="objectGeneration\objects\basic">
       <UniqueIdentifier>{5537b6b1-4353-4915-a01a-4d2edbdbbfe1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="objectLoader\objects\basic\cube">
+    <Filter Include="objectGeneration\objects\basic\cube">
       <UniqueIdentifier>{a04e952c-c7b9-43a0-8bcb-6edc31d380d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\geometry">
+      <UniqueIdentifier>{e2b6b904-6f9e-4ff4-b6ea-8a35b63e734d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\core">
+      <UniqueIdentifier>{d48f6d52-9346-48d8-aab7-2981f7a43e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\core\activators">
+      <UniqueIdentifier>{0c034e6f-48bc-4126-85f8-0bcdd3573229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg">
+      <UniqueIdentifier>{78e0c019-c2fb-44ae-9f69-8532b1f16922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\shapes">
+      <UniqueIdentifier>{4a65217e-1c32-42e8-877d-580756b96cc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\operations">
+      <UniqueIdentifier>{7aca6321-74c4-4a6d-afa2-caf43c73e7cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\general">
+      <UniqueIdentifier>{ee9bd1d8-9d4c-4e95-b1bc-274eb983302d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

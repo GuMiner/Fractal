@@ -14,11 +14,11 @@ public:
     GLuint textureId;
 
     Texture();
-    void Initialize(int activeTextureOffset);
+    void SetupOpenGlTexture(int activeTextureOffset);
     void SetImageData(int width, int height, std::vector<unsigned char> textureData);
     void TransferToOpenGl();
     int GetWidth() const;
     int GetHeight() const;
-    ~Texture();
+    void Deinitialize();
 };
 

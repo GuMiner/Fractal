@@ -4,7 +4,7 @@ Texture::Texture()
 {
 }
 
-void Texture::Initialize(int activeTextureOffset)
+void Texture::SetupOpenGlTexture(int activeTextureOffset)
 {
     this->activeTextureOffset = activeTextureOffset;
     glGenTextures(1, &textureId);
@@ -35,7 +35,7 @@ int Texture::GetHeight() const
     return height;
 }
 
-Texture::~Texture()
+void Texture::Deinitialize()
 {
     glDeleteTextures(1, &textureId);
 }

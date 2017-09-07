@@ -5,8 +5,7 @@
 #include <glm\vec3.hpp>
 #include <glm\vec4.hpp>
 #include "vertex\UvVbo.hpp"
-#include "vertex\NormalVbo.hpp"
-#include "vertex\PositionVbo.hpp"
+#include "CoreGeometry.h"
 #include "Texture.h"
 #include "IStandardRenderer.h"
 #include "IPerformanceProfiler.h"
@@ -18,8 +17,7 @@ class Geometry
     
     Texture texture;
     UvVbo uvVbo;
-    NormalVbo normalVbo;
-    PositionVbo positionVbo;
+    CoreGeometry coreGeometry;
     int vertexCount;
 
     bool sentToOpenGl;
