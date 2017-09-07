@@ -50,12 +50,10 @@ bool OpenGl::Load(Viewer* viewer)
     // Let OpenGL shaders determine point sizes.
     glEnable(GL_PROGRAM_POINT_SIZE);
 
-    // Disable face culling so that see-through flat objects and stuff at 1.0 (cube map, text) work.
-    glDisable(GL_CULL_FACE);
-    glFrontFace(GL_CW);
+    glEnable(GL_CULL_FACE);
+    glFrontFace(GL_CCW);
 
-    // Cutout faces that are hidden by other faces must also be disabled.
-    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
     // Initialize capabilities (and log what is *actually* set by OpenGL).

@@ -69,12 +69,10 @@ void WireCubeGenerator::GenerateGeometry(GeometryGenerationData* geometryGenerat
     texture.resize(width * height * 4);
     for (int i = 0; i < width * height; i++)
     {
-        texture[i * 4 + 0] = (unsigned char)(rand() % 256);
-        texture[i * 4 + 1] = (unsigned char)(rand() % 256);
-        texture[i * 4 + 2] = (unsigned char)(rand() % 256);
-
-        // Random transparency. Should be rather interesting to observe.
-        texture[i * 4 + 3] = (unsigned char)(rand() % 256);
+        texture[i * 4 + 0] = (unsigned char)((i) % 256);
+        texture[i * 4 + 1] = (unsigned char)((i * i) % 256);
+        texture[i * 4 + 2] = (unsigned char)((i * i * i) % 256);
+        texture[i * 4 + 3] = 255;
     }
 
     // We're unfolding the cube manually, but we really want to do this automatically.

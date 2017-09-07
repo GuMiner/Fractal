@@ -61,9 +61,9 @@ void Fractal::Render(float currentTime, glm::mat4& viewMatrix)
 
     // Clear the screen (and depth buffer) before any rendering begins.
     const GLfloat color[] = { 0, 0.2f, 0, 1 };
-    const GLfloat one = 1.0f;
+    const GLfloat depth = 1.0f;
     glClearBufferfv(GL_COLOR, 0, color);
-    glClearBufferfv(GL_DEPTH, 0, &one);
+    glClearBufferfv(GL_DEPTH, 0, &depth);
 
     world.Render(projectionMatrix);
     fpsCounter.Render();
