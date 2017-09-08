@@ -100,7 +100,7 @@
     <ClCompile Include="TorusShape.cpp">
       <Filter>objectGeneration\csg\shapes</Filter>
     </ClCompile>
-    <ClCompile Include="UvMapper.cpp">
+    <ClCompile Include="BoundedTriangleUvMapper.cpp">
       <Filter>objectGeneration\csg\general</Filter>
     </ClCompile>
   </ItemGroup>
@@ -261,7 +261,10 @@
     <ClInclude Include="TorusShape.h">
       <Filter>objectGeneration\csg\shapes</Filter>
     </ClInclude>
-    <ClInclude Include="UvMapper.h">
+    <ClInclude Include="BoundedTriangleUvMapper.h">
+      <Filter>objectGeneration\csg\general</Filter>
+    </ClInclude>
+    <ClInclude Include="IUvMapper.h">
       <Filter>objectGeneration\csg\general</Filter>
     </ClInclude>
   </ItemGroup>

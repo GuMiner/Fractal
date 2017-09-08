@@ -12,6 +12,8 @@ class CoreGeometry
 public:
     CoreGeometry();
     
+    const std::vector<glm::vec3>& GetVertices() const;
+    const std::vector<glm::vec3>& GetNormals() const;
     void SetGeometryData(std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& normals);
     size_t GetMaxVertexCount() const;
     void NormalizeVertexCount(int maxVertexCount);

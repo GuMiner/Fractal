@@ -7,14 +7,14 @@
 #include <glm\gtc\random.hpp>
 #include <glm\gtx\transform.hpp>
 #include "logging\Logger.h"
+#include "BoundedTriangleUvMapper.h"
 #include "WireCubeGenerator.h"
 
 WireCubeGenerator::WireCubeGenerator()
 {
 }
 
-void WireCubeGenerator::AddPlane(std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& normals, std::vector<glm::vec2>& uvs,
-    glm::mat3 planeRotation, glm::vec2 uvTranslation)
+void WireCubeGenerator::AddPlane(std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& normals, glm::mat3 planeRotation)
 {
     // Add a basic plane
     vertices.push_back(glm::vec3(-1, -1, -1));
@@ -33,27 +33,12 @@ void WireCubeGenerator::AddPlane(std::vector<glm::vec3>& vertices, std::vector<g
     normals.push_back(glm::vec3(0, 0, -1));
     normals.push_back(glm::vec3(0, 0, -1));
 
-    // Our UVs start as a 1/12th segment in this location:
-    // - - - -
-    // * - - -
-    // - - - -
-    float oneThirds = 1.0f / 3.0f;
-    float twoThirds = 2.0f / 3.0f;
-    uvs.push_back(glm::vec2(0.0f, twoThirds));
-    uvs.push_back(glm::vec2(0.25f, twoThirds));
-    uvs.push_back(glm::vec2(0.25f, oneThirds));
-
-    uvs.push_back(glm::vec2(0.0f, twoThirds));
-    uvs.push_back(glm::vec2(0.25f, oneThirds));
-    uvs.push_back(glm::vec2(0.0f, oneThirds));
-
-    // Lookback six items and rotate / move UVs as applicable.
+    // Lookback six items and rotate as applicable.
     for (int i = 0; i < 6; i++)
     {
         int itemIdx = (int)vertices.size() - (i + 1);
         vertices[itemIdx] = planeRotation * vertices[itemIdx];
         normals[itemIdx] = planeRotation * normals[itemIdx];
-        uvs[itemIdx] += uvTranslation;
     }
 }
 
@@ -81,15 +66,22 @@ void WireCubeGenerator::GenerateGeometry(GeometryGenerationData* geometryGenerat
     std::vector<glm::vec2> uvs;
     
     float ninetyDegrees = M_PI_2;
-    AddPlane(vertices, normals, uvs, glm::mat3(), glm::vec2(0, 0));
-    AddPlane(vertices, normals, uvs, glm::rotate(ninetyDegrees, glm::vec3(0, 1, 0)), glm::vec2(0.25, 0));
-    AddPlane(vertices, normals, uvs, glm::rotate(ninetyDegrees * 2, glm::vec3(0, 1, 0)), glm::vec2(0.50, 0));
-    AddPlane(vertices, normals, uvs, glm::rotate(ninetyDegrees * 3, glm::vec3(0, 1, 0)), glm::vec2(0.75, 0));
+    AddPlane(vertices, normals, glm::mat3());
+    AddPlane(vertices, normals, glm::rotate(ninetyDegrees, glm::vec3(0, 1, 0)));
+    AddPlane(vertices, normals, glm::rotate(ninetyDegrees * 2, glm::vec3(0, 1, 0)));
+    AddPlane(vertices, normals, glm::rotate(ninetyDegrees * 3, glm::vec3(0, 1, 0)));
 
-    AddPlane(vertices, normals, uvs, 
-        glm::rotate(ninetyDegrees, glm::vec3(0, 0, 1)) * glm::rotate(ninetyDegrees, glm::vec3(0, 1, 0)), glm::vec2(0.25, 0.33));
-    AddPlane(vertices, normals, uvs,
-        glm::rotate(-ninetyDegrees, glm::vec3(0, 0, 1)) * glm::rotate(ninetyDegrees, glm::vec3(0, 1, 0)), glm::vec2(0.25, -0.33));
+    AddPlane(vertices, normals, glm::rotate(ninetyDegrees, glm::vec3(0, 0, 1)) * glm::rotate(ninetyDegrees, glm::vec3(0, 1, 0)));
+    AddPlane(vertices, normals, glm::rotate(-ninetyDegrees, glm::vec3(0, 0, 1)) * glm::rotate(ninetyDegrees, glm::vec3(0, 1, 0)));
+
+    // Simulate cube construction to verify our uv mapper, as we want to verify this works before creating test geometry.
+    CoreGeometry geo;
+    geo.SetGeometryData(vertices, normals);
+
+    BoundedTriangleUvMapper uvMapper;
+    float triangleScaleDownAmount;
+    
+    uvs = uvMapper.MapToTexturePlane(geo, &triangleScaleDownAmount);
 
     geometryToGenerate->SetGeometryData(width, height, texture, vertices, normals, uvs);
 }

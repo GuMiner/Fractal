@@ -12,6 +12,7 @@
   <ItemGroup>
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="BaseObjectType.cpp" />
+    <ClCompile Include="BoundedTriangleUvMapper.cpp" />
     <ClCompile Include="ColorGradient.cpp" />
     <ClCompile Include="CoreGeometry.cpp" />
     <ClCompile Include="CubeShape.cpp" />
@@ -39,7 +40,6 @@
     <ClCompile Include="StandardGeometryRenderer.cpp" />
     <ClCompile Include="TorusShape.cpp" />
     <ClCompile Include="UnionOperation.cpp" />
-    <ClCompile Include="UvMapper.cpp" />
     <ClCompile Include="WireCube.cpp" />
     <ClCompile Include="InfiniteGrid.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -50,6 +50,7 @@
   <ItemGroup>
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="BaseObjectType.h" />
+    <ClInclude Include="BoundedTriangleUvMapper.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColorGradient.h" />
     <ClInclude Include="CoreGeometry.h" />
@@ -95,7 +96,7 @@
     <ClInclude Include="StandardGeometryRenderer.h" />
     <ClInclude Include="TorusShape.h" />
     <ClInclude Include="UnionOperation.h" />
-    <ClInclude Include="UvMapper.h" />
+    <ClInclude Include="IUvMapper.h" />
     <ClInclude Include="WireCube.h" />
     <ClInclude Include="InfiniteGrid.h" />
     <ClInclude Include="Texture.h" />

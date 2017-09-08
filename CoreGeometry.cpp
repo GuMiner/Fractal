@@ -7,6 +7,16 @@ CoreGeometry::CoreGeometry()
 {
 }
 
+const std::vector<glm::vec3>& CoreGeometry::GetVertices() const
+{
+    return positionVbo.vertices;
+}
+
+const std::vector<glm::vec3>& CoreGeometry::GetNormals() const
+{
+    return normalVbo.vertices;
+}
+
 void CoreGeometry::SetGeometryData(std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& normals)
 {
     positionVbo.vertices = vertices;
