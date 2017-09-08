@@ -8,10 +8,10 @@ Geometry::Geometry()
 }
 
 void Geometry::SetGeometryData(int width, int height, std::vector<unsigned char>& textureData,
-    std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& normals, std::vector<glm::vec2>& uvs)
+    CoreGeometry& coreGeometry, std::vector<glm::vec2>& uvs)
 {
     texture.SetImageData(width, height, textureData);
-    coreGeometry.SetGeometryData(vertices, normals);
+    this->coreGeometry = coreGeometry;
     uvVbo.vertices = uvs;
 
     // We allow those who don't want to specify a full set of parameters to do so by defining defaults.

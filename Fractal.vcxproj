@@ -36,6 +36,7 @@
     <ClCompile Include="OpenGl.cpp" />
     <ClCompile Include="OpenGlCapabilities.cpp" />
     <ClCompile Include="OpenGlPerformanceProfiler.cpp" />
+    <ClCompile Include="PlanePrimitive.cpp" />
     <ClCompile Include="SphereShape.cpp" />
     <ClCompile Include="StandardGeometryRenderer.cpp" />
     <ClCompile Include="TorusShape.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="OpenGl.h" />
     <ClInclude Include="OpenGlCapabilities.h" />
     <ClInclude Include="OpenGlPerformanceProfiler.h" />
+    <ClInclude Include="PlanePrimitive.h" />
     <ClInclude Include="SphereShape.h" />
     <ClInclude Include="StandardGeometryRenderer.h" />
     <ClInclude Include="TorusShape.h" />

@@ -8,9 +8,6 @@
 // Creates geometry for a wireframe cube.
 class WireCubeGenerator : public IGeometryGenerator
 {
-    // Adds a plane in the cube generator.
-    void AddPlane(std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& normals, glm::mat3 planeRotation);
-
 public:
     WireCubeGenerator();
 

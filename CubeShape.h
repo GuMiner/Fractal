@@ -6,10 +6,10 @@
 class CubeShape : public IShape
 {
     // The number of divisions per edge of the cube.
-    float divisions;
+    int divisions;
 
 public:
-    CubeShape(float divisions);
+    CubeShape(int divisions);
     virtual CoreGeometry Generate() override;
 };
 

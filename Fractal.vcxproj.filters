@@ -103,6 +103,9 @@
     <ClCompile Include="BoundedTriangleUvMapper.cpp">
       <Filter>objectGeneration\csg\general</Filter>
     </ClCompile>
+    <ClCompile Include="PlanePrimitive.cpp">
+      <Filter>objectGeneration\csg\shapes\primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gucommon\logging\Logger.h">
@@ -267,6 +270,9 @@
     <ClInclude Include="IUvMapper.h">
       <Filter>objectGeneration\csg\general</Filter>
     </ClInclude>
+    <ClInclude Include="PlanePrimitive.h">
+      <Filter>objectGeneration\csg\shapes\primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="gucommon">
@@ -352,6 +358,9 @@
     </Filter>
     <Filter Include="objectGeneration\csg\general">
       <UniqueIdentifier>{ee9bd1d8-9d4c-4e95-b1bc-274eb983302d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\shapes\primitives">
+      <UniqueIdentifier>{12579024-9a09-44dc-80e0-07e9750e49cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -28,7 +28,7 @@ public:
 
     Geometry();
     void SetGeometryData(int width, int height, std::vector<unsigned char>& textureData, 
-        std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& normals, std::vector<glm::vec2>& uvs);
+        CoreGeometry& coreGeometry, std::vector<glm::vec2>& uvs);
     void SetAsGenerated();
     
     bool CanSendToGpu() const;
