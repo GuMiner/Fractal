@@ -6,13 +6,13 @@
 class CylinderShape : public IShape
 {
     // Defines the resolution for each side of the cylinder
-    float angularResolution;
+    int angularSteps;
     float lowerRadius;
     float upperRadius;
 
 public:
-    CylinderShape(float angularResolution);
-    CylinderShape(float angularResolution, float lowerRadius, float upperRadius);
+    CylinderShape(int angularSteps);
+    CylinderShape(int angularSteps, float lowerRadius, float upperRadius);
     virtual CoreGeometry Generate() override;
 };
 

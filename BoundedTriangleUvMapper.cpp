@@ -14,7 +14,7 @@ std::vector<glm::vec2> BoundedTriangleUvMapper::MapToTexturePlane(CoreGeometry c
     size_t triangleCount = vertices.size() / 3;
 
     std::vector<glm::vec2> uvs;
-    uvs.resize(vertices.size() * 2);
+    uvs.resize(vertices.size());
 
     std::vector<glm::vec2> boundingBoxes;
     boundingBoxes.resize(triangleCount);

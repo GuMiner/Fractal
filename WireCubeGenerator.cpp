@@ -7,6 +7,7 @@
 #include "logging\Logger.h"
 #include "BoundedTriangleUvMapper.h"
 #include "CubeShape.h"
+#include "CylinderShape.h" // TODO remove after testing
 #include "WireCubeGenerator.h"
 
 WireCubeGenerator::WireCubeGenerator()
@@ -32,7 +33,8 @@ void WireCubeGenerator::GenerateGeometry(GeometryGenerationData* geometryGenerat
         texture[i * 4 + 3] = 255;
     }
 
-    CubeShape cube(1);
+    // CubeShape cube(1);
+    CylinderShape cube(10);
     CoreGeometry geo = cube.Generate();
 
     BoundedTriangleUvMapper uvMapper;
