@@ -4,7 +4,7 @@
 #include "WireCube.h"
 
 WireCube::WireCube(GeometryGenerationScheduler* scheduler) 
-    : BaseObjectType(new DistanceActivator(10.0f), new WireCubeGenerator(), scheduler)
+    : BaseObjectType(new DistanceActivator(30.0f), new WireCubeGenerator(), scheduler)
 {
 }
 

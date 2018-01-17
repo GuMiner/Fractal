@@ -33,6 +33,7 @@ void WireCubeGenerator::GenerateGeometry(GeometryGenerationData* geometryGenerat
         texture[i * 4 + 3] = 255;
     }
 
+    // TODO: Make this a CUBE again once testing completes.
     // CubeShape cube(1);
     CylinderShape cube(10);
     CoreGeometry geo = cube.Generate();
