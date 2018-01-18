@@ -1,14 +1,17 @@
 #pragma once
 #include "CoreGeometry.h"
-#include "EllipseShape.h"
+#include "IShape.h"
 
 // Defines a basic sphere at (0, 0, 0), r=1
-class SphereShape : public EllipseShape
+class SphereShape : public IShape
 {
-    // The radians for each triangle we generate.
-    float angularResolution;
+protected:
+    int subdivisions;
 
 public:
-    SphereShape(float angularResolution);
+    // Generates a sphere with a series of subdivisions.
+    // 1 == tetrahedron. 2 = tetrahedron with subdivided portions.
+    SphereShape(int subdivisions);
+    virtual CoreGeometry Generate() override;
 };
 

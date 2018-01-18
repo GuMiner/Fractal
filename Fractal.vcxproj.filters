@@ -67,9 +67,6 @@
     <ClCompile Include="WireCubeGenerator.cpp">
       <Filter>objectGeneration\objects\basic\cube</Filter>
     </ClCompile>
-    <ClCompile Include="SphereShape.cpp">
-      <Filter>objectGeneration\csg\shapes</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry.cpp">
       <Filter>objectGeneration\geometry</Filter>
     </ClCompile>
@@ -88,15 +85,6 @@
     <ClCompile Include="DifferenceOperation.cpp">
       <Filter>objectGeneration\csg\operations</Filter>
     </ClCompile>
-    <ClCompile Include="CubeShape.cpp">
-      <Filter>objectGeneration\csg\shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="CylinderShape.cpp">
-      <Filter>objectGeneration\csg\shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="EllipseShape.cpp">
-      <Filter>objectGeneration\csg\shapes</Filter>
-    </ClCompile>
     <ClCompile Include="TorusShape.cpp">
       <Filter>objectGeneration\csg\shapes</Filter>
     </ClCompile>
@@ -105,6 +93,18 @@
     </ClCompile>
     <ClCompile Include="PlanePrimitive.cpp">
       <Filter>objectGeneration\csg\shapes\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeShape.cpp">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="CylinderShape.cpp">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="CoordinateConversions.cpp">
+      <Filter>utility\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereShape.cpp">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -225,9 +225,6 @@
     <ClInclude Include="WireCubeGenerator.h">
       <Filter>objectGeneration\objects\basic\cube</Filter>
     </ClInclude>
-    <ClInclude Include="SphereShape.h">
-      <Filter>objectGeneration\csg\shapes</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>objectGeneration\geometry</Filter>
     </ClInclude>
@@ -252,15 +249,6 @@
     <ClInclude Include="IShape.h">
       <Filter>objectGeneration\csg\shapes</Filter>
     </ClInclude>
-    <ClInclude Include="CubeShape.h">
-      <Filter>objectGeneration\csg\shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="CylinderShape.h">
-      <Filter>objectGeneration\csg\shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="EllipseShape.h">
-      <Filter>objectGeneration\csg\shapes</Filter>
-    </ClInclude>
     <ClInclude Include="TorusShape.h">
       <Filter>objectGeneration\csg\shapes</Filter>
     </ClInclude>
@@ -272,6 +260,18 @@
     </ClInclude>
     <ClInclude Include="PlanePrimitive.h">
       <Filter>objectGeneration\csg\shapes\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeShape.h">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="CylinderShape.h">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="CoordinateConversions.h">
+      <Filter>utility\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereShape.h">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +361,9 @@
     </Filter>
     <Filter Include="objectGeneration\csg\shapes\primitives">
       <UniqueIdentifier>{12579024-9a09-44dc-80e0-07e9750e49cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\shapes\basic">
+      <UniqueIdentifier>{75f94a4e-97e2-4953-a635-41d2c4db99b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
