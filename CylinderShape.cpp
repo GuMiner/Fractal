@@ -25,9 +25,10 @@ CoreGeometry CylinderShape::Generate()
     float sliceSize = 2.0f * (float)M_PI / angularSteps;
 
     float cylinderTiltAngle = std::atan(std::abs(upperRadius - lowerRadius) / 2.0f);
+
     // Our cylinder is really a capped polygon. With low angular resolution, we end up with other interesting shapes
-    float innerPolygonHalfAngle = ((float)(angularSteps - 2) * (float)M_PI) / (2.0f * angularSteps);
-    float planeSideDistance = midRadius / std::tan(innerPolygonHalfAngle);
+    float innerPolygonHalfAngle = ((float)M_PI) / (angularSteps);
+    float planeSideHalfDistance = midRadius * std::sin(innerPolygonHalfAngle);
 
     for (int i = 0; i < angularSteps; i++)
     {
@@ -38,7 +39,7 @@ CoreGeometry CylinderShape::Generate()
         PlanePrimitive::AddPlane(vertices, normals,
             glm::rotate(cylinderTiltAngle, glm::vec3(1, 0, 0)) *  // TODO, we need to move the plane to 0,0,0 to perform this transformation ... and then back.
             glm::rotate(angle, glm::vec3(0, 1, 0)) * 
-            glm::scale(glm::vec3(planeSideDistance, 1.0f, 1.0f)), glm::vec3(0, 0, 1.0f - midRadius)); // Rotate to the correct angle.
+            glm::scale(glm::vec3(planeSideHalfDistance, 1.0f, 1.0f)), glm::vec3(0, 0, 1.0f - (midRadius * std::cos(innerPolygonHalfAngle)))); // Rotate to the correct angle.
     }
 
     // Generate the tops and bottoms of the cylinder.

@@ -2,7 +2,7 @@
 #include "CoreGeometry.h"
 #include "IShape.h"
 
-// Defines a cylinder with r=1 (configurable) from -1 to 1.
+// Defines a cylinder with r=1 (configurable) from h=-1 to 1.
 class CylinderShape : public IShape
 {
     // Defines the resolution for each side of the cylinder
