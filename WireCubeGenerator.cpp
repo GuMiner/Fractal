@@ -35,7 +35,7 @@ void WireCubeGenerator::GenerateGeometry(GeometryGenerationData* geometryGenerat
 
     // TODO: Make this a CUBE again once testing completes.
     // CubeShape cube(1);
-    CylinderShape cube(8);
+    CylinderShape cube(5);
     CoreGeometry geo = cube.Generate();
 
     BoundedTriangleUvMapper uvMapper;
