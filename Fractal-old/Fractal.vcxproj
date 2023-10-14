@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{699BD1D3-FA86-4146-97CC-288D84FA1A5F}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="BaseObject.cpp" />
+    <ClCompile Include="BaseObjectType.cpp" />
+    <ClCompile Include="BoundedTriangleUvMapper.cpp" />
+    <ClCompile Include="ColorGradient.cpp" />
+    <ClCompile Include="CoordinateConversions.cpp" />
+    <ClCompile Include="CoreGeometry.cpp" />
+    <ClCompile Include="CubeShape.cpp" />
+    <ClCompile Include="CylinderShape.cpp" />
+    <ClCompile Include="DescentMotionTranslator.cpp" />
+    <ClCompile Include="DifferenceOperation.cpp" />
+    <ClCompile Include="DistanceActivator.cpp" />
+    <ClCompile Include="FpsCounter.cpp" />
+    <ClCompile Include="Fractal.cpp" />
+    <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="GeometryGenerationScheduler.cpp" />
+    <ClCompile Include="gucommon\logging\Logger.cpp" />
+    <ClCompile Include="gucommon\shaders\ShaderFactory.cpp" />
+    <ClCompile Include="GuCommon\stb\stb_implementations.cpp" />
+    <ClCompile Include="gucommon\strings\StringUtils.cpp" />
+    <ClCompile Include="ImguiRenderer.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="IntersectionOperation.cpp" />
+    <ClCompile Include="ObjectLoader.cpp" />
+    <ClCompile Include="OpenGl.cpp" />
+    <ClCompile Include="OpenGlCapabilities.cpp" />
+    <ClCompile Include="OpenGlPerformanceProfiler.cpp" />
+    <ClCompile Include="PlanePrimitive.cpp" />
+    <ClCompile Include="SphereShape.cpp" />
+    <ClCompile Include="StandardGeometryRenderer.cpp" />
+    <ClCompile Include="TorusShape.cpp" />
+    <ClCompile Include="UnionOperation.cpp" />
+    <ClCompile Include="WireCube.cpp" />
+    <ClCompile Include="InfiniteGrid.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Viewer.cpp" />
+    <ClCompile Include="WireCubeGenerator.cpp" />
+    <ClCompile Include="World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="BaseObjectType.h" />
+    <ClInclude Include="BoundedTriangleUvMapper.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="ColorGradient.h" />
+    <ClInclude Include="CoordinateConversions.h" />
+    <ClInclude Include="CoreGeometry.h" />
+    <ClInclude Include="CubeShape.h" />
+    <ClInclude Include="CylinderShape.h" />
+    <ClInclude Include="DescentMotionTranslator.h" />
+    <ClInclude Include="DifferenceOperation.h" />
+    <ClInclude Include="DistanceActivator.h" />
+    <ClInclude Include="GeometryGenerationData.h" />
+    <ClInclude Include="FpsCounter.h" />
+    <ClInclude Include="Fractal.h" />
+    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="GeometryGenerationScheduler.h" />
+    <ClInclude Include="gucommon\logging\Logger.h" />
+    <ClInclude Include="gucommon\shaders\ShaderFactory.h" />
+    <ClInclude Include="gucommon\strings\StringUtils.h" />
+    <ClInclude Include="gucommon\testing\ITestable.h" />
+    <ClInclude Include="gucommon\vertex\ColorVbo.hpp" />
+    <ClInclude Include="gucommon\vertex\NormalVbo.hpp" />
+    <ClInclude Include="gucommon\vertex\PositionVbo.hpp" />
+    <ClInclude Include="gucommon\vertex\UvVbo.hpp" />
+    <ClInclude Include="gucommon\vertex\VboBase.hpp" />
+    <ClInclude Include="IGeometryGenerator.h" />
+    <ClInclude Include="IGlfwKeyHandler.h" />
+    <ClInclude Include="IGlfwMouseHandler.h" />
+    <ClInclude Include="IntersectionOperation.h" />
+    <ClInclude Include="IObjectActivator.h" />
+    <ClInclude Include="ImguiRenderer.h" />
+    <ClInclude Include="IMotionTranslator.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Instance.h" />
+    <ClInclude Include="IObject.h" />
+    <ClInclude Include="IOperation.h" />
+    <ClInclude Include="IPerformanceProfiler.h" />
+    <ClInclude Include="IShape.h" />
+    <ClInclude Include="IStandardRenderer.h" />
+    <ClInclude Include="ObjectLoader.h" />
+    <ClInclude Include="OpenGl.h" />
+    <ClInclude Include="OpenGlCapabilities.h" />
+    <ClInclude Include="OpenGlPerformanceProfiler.h" />
+    <ClInclude Include="PlanePrimitive.h" />
+    <ClInclude Include="SphereShape.h" />
+    <ClInclude Include="StandardGeometryRenderer.h" />
+    <ClInclude Include="TorusShape.h" />
+    <ClInclude Include="UnionOperation.h" />
+    <ClInclude Include="IUvMapper.h" />
+    <ClInclude Include="WireCube.h" />
+    <ClInclude Include="InfiniteGrid.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="version.h" />
+    <ClInclude Include="Viewer.h" />
+    <ClInclude Include="WireCubeGenerator.h" />
+    <ClInclude Include="World.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <DCompiler>None</DCompiler>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\bin\</OutDir>
+    <IntDir>obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>x64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);include;$(MSBuildProjectDirectory);gucommon</AdditionalIncludeDirectories>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <OpenMPSupport>true</OpenMPSupport>
+      <CompileAsManaged>false</CompileAsManaged>
+      <ControlFlowGuard>false</ControlFlowGuard>
+      <AdditionalOptions>
+      </AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/ignore:4099</AdditionalOptions>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PreBuildEvent>
+      <Command>python $(ProjectDir)\IncrementBuildVersion.py</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

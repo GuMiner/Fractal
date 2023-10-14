@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="gucommon\logging\Logger.cpp">
+      <Filter>gucommon\logging</Filter>
+    </ClCompile>
+    <ClCompile Include="gucommon\strings\StringUtils.cpp">
+      <Filter>gucommon\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="Fractal.cpp" />
+    <ClCompile Include="gucommon\shaders\ShaderFactory.cpp">
+      <Filter>gucommon\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsCounter.cpp">
+      <Filter>utility\fps</Filter>
+    </ClCompile>
+    <ClCompile Include="GuCommon\stb\stb_implementations.cpp">
+      <Filter>utility\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGl.cpp">
+      <Filter>utility\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="ImguiRenderer.cpp">
+      <Filter>renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewer.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="DescentMotionTranslator.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorGradient.cpp">
+      <Filter>utility\math</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGlCapabilities.cpp">
+      <Filter>utility\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGlPerformanceProfiler.cpp">
+      <Filter>utility\opengl\Performance</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardGeometryRenderer.cpp">
+      <Filter>renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryGenerationScheduler.cpp">
+      <Filter>objectGeneration\objects\generation</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp" />
+    <ClCompile Include="BaseObjectType.cpp">
+      <Filter>objectGeneration\core</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectLoader.cpp" />
+    <ClCompile Include="BaseObject.cpp">
+      <Filter>objectGeneration\core</Filter>
+    </ClCompile>
+    <ClCompile Include="DistanceActivator.cpp">
+      <Filter>objectGeneration\core\activators</Filter>
+    </ClCompile>
+    <ClCompile Include="InfiniteGrid.cpp">
+      <Filter>objectGeneration\objects\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="WireCube.cpp">
+      <Filter>objectGeneration\objects\basic\cube</Filter>
+    </ClCompile>
+    <ClCompile Include="WireCubeGenerator.cpp">
+      <Filter>objectGeneration\objects\basic\cube</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry.cpp">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreGeometry.cpp">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="UnionOperation.cpp">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="IntersectionOperation.cpp">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="DifferenceOperation.cpp">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="TorusShape.cpp">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundedTriangleUvMapper.cpp">
+      <Filter>objectGeneration\csg\general</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanePrimitive.cpp">
+      <Filter>objectGeneration\csg\shapes\primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeShape.cpp">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="CylinderShape.cpp">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="CoordinateConversions.cpp">
+      <Filter>utility\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereShape.cpp">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gucommon\logging\Logger.h">
+      <Filter>gucommon\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\strings\StringUtils.h">
+      <Filter>gucommon\strings</Filter>
+    </ClInclude>
+    <ClInclude Include="Fractal.h" />
+    <ClInclude Include="gucommon\shaders\ShaderFactory.h">
+      <Filter>gucommon\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="IGlfwKeyHandler.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="IGlfwMouseHandler.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>input</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>utility\versioning</Filter>
+    </ClInclude>
+    <ClInclude Include="FpsCounter.h">
+      <Filter>utility\fps</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\testing\ITestable.h">
+      <Filter>gucommon\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGl.h">
+      <Filter>utility\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiRenderer.h">
+      <Filter>renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="DescentMotionTranslator.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="IMotionTranslator.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorGradient.h">
+      <Filter>utility\math</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGlCapabilities.h">
+      <Filter>utility\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGlPerformanceProfiler.h">
+      <Filter>utility\opengl\Performance</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\ColorVbo.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\PositionVbo.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\UvVbo.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\VboBase.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="gucommon\vertex\NormalVbo.hpp">
+      <Filter>gucommon\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="IObject.h">
+      <Filter>objectGeneration</Filter>
+    </ClInclude>
+    <ClInclude Include="IStandardRenderer.h">
+      <Filter>renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Instance.h">
+      <Filter>objectGeneration\core</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardGeometryRenderer.h">
+      <Filter>renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="IPerformanceProfiler.h">
+      <Filter>utility\opengl\Performance</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryGenerationScheduler.h">
+      <Filter>objectGeneration\objects\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="IGeometryGenerator.h">
+      <Filter>objectGeneration\objects\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h" />
+    <ClInclude Include="BaseObjectType.h">
+      <Filter>objectGeneration\core</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectLoader.h" />
+    <ClInclude Include="BaseObject.h">
+      <Filter>objectGeneration\core</Filter>
+    </ClInclude>
+    <ClInclude Include="IObjectActivator.h">
+      <Filter>objectGeneration\core\activators</Filter>
+    </ClInclude>
+    <ClInclude Include="DistanceActivator.h">
+      <Filter>objectGeneration\core\activators</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryGenerationData.h">
+      <Filter>objectGeneration\objects\generation</Filter>
+    </ClInclude>
+    <ClInclude Include="InfiniteGrid.h">
+      <Filter>objectGeneration\objects\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="WireCube.h">
+      <Filter>objectGeneration\objects\basic\cube</Filter>
+    </ClInclude>
+    <ClInclude Include="WireCubeGenerator.h">
+      <Filter>objectGeneration\objects\basic\cube</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreGeometry.h">
+      <Filter>objectGeneration\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="UnionOperation.h">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="IOperation.h">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="DifferenceOperation.h">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="IntersectionOperation.h">
+      <Filter>objectGeneration\csg\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="IShape.h">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="TorusShape.h">
+      <Filter>objectGeneration\csg\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundedTriangleUvMapper.h">
+      <Filter>objectGeneration\csg\general</Filter>
+    </ClInclude>
+    <ClInclude Include="IUvMapper.h">
+      <Filter>objectGeneration\csg\general</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanePrimitive.h">
+      <Filter>objectGeneration\csg\shapes\primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeShape.h">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="CylinderShape.h">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="CoordinateConversions.h">
+      <Filter>utility\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereShape.h">
+      <Filter>objectGeneration\csg\shapes\basic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="gucommon">
+      <UniqueIdentifier>{a41394e0-f996-48df-b3b2-c43ffb4ccefa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\logging">
+      <UniqueIdentifier>{9c5a4931-3076-4a8e-a50c-9652f3059daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\strings">
+      <UniqueIdentifier>{d0e723ad-9960-419d-bc9d-44cc7a9178ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\shaders">
+      <UniqueIdentifier>{a14bd6ae-0bea-4c1b-a1b3-075980e04223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{19c38540-74ac-4697-a85c-5042337f5a29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{9e8d6b8a-8d6e-4a14-8499-cf837129cf56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\versioning">
+      <UniqueIdentifier>{b6592b38-236e-4fb5-b2d6-c80398330816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\fps">
+      <UniqueIdentifier>{66452826-1fd8-4080-a681-4f49bb4c976f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\opengl">
+      <UniqueIdentifier>{0f528e46-f00e-4b76-a9ab-8b0d65704387}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\testing">
+      <UniqueIdentifier>{399e3e6a-ad92-44d2-86ca-0ebbbf1f904d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\stb">
+      <UniqueIdentifier>{826b2fe5-9592-4b39-b4cf-c2364367b1ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderers">
+      <UniqueIdentifier>{a9bbffcb-d713-4d92-8277-ea092b15b09b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="camera">
+      <UniqueIdentifier>{23777ed3-ffc7-4fed-b4e3-69e4bb8312a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\math">
+      <UniqueIdentifier>{400a7b34-ad97-4cc4-b8be-93dc4ccd836a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\opengl\Performance">
+      <UniqueIdentifier>{b590f98e-288f-409e-8045-c7758fa0c595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\vertex">
+      <UniqueIdentifier>{50c9475d-bb95-41bc-8093-102e916fb0ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration">
+      <UniqueIdentifier>{f3eb0119-ff3b-48c4-84e1-cbc6d1754e2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\objects">
+      <UniqueIdentifier>{d80127ad-210d-47f5-a374-7afd6ab0de41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\objects\generation">
+      <UniqueIdentifier>{eae57b20-24bc-4f52-b8c2-1fd236a3cc96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\objects\basic">
+      <UniqueIdentifier>{5537b6b1-4353-4915-a01a-4d2edbdbbfe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\objects\basic\cube">
+      <UniqueIdentifier>{a04e952c-c7b9-43a0-8bcb-6edc31d380d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\geometry">
+      <UniqueIdentifier>{e2b6b904-6f9e-4ff4-b6ea-8a35b63e734d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\core">
+      <UniqueIdentifier>{d48f6d52-9346-48d8-aab7-2981f7a43e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\core\activators">
+      <UniqueIdentifier>{0c034e6f-48bc-4126-85f8-0bcdd3573229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg">
+      <UniqueIdentifier>{78e0c019-c2fb-44ae-9f69-8532b1f16922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\shapes">
+      <UniqueIdentifier>{4a65217e-1c32-42e8-877d-580756b96cc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\operations">
+      <UniqueIdentifier>{7aca6321-74c4-4a6d-afa2-caf43c73e7cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\general">
+      <UniqueIdentifier>{ee9bd1d8-9d4c-4e95-b1bc-274eb983302d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\shapes\primitives">
+      <UniqueIdentifier>{12579024-9a09-44dc-80e0-07e9750e49cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objectGeneration\csg\shapes\basic">
+      <UniqueIdentifier>{75f94a4e-97e2-4953-a635-41d2c4db99b7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
