@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <sstream>
 #include <thread>
@@ -9,13 +10,17 @@
 //#include "Telemetry/Logger.h"
 //#include "TemperFine.h"
 //#include "../version.h"
-
-#include <SFML/Graphics.hpp>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 int main()
 {
+    std::ifstream f("Data/Config/graphics.json");
+    json data = json::parse(f);
     // create the window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+    int width = data.at("width").get<int>();
+    int height = data.at("height").get<int>();
+    sf::RenderWindow window(sf::VideoMode(width, height), "My window");
 
     // run the program as long as the window is open
     while (window.isOpen())
