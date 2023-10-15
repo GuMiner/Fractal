@@ -133,10 +133,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants\DisplayConstants.h" />
+    <ClInclude Include="Data\Config\Config.cpp" />
+    <ClInclude Include="Data\Config\Config.h" />
+    <ClInclude Include="Sim.h" />
     <ClInclude Include="Telemetry\Logger.h" />
+    <ClInclude Include="Telemetry\FpsCounter.h" />
+    <ClCompile Include="Telemetry\FpsCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="Data\Config\graphics.json">
+    <CopyFileToFolders Include="Config\graphics.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Config\diagnostics.json">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Config\Fonts\DejaVuSans.ttf">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </CopyFileToFolders>

@@ -11,20 +11,73 @@
 //#include "TemperFine.h"
 //#include "../version.h"
 #include <nlohmann/json.hpp>
+#include "Sim.h"
+#include "Data/Config/Config.h"
+
 using json = nlohmann::json;
 
-int main()
-{
-    std::ifstream f("Data/Config/graphics.json");
-    json data = json::parse(f);
-    // create the window
-    int width = data.at("width").get<int>();
-    int height = data.at("height").get<int>();
-    sf::RenderWindow window(sf::VideoMode(width, height), "My window");
+void Sim::SetupDiagnostics() {
+    std::ifstream f("Config/diagnostics.json");
+    DiagnosticsConfig config = json::parse(f).template get<DiagnosticsConfig>();
+    simTexture.create(config.width, config.height);
+    simTexture.setRepeated(false);
+    simTexture.setSmooth(false);
 
-    // run the program as long as the window is open
+    simSprite.setTexture(simTexture);
+}
+
+Sim::Sim() : fpsCounter(nullptr) {
+}
+
+Sim::~Sim() {
+    delete fpsCounter;
+}
+
+void Sim::Init() {
+    SetupDiagnostics();
+    fpsCounter = new FpsCounter();
+}
+
+void Sim::Update(float currentTime) {
+    sf::Vector2u textureSize = simTexture.getSize();
+    sf::Uint8* pixels = new sf::Uint8[textureSize.x * textureSize.y * 4]; // * 4 because pixels have 4 components (RGBA)
+    for (unsigned int y = 0; y < textureSize.y; y++)
+    {
+        for (unsigned int x = 0; x < textureSize.x; x++)
+        {
+            int pixelIdx = (x + y * textureSize.x) * 4;
+            pixels[pixelIdx] = 0;
+            pixels[pixelIdx + 1] = 255;
+            pixels[pixelIdx + 2] = 0;
+        }
+    }
+
+    simTexture.update(pixels);
+    delete[] pixels;
+
+    fpsCounter->Update(currentTime);
+}
+
+void Sim::Render(sf::RenderWindow& window) {
+    window.clear(sf::Color::Black);
+
+    window.draw(simSprite);
+    fpsCounter->Render(window);
+
+    // draw everything here...
+    // window.draw(...);
+}
+
+void Sim::Run() {
+    std::ifstream f("Config/graphics.json");
+    GraphicsConfig config = json::parse(f).template get<GraphicsConfig>();
+    sf::RenderWindow window(sf::VideoMode(config.width, config.height), "Sim");
+
+    sf::Clock clock;
     while (window.isOpen())
     {
+        float currentTime = clock.getElapsedTime().asSeconds();
+
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
         while (window.pollEvent(event))
@@ -34,38 +87,21 @@ int main()
                 window.close();
         }
 
-        // clear the window with black color
-        window.clear(sf::Color::Black);
-
-        // draw everything here...
-        // window.draw(...);
-
-        // end the current frame
+        Update(currentTime);
+        Render(window);
         window.display();
     }
+}
+
+int main()
+{
+    Sim sim;
+    sim.Init();
+    sim.Run();
 
     return 0;
 }
 
-//// Imports so that they're actually readable and not hidden away in a config file.
-//#pragma comment(lib, "opengl32")
-//
-//#ifndef _DEBUG
-//    #pragma comment(lib, "lib/glew32.lib")
-//    #pragma comment(lib, "lib/sfml-audio")
-//    #pragma comment(lib, "lib/sfml-system")
-//    #pragma comment(lib, "lib/sfml-window")
-//    #pragma comment(lib, "lib/sfml-graphics")
-//    #pragma comment(lib, "lib/sfgui")
-//#else
-//    #pragma comment(lib, "lib/glew32d.lib")
-//    #pragma comment(lib, "lib/sfml-audio-d")
-//    #pragma comment(lib, "lib/sfml-system-d")
-//    #pragma comment(lib, "lib/sfml-window-d")
-//    #pragma comment(lib, "lib/sfml-graphics-d")
-//    #pragma comment(lib, "lib/sfgui-d")
-//#endif
-//
 //// Static definitions.
 //Constants TemperFine::Constant;
 //MathOps TemperFine::MathOp;
@@ -112,41 +148,6 @@ int main()
 //        float widthDelta = ((float)width - necessaryWidth) / 2.0f;
 //        glViewport((GLint)widthDelta, (GLint)0, (GLsizei)necessaryWidth, (GLsizei)height);
 //    }
-//}
-//
-//// Performs initialization that can be done without a GPU context.
-//Constants::Status TemperFine::Initialize()
-//{
-//    Logger::Log("Loading graphics config file...");
-//    if (!graphicsConfig.ReadConfiguration())
-//    {
-//        Logger::Log("Bad graphics config file!");
-//        return Constants::Status::BAD_CONFIG;
-//    }
-//
-//    Logger::Log("Loading key binding config file...");
-//    if (!keyBindingConfig.ReadConfiguration())
-//    {
-//        Logger::Log("Bad key binding config file!");
-//        return Constants::Status::BAD_CONFIG;
-//    }
-//
-//    Logger::Log("Loading physics config file...");
-//    if (!physicsConfig.ReadConfiguration())
-//    {
-//        Logger::Log("Bad physics config file!");
-//        return Constants::Status::BAD_CONFIG;
-//    }
-//
-//    Logger::Log("Loading technology config file...");
-//    if (!techConfig.ReadConfiguration())
-//    {
-//        Logger::Log("Bad technology config file!");
-//        return Constants::Status::BAD_CONFIG;
-//    }
-//
-//    Logger::Log("Configuration loaded!");
-//    return Constants::Status::OK;
 //}
 //
 //Constants::Status TemperFine::LoadGraphics(sfg::Desktop* desktop)
@@ -446,31 +447,6 @@ int main()
 //    {
 //        alive = false;
 //    }
-//}
-//
-//void TemperFine::Render(sfg::Desktop& desktop, sf::RenderWindow& window, vec::mat4& viewMatrix)
-//{
-//    window.clear(sf::Color::Black);
-//   // vec::mat4 projectionMatrix = Constants::PerspectiveMatrix * viewMatrix;
-//   //
-//   // // Clear the screen (and depth buffer) before any rendering begins.
-//   // const GLfloat color[] = { 0, 0, 0, 1 };
-//   // const GLfloat one = 1.0f;
-//   // glClearBufferfv(GL_COLOR, 0, color);
-//   // glClearBufferfv(GL_DEPTH, 0, &one);
-//   //
-//   // // Render the scenery
-//   // scenery.Render(viewMatrix, projectionMatrix);
-//   //
-//   // // Renders each players' units.
-//   // physicsSyncBuffer.RenderPlayers(modelManager, routeVisuals, projectionMatrix);
-//   //
-//   // // Renders the voxel map
-//   // // TODO needs a semaphore to prevent inadvertent updates.
-//   // voxelMap.Render(projectionMatrix);
-//   //
-//   // // Renders the statistics. Note that this just takes the perspective matrix, not accounting for the viewer position.
-//   // statistics.RenderStats(Constants::PerspectiveMatrix);
 //}
 //
 //Constants::Status TemperFine::Run()

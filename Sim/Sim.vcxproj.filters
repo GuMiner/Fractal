@@ -24,6 +24,9 @@
     <ClCompile Include="Constants\DisplayConstants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Telemetry\FpsCounter.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -32,8 +35,22 @@
     <ClInclude Include="Constants\DisplayConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\Config\Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\Config\Config.cpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Telemetry\FpsCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="Data\Config\graphics.json" />
+    <CopyFileToFolders Include="Config\graphics.json" />
+    <CopyFileToFolders Include="Config\diagnostics.json" />
+    <CopyFileToFolders Include="Config\Fonts\DejaVuSans.ttf" />
   </ItemGroup>
 </Project>
