@@ -14,7 +14,7 @@ FpsCounter::FpsCounter() :
     fpsText = new sf::Text();
     fpsText->setFont(*fpsFont);
     fpsText->setCharacterSize(24);
-    fpsText->setFillColor(sf::Color(128, 128, 128));
+    fpsText->setFillColor(sf::Color::Yellow); // sf::Color(128, 128, 128));
     fpsText->setString("FPS: ");
 }
 

@@ -26,31 +26,45 @@ void Sim::SetupDiagnostics() {
     simSprite.setTexture(simTexture);
 }
 
-Sim::Sim() : fpsCounter(nullptr) {
+Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr) {
 }
 
 Sim::~Sim() {
     delete fpsCounter;
+    delete threadProcessor;
+    delete filler;
 }
 
 void Sim::Init() {
     SetupDiagnostics();
     fpsCounter = new FpsCounter();
+    threadProcessor = new ThreadProcessor();
+    filler = new Random2DFiller(12345);
+
+    // TODO setup thread processor with some test operation.
 }
 
 void Sim::Update(float currentTime) {
     sf::Vector2u textureSize = simTexture.getSize();
     sf::Uint8* pixels = new sf::Uint8[textureSize.x * textureSize.y * 4]; // * 4 because pixels have 4 components (RGBA)
-    for (unsigned int y = 0; y < textureSize.y; y++)
-    {
-        for (unsigned int x = 0; x < textureSize.x; x++)
-        {
-            int pixelIdx = (x + y * textureSize.x) * 4;
-            pixels[pixelIdx] = 0;
-            pixels[pixelIdx + 1] = 255;
-            pixels[pixelIdx + 2] = 0;
-        }
-    }
+    
+    // Multiple thread version
+    threadProcessor->StartThreads(textureSize.x, textureSize.y, pixels);
+    threadProcessor->WaitForThreads();
+
+    // Single threaded version
+    // filler->Fill(0, textureSize.y, textureSize.x, pixels);
+    
+    // for (unsigned int y = 0; y < textureSize.y; y++)
+    // {
+    //     for (unsigned int x = 0; x < textureSize.x; x++)
+    //     {
+    //         int pixelIdx = (x + y * textureSize.x) * 4;
+    //         pixels[pixelIdx] = 0;
+    //         pixels[pixelIdx + 1] = 255;
+    //         pixels[pixelIdx + 2] = 0;
+    //     }
+    // }
 
     simTexture.update(pixels);
     delete[] pixels;
@@ -63,9 +77,6 @@ void Sim::Render(sf::RenderWindow& window) {
 
     window.draw(simSprite);
     fpsCounter->Render(window);
-
-    // draw everything here...
-    // window.draw(...);
 }
 
 void Sim::Run() {
@@ -195,128 +206,7 @@ int main()
 //    return LoadAssets(desktop);
 //}
 //
-//Constants::Status TemperFine::LoadAssets(sfg::Desktop* desktop)
-//{
-//    // Game Data configuration files.
-//    Logger::Log("Loading armor config file...");
-//    if (!armorConfig.ReadConfiguration())
-//    {
-//        Logger::Log("Bad armor config file!");
-//        return Constants::Status::BAD_CONFIG;
-//    }
-//
-//    Logger::Log("Loading body config file...");
-//    if (!bodyConfig.ReadConfiguration())
-//    {
-//        Logger::Log("Bad body config file!");
-//        return Constants::Status::BAD_CONFIG;
-//    }
-//
-//    Logger::Log("Loading turret config file...");
-//    if (!turretConfig.ReadConfiguration())
-//    {
-//        Logger::Log("Bad turret config file!");
-//        return Constants::Status::BAD_CONFIG;
-//    }
-//
-//    // Scenery
-//    Logger::Log("Scenery loading...");
-//    if (!scenery.Initialize(shaderManager))
-//    {
-//        Logger::Log("Bad scenery");
-//        return Constants::Status::BAD_SCENERY;
-//    }
-//
-//    Logger::Log("Scenery loading done!");
-//
-//    // Unit router and  visualization
-//    Logger::Log("Unit router and visualizer loading...");
-//    if (!routeVisuals.Initialize(shaderManager))
-//    {
-//        Logger::Log("Bad unit router!");
-//        return Constants::Status::BAD_ROUTER;
-//    }
-//
-//    Logger::Log("Unit router and visualizer loaded!");
-//
-//    // Fonts
-//    Logger::Log("Font loading...");
-//    if (!fontManager.LoadFont(&shaderManager, "fonts/DejaVuSans.ttf"))
-//    {
-//        return Constants::Status::BAD_FONT;
-//    }
-//
-//    Logger::Log("Font loading done!");
-//
-//    // Statistics
-//    Logger::Log("Statistics loading...");
-//    if (!statistics.Initialize(&fontManager))
-//    {
-//        return Constants::Status::BAD_STATS;
-//    }
-//
-//    // Voxel Map
-//    Logger::Log("Voxel map loading...");
-//    if (!voxelMap.Initialize(imageManager, modelManager, shaderManager))
-//    {
-//        return Constants::Status::BAD_VOXEL_MAP;
-//    }
-//
-//    // TODO this should be some menu code, once the UI bugs are fixed.
-//    Logger::Log("Loading maps...");
-//    if (!mapManager.ReadMap("maps/test.txt", testMap))
-//    {
-//        Logger::Log("Bad test map!");
-//        return Constants::Status::BAD_MAP;
-//    }
-//
-//    // TODO we start at a menu, not inside a game. This can be called from the physics thread!
-//    physicsSyncBuffer.SetRoundMap(testMap);
-//
-//    // Load the current player, who is always the first element in the players list. TODO name should be from config.
-//    physicsSyncBuffer.AddPlayer("Default Player");
-//
-//    // Now that *all* the models have loaded, prepare for rendering models by initializing OpenGL and sending the model data to OpenGL
-//    Logger::Log("Sending model VAO to OpenGL...");
-//    if (!modelManager.InitializeOpenGlResources(shaderManager))
-//    {
-//        return Constants::Status::BAD_SHADERS;
-//    }
-//
-//    modelManager.ResetOpenGlModelData();
-//
-//    // UI
-//    if (!techTreeWindow.Initialize(desktop))
-//    {
-//        return Constants::Status::BAD_UI;
-//    }
-//    else if (!techProgressWindow.Initialize(desktop))
-//    {
-//        return Constants::Status::BAD_UI;
-//    }
-//    else if (!resourcesWindow.Initialize(desktop))
-//    {
-//        return Constants::Status::BAD_UI;
-//    }
-//    else if (!buildingsWindow.Initialize(desktop))
-//    {
-//        return Constants::Status::BAD_UI;
-//    }
-//    else if (!escapeConfigWindow.Initialize(desktop))
-//    {
-//        return Constants::Status::BAD_UI;
-//    }
-//
-//    // Physics
-//    Logger::Log("Physics loading...");
-//    physics.Initialize(&physicsSyncBuffer);
-//
-//    physicsThread.launch();
-//    Logger::Log("Physics Thread Started!");
-//
-//    return Constants::Status::OK;
-//}
-//
+
 //void TemperFine::PerformGuiThreadUpdates(float currentGameTime)
 //{
 //    // Update the selected voxel.

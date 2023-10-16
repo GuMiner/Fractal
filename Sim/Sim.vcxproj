@@ -128,17 +128,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Constants\DisplayConstants.cpp" />
+    <ClCompile Include="Random2DFiller.cpp" />
     <ClCompile Include="Sim.cpp" />
     <ClCompile Include="Telemetry\Logging.cpp" />
+    <ClCompile Include="ThreadProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants\DisplayConstants.h" />
     <ClInclude Include="Data\Config\Config.cpp" />
     <ClInclude Include="Data\Config\Config.h" />
+    <ClInclude Include="Random2DFiller.h" />
     <ClInclude Include="Sim.h" />
     <ClInclude Include="Telemetry\Logger.h" />
     <ClInclude Include="Telemetry\FpsCounter.h" />
     <ClCompile Include="Telemetry\FpsCounter.cpp" />
+    <ClInclude Include="ThreadProcessor.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json">

@@ -27,6 +27,12 @@
     <ClCompile Include="Telemetry\FpsCounter.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="ThreadProcessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Random2DFiller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -45,6 +51,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Telemetry\FpsCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadProcessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Random2DFiller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
