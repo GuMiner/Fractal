@@ -3,7 +3,6 @@
 #include <sstream>
 #include <fstream>
 #include <SFML\System.hpp>
-#include "..\Constants\DisplayConstants.h"
 
 // A simple class for logging program events out to a file.
 class Logger : sf::NonCopyable

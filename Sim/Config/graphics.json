@@ -1,4 +1,9 @@
 {
   "width": 1200,
-  "height":  800
+  "height":  800,
+  "depthBits":  24,
+  "stencilBits": 8,
+  "antialiasingLevel":  4,
+  "openGlMajor": 3,
+  "openGlMinor": 3
 }

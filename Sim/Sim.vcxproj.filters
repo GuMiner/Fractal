@@ -21,9 +21,6 @@
     <ClCompile Include="Telemetry\Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Constants\DisplayConstants.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Telemetry\FpsCounter.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
@@ -33,12 +30,12 @@
     <ClCompile Include="Random2DFiller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SimUpdateState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Constants\DisplayConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sim.h">
@@ -59,11 +56,17 @@
     <ClInclude Include="Random2DFiller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SimUpdateState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json" />
     <CopyFileToFolders Include="Config\diagnostics.json" />
     <CopyFileToFolders Include="Config\Fonts\DejaVuSans.ttf" />
     <CopyFileToFolders Include="Config\libigl-bunny.off" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Config\rendering.json" />
   </ItemGroup>
 </Project>

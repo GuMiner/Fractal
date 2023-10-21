@@ -1,0 +1,7 @@
+{
+  "letterbox": true,
+  "aspectRatio":  1.77778,
+  "fovY": 50.0,
+  "nearPlane": 0.1,
+  "farPlane":  1000.0
+}

@@ -4,6 +4,7 @@
 #include "Telemetry/FpsCounter.h"
 #include "ThreadProcessor.h"
 #include "Random2DFiller.h"
+#include "SimUpdateState.h"
 
 class Sim
 {
@@ -18,6 +19,8 @@ class Sim
 	Random2DFiller* filler;
 
 	void SetupDiagnostics();
+	void UpdatePerspective(unsigned int width, unsigned int height);
+	void HandleEvents(sf::RenderWindow& window, SimUpdateState& state);
 	void Update(float currentTime);
 	void Render(sf::RenderWindow& window);
 

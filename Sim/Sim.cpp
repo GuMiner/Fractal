@@ -3,9 +3,7 @@
 #include <string>
 #include <sstream>
 #include <thread>
-//#include <GL/glew.h>
-//#include <SFML/OpenGL.hpp>
-//#include <SFML/Graphics.hpp>
+
 // #include <vld.h> // Enable for memory debugging.
 //#include "Telemetry/Logger.h"
 //#include "TemperFine.h"
@@ -15,6 +13,10 @@
 #include "Data/Config/Config.h"
 #include <igl/readOFF.h>
 #include <igl/opengl/glfw/Viewer.h>
+
+//#include <GL/glew.h>
+#include <SFML/OpenGL.hpp>
+#include <SFML/Graphics.hpp>
 
 Eigen::MatrixXd V;
 Eigen::MatrixXi F;
@@ -78,29 +80,137 @@ void Sim::Update(float currentTime) {
 }
 
 void Sim::Render(sf::RenderWindow& window) {
+    // window.resetGLStates();
+    window.pushGLStates();
     window.clear(sf::Color::Black);
-
     window.draw(simSprite);
     fpsCounter->Render(window);
+    window.popGLStates();
+
+    // TODO swap to reset.
+
+
+}
+
+void Sim::UpdatePerspective(unsigned int width, unsigned int height)
+{
+    // Letterboxing is done at the top and bottom.
+    float necessaryWidth = (float)height * 1.77f;
+    if (necessaryWidth > width)
+    {
+        // Letterbox the top and the bottom of the screen so that the aspect ratio is met
+        float effectiveHeight = (float)width / 1.77f;
+        float heightDelta = ((float)height - effectiveHeight) / 2.0f;
+        glViewport(0, (int)heightDelta, (GLsizei)width, (GLsizei)effectiveHeight);
+    }
+    else
+    {
+        // Letterbox the left and the right so that the aspect ratio is met.
+        float widthDelta = ((float)width - necessaryWidth) / 2.0f;
+        glViewport((GLint)widthDelta, (GLint)0, (GLsizei)necessaryWidth, (GLsizei)height);
+    }
+}
+ 
+void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state)
+{
+    // Handle all events.
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+        // Handle generic pause and window events
+        state.Update(event);
+
+        if (event.type == sf::Event::Resized)
+        {
+            UpdatePerspective(event.size.width, event.size.height);
+        }
+        else if (event.type == sf::Event::KeyReleased)
+        {
+           //if (event.key.code == KeyBindingConfig::ToggleTechTreeWindow)
+           //{
+           //    techTreeWindow.ToggleDisplay();
+           //}
+           //else if (event.key.code == KeyBindingConfig::ToggleTechProgressWindow)
+           //{
+           //    techProgressWindow.ToggleDisplay();
+           //}
+           //else if (event.key.code == KeyBindingConfig::ToggleResourcesWindow)
+           //{
+           //    resourcesWindow.ToggleDisplay();
+           //}
+           //else if (event.key.code == KeyBindingConfig::ToggleBuildingsWindow)
+           //{
+           //    buildingsWindow.ToggleDisplay();
+           //}
+        }
+        else if (event.type == sf::Event::MouseButtonPressed)
+        {
+           // if (event.mouseButton.button == sf::Mouse::Left && 
+           //     !techTreeWindow.WithinVisibleBounds(event.mouseButton.x, event.mouseButton.y) &&
+           //     !buildingsWindow.WithinVisibleBounds(event.mouseButton.x, event.mouseButton.y) &&
+           //     !escapeConfigWindow.WithinVisibleBounds(event.mouseButton.x, event.mouseButton.y))
+           // {
+           //     physics.QueueLeftMouseClick(event.mouseButton.x, event.mouseButton.y, window.getSize().x, window.getSize().y);
+           // }
+        }
+    }
+
+    // Update the player's research progress. if the user clicked a tech tile on the tech tree.
+   // unsigned int techId;
+   // if (techTreeWindow.TryGetHitTechTile(&techId))
+   // {
+   //     bool switchedResearch = false;
+   //     Player& currentPlayer = physicsSyncBuffer.LockPlayer(0);
+   //     if (currentPlayer.SwitchResearch(techId))
+   //     {
+   //         switchedResearch = true;
+   //     }
+   //
+   //     physicsSyncBuffer.UnlockPlayer(0);
+   //
+   //     // TODO play a sound if you fail to (or succeed in) switching research.
+   // }
+   //
+   // // Update windows based on size resizing.
+   // resourcesWindow.MoveToScreenBottom(window.getSize());
+   // techProgressWindow.MoveToScreenBottomLeft(window.getSize());
+   //
+   // // Handle pausing the physics thread if we're paused.
+   // if (escapePaused || focusPaused)
+   // {
+   //     physics.Pause();
+   // }
+   // else
+   // {
+   //     physics.Resume();
+   // }
 }
 
 void Sim::Run() {
+    // Create compatible OpenGL window
     std::ifstream f("Config/graphics.json");
     GraphicsConfig config = json::parse(f).template get<GraphicsConfig>();
-    sf::RenderWindow window(sf::VideoMode(config.width, config.height), "Sim");
+    sf::ContextSettings windowSettings(config.depthBits, config.stencilBits, config.antialiasingLevel,
+        config.openGlMajor, config.openGlMinor);
+    sf::RenderWindow window(sf::VideoMode(config.width, config.height), "Sim", sf::Style::Default, windowSettings);
+    window.setVerticalSyncEnabled(true);
+    window.setActive(true);
+
+    sf::ContextSettings usedSettings = window.getSettings();
+
+    std::cout << "D:" << usedSettings.depthBits << ". S:" << usedSettings.stencilBits << ". A: " << usedSettings.antialiasingLevel << 
+        ". GL: " << usedSettings.majorVersion << "." << usedSettings.minorVersion << std::endl;
+
+    SimUpdateState state = SimUpdateState();
 
     sf::Clock clock;
     while (window.isOpen())
     {
         float currentTime = clock.getElapsedTime().asSeconds();
 
-        // check all the window's events that were triggered since the last iteration of the loop
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                window.close();
+        HandleEvents(window, state);
+        if (state.ShouldQuit()) {
+            window.close();
         }
 
         Update(currentTime);
@@ -155,24 +265,7 @@ int main()
 //    Logger::Log("Max Vertex Uniform Blocks: ", maxVertexUniformBlocks, ", Max Fragment Uniform Blocks: ", maxFragmentUniformBlocks);
 //}
 //
-//void TemperFine::UpdatePerspective(unsigned int width, unsigned int height)
-//{
-//    // Letterboxing is done at the top and bottom.
-//    float necessaryWidth = (float)height * Constants::ASPECT;
-//    if (necessaryWidth > width)
-//    {
-//        // Letterbox the top and the bottom of the screen so that the aspect ratio is met
-//        float effectiveHeight = (float)width / Constants::ASPECT;
-//        float heightDelta = ((float)height - effectiveHeight) / 2.0f;
-//        glViewport(0, (int)heightDelta, (GLsizei)width, (GLsizei)effectiveHeight);
-//    }
-//    else
-//    {
-//        // Letterbox the left and the right so that the aspect ratio is met.
-//        float widthDelta = ((float)width - necessaryWidth) / 2.0f;
-//        glViewport((GLint)widthDelta, (GLint)0, (GLsizei)necessaryWidth, (GLsizei)height);
-//    }
-//}
+
 //
 //Constants::Status TemperFine::LoadGraphics(sfg::Desktop* desktop)
 //{
@@ -253,115 +346,9 @@ int main()
 //   //statistics.UpdateViewPos(physicsSyncBuffer.GetViewerPosition());
 //}
 //
-//void TemperFine::HandleEvents(sfg::Desktop& desktop, sf::RenderWindow& window, bool& alive, bool& focusPaused, bool& escapePaused)
-//{
-//    // Handle all events.
-//    sf::Event event;
-//    while (window.pollEvent(event))
-//    {
-//        // Update SF GUI. NOTE: This runs on the GUI thread!
-//        desktop.HandleEvent(event);
-//
-//        if (event.type == sf::Event::Closed)
-//        {
-//            alive = false;
-//        }
-//        else if (event.type == sf::Event::LostFocus)
-//        {
-//            focusPaused = true;
-//        }
-//        else if (event.type == sf::Event::GainedFocus)
-//        {
-//            focusPaused = false;
-//        }
-//        else if (event.type == sf::Event::Resized)
-//        {
-//            UpdatePerspective(event.size.width, event.size.height);
-//        }
-//        else if (event.type == sf::Event::KeyReleased)
-//        {
-//            if (event.key.code == KeyBindingConfig::ToggleTechTreeWindow)
-//            {
-//                techTreeWindow.ToggleDisplay();
-//            }
-//            else if (event.key.code == KeyBindingConfig::ToggleTechProgressWindow)
-//            {
-//                techProgressWindow.ToggleDisplay();
-//            }
-//            else if (event.key.code == KeyBindingConfig::ToggleResourcesWindow)
-//            {
-//                resourcesWindow.ToggleDisplay();
-//            }
-//            else if (event.key.code == KeyBindingConfig::ToggleBuildingsWindow)
-//            {
-//                buildingsWindow.ToggleDisplay();
-//            }
-//            else if (event.key.code == sf::Keyboard::Escape)
-//            {
-//                // The Escape key is the consistent pause / unpause
-//                escapePaused = !escapePaused;
-//                escapeConfigWindow.ToggleDisplay();
-//            }
-//        }
-//        else if (event.type == sf::Event::MouseButtonPressed)
-//        {
-//            if (event.mouseButton.button == sf::Mouse::Left && 
-//                !techTreeWindow.WithinVisibleBounds(event.mouseButton.x, event.mouseButton.y) &&
-//                !buildingsWindow.WithinVisibleBounds(event.mouseButton.x, event.mouseButton.y) &&
-//                !escapeConfigWindow.WithinVisibleBounds(event.mouseButton.x, event.mouseButton.y))
-//            {
-//                physics.QueueLeftMouseClick(event.mouseButton.x, event.mouseButton.y, window.getSize().x, window.getSize().y);
-//            }
-//        }
-//    }
-//
-//    // Update the player's research progress. if the user clicked a tech tile on the tech tree.
-//    unsigned int techId;
-//    if (techTreeWindow.TryGetHitTechTile(&techId))
-//    {
-//        bool switchedResearch = false;
-//        Player& currentPlayer = physicsSyncBuffer.LockPlayer(0);
-//        if (currentPlayer.SwitchResearch(techId))
-//        {
-//            switchedResearch = true;
-//        }
-//
-//        physicsSyncBuffer.UnlockPlayer(0);
-//
-//        // TODO play a sound if you fail to (or succeed in) switching research.
-//    }
-//
-//    // Update windows based on size resizing.
-//    resourcesWindow.MoveToScreenBottom(window.getSize());
-//    techProgressWindow.MoveToScreenBottomLeft(window.getSize());
-//
-//    // Handle pausing the physics thread if we're paused.
-//    if (escapePaused || focusPaused)
-//    {
-//        physics.Pause();
-//    }
-//    else
-//    {
-//        physics.Resume();
-//    }
-//
-//    // Handle alternative means of quitting.
-//    if (escapeConfigWindow.ShouldQuit())
-//    {
-//        alive = false;
-//    }
-//}
 //
 //Constants::Status TemperFine::Run()
 //{
-//    // 24 depth bits, 8 stencil bits, 8x AA, major version 4.
-//    Logger::Log("Graphics Initializing...");
-//    //sf::ContextSettings contextSettings = sf::ContextSettings(24, 8, 8, 4, 0);
-//
-//   // sf::Uint32 style = GraphicsConfig::IsFullscreen ? sf::Style::Fullscreen : sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close;
-//   // sf::RenderWindow window(sf::VideoMode(GraphicsConfig::ScreenWidth, GraphicsConfig::ScreenHeight), "Temper Fine", style, contextSettings);
-//    sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
-//    sfg::Desktop desktop;
 //
 //    // Now that we have an OpenGL Context, load our graphics.
 //    Constants::Status firstTimeSetup = LoadGraphics(&desktop);

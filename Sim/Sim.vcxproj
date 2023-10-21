@@ -129,16 +129,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Constants\DisplayConstants.cpp" />
+    <ClCompile Include="SimUpdateState.cpp" />
     <ClCompile Include="Random2DFiller.cpp" />
     <ClCompile Include="Sim.cpp" />
     <ClCompile Include="Telemetry\Logging.cpp" />
     <ClCompile Include="ThreadProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Constants\DisplayConstants.h" />
     <ClInclude Include="Data\Config\Config.cpp" />
     <ClInclude Include="Data\Config\Config.h" />
+    <ClInclude Include="SimUpdateState.h" />
     <ClInclude Include="Random2DFiller.h" />
     <ClInclude Include="Sim.h" />
     <ClInclude Include="Telemetry\Logger.h" />
@@ -169,6 +169,9 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Config\rendering.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
