@@ -3,9 +3,9 @@
 #include <string>
 #include <sstream>
 #include <thread>
-#include <GL/glew.h>
-#include <SFML/OpenGL.hpp>
-#include <SFML/Graphics.hpp>
+//#include <GL/glew.h>
+//#include <SFML/OpenGL.hpp>
+//#include <SFML/Graphics.hpp>
 // #include <vld.h> // Enable for memory debugging.
 //#include "Telemetry/Logger.h"
 //#include "TemperFine.h"
@@ -13,6 +13,11 @@
 #include <nlohmann/json.hpp>
 #include "Sim.h"
 #include "Data/Config/Config.h"
+#include <igl/readOFF.h>
+#include <igl/opengl/glfw/Viewer.h>
+
+Eigen::MatrixXd V;
+Eigen::MatrixXi F;
 
 using json = nlohmann::json;
 
@@ -105,7 +110,15 @@ void Sim::Run() {
 }
 
 int main()
-{
+{  
+    // Load a mesh in OFF format
+    igl::readOFF("Config/libigl-bunny.off", V, F);
+
+    // Plot the mesh
+    igl::opengl::glfw::Viewer viewer;
+    viewer.data().set_mesh(V, F);
+    viewer.launch();
+
     Sim sim;
     sim.Init();
     sim.Run();

@@ -64,5 +64,6 @@
     <CopyFileToFolders Include="Config\graphics.json" />
     <CopyFileToFolders Include="Config\diagnostics.json" />
     <CopyFileToFolders Include="Config\Fonts\DejaVuSans.ttf" />
+    <CopyFileToFolders Include="Config\libigl-bunny.off" />
   </ItemGroup>
 </Project>
