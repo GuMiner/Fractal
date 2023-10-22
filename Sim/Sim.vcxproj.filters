@@ -33,6 +33,12 @@
     <ClCompile Include="SimUpdateState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GLCore\ShaderFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\StringExtensions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -59,12 +65,23 @@
     <ClInclude Include="SimUpdateState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GLCore\ShaderFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\StringExtensions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\ITestable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json" />
     <CopyFileToFolders Include="Config\diagnostics.json" />
     <CopyFileToFolders Include="Config\Fonts\DejaVuSans.ttf" />
     <CopyFileToFolders Include="Config\libigl-bunny.off" />
+    <CopyFileToFolders Include="Config\Shaders\juliaFractal.vs" />
+    <CopyFileToFolders Include="Config\Shaders\juliaFractal.fs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\rendering.json" />

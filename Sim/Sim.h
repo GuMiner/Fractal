@@ -5,6 +5,7 @@
 #include "ThreadProcessor.h"
 #include "Random2DFiller.h"
 #include "SimUpdateState.h"
+#include "GLCore/ShaderFactory.h"
 
 class Sim
 {
@@ -18,16 +19,20 @@ class Sim
 	// Single-threaded variant
 	Random2DFiller* filler;
 
+	// Will be moved elsewhere, just testing integration
+	GLuint testProgram;
+	ShaderFactory* shaderFactory;
+
 	void SetupDiagnostics();
 	void UpdatePerspective(unsigned int width, unsigned int height);
 	void HandleEvents(sf::RenderWindow& window, SimUpdateState& state);
 	void Update(float currentTime);
-	void Render(sf::RenderWindow& window);
+	void Render(sf::RenderWindow& window, float currentTime);
 
 public:
 	Sim();
 	~Sim();
 
-	void Init();
+	bool Init();
 	void Run();
 };

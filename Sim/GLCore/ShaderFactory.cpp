@@ -1,7 +1,10 @@
 #include <algorithm>
 #include <sstream>
+#include <gl/glew.h>
+#include <vector>
+#include <glm\gtx\color_space.hpp>
 #include "../Telemetry/Logger.h"
-#include "strings\StringUtils.h"
+#include "../Data/StringExtensions.h"
 #include "ShaderFactory.h"
 
 ShaderFactory::ShaderFactory()
@@ -9,12 +12,98 @@ ShaderFactory::ShaderFactory()
 {
 }
 
+void ShaderFactory::LogGraphicsSettings()
+{
+    Logger::Log("OpenGL vendor: ", glGetString(GL_VENDOR), ", version ", glGetString(GL_VERSION), ", renderer ", glGetString(GL_RENDERER));
+    Logger::Log("OpenGL extensions: ", glGetString(GL_EXTENSIONS));
+
+    GLint maxTextureUnits, maxUniformBlockSize;
+    GLint maxVertexUniformBlocks, maxFragmentUniformBlocks;
+    glGetIntegerv(GL_MAX_TEXTURE_UNITS, &maxTextureUnits);
+    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &maxVertexUniformBlocks);
+    glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &maxFragmentUniformBlocks);
+    glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &maxUniformBlockSize);
+
+    Logger::Log("Max Texture Units: ", ", Max Uniform Size: ", (maxUniformBlockSize / 1024), " kB");
+    Logger::Log("Max Vertex Uniform Blocks: ", maxVertexUniformBlocks, ", Max Fragment Uniform Blocks: ", maxFragmentUniformBlocks);
+}
+
+bool ShaderFactory::InitCore()
+{
+    GLenum err = glewInit();
+    if (err != GLEW_OK)
+    {
+        Logger::LogError("GLEW startup failure: ", err, ".");
+        return false;
+    }
+
+    LogGraphicsSettings();
+
+    glActiveTexture(GL_TEXTURE0);
+    glGenTextures(1, &rainbowTexture);
+    
+    std::vector<glm::vec3> gradient;
+    int steps = 256;
+    for (int i = 0; i < steps; i++)
+    {
+        // Full HSV goes from 0 to 260. We stop at mid-purple.
+        float hue = 320.0f * ((float)i / (float)steps);
+        gradient.push_back(glm::rgbColor(glm::vec3(hue, 1.0f, 1.0f)));
+    }
+
+
+    glBindTexture(GL_TEXTURE_1D, rainbowTexture);
+    glTexStorage1D(GL_TEXTURE_1D, 1, GL_RGB32F, steps);
+    glTexSubImage1D(GL_TEXTURE_1D, 0, 0, steps, GL_RGB, GL_FLOAT, &gradient[0]);
+    
+    std::vector<glm::vec2> ccwQuad;
+    ccwQuad.push_back(glm::vec2(-1, 1));
+    ccwQuad.push_back(glm::vec2(1, -1));
+    ccwQuad.push_back(glm::vec2(1, 1));
+    ccwQuad.push_back(glm::vec2(-1, -1));
+    ccwQuad.push_back(glm::vec2(1, -1));
+    ccwQuad.push_back(glm::vec2(-1, 1));
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    glEnableVertexAttribArray(0);
+
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, nullptr);
+
+    //2 -- 2 floats / vertex. 4 -- float32
+    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * 4, &ccwQuad[0], GL_STATIC_DRAW);
+
+    return true;
+}
+
+void ShaderFactory::RunTestProgram(GLuint programId, float currentTime)
+{
+    glUseProgram(programId);
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_1D, rainbowTexture);
+    
+    GLint fractalGradientLoc = glGetUniformLocation(programId, "fractalGradient");
+    glUniform1i(fractalGradientLoc, GL_TEXTURE0);
+    
+    GLint maxIterationsLoc = glGetUniformLocation(programId, "maxIterations");
+    glUniform1i(maxIterationsLoc, 400);
+
+    GLint time = glGetUniformLocation(programId, "time");
+    glUniform1f(time, currentTime);
+
+    glBindVertexArray(vao);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
 bool ShaderFactory::ReadShader(const char* rootName, const char* extension, std::string* readShader)
 {
     std::stringstream filenameStream;
-    filenameStream << "shaders/" << rootName << extension;
+    filenameStream << rootName << extension;
 
-    if (!StringUtils::LoadStringFromFile(filenameStream.str().c_str(), *readShader))
+    if (!StringExtensions::LoadStringFromFile(filenameStream.str().c_str(), *readShader))
     {
         Logger::LogError("Could not load ", extension, " shader: ", *readShader, "!");
         return false;
@@ -22,13 +111,13 @@ bool ShaderFactory::ReadShader(const char* rootName, const char* extension, std:
 
     // Implement a non-standard #include definition to avoid shader duplication.
     std::vector<std::string> lines;
-    StringUtils::Split(*readShader, StringUtils::Newline, true, lines);
+    StringExtensions::Split(*readShader, StringExtensions::Newline, true, lines);
     for (int i = lines.size() - 1; i >= 0; i--)
     {
-        if (StringUtils::StartsWith(lines[i], "#include "))
+        if (StringExtensions::StartsWith(lines[i], "#include "))
         {
             std::string includeFileName;
-            if (!StringUtils::SplitAndGrabSecondary(lines[i], includeFileName))
+            if (!StringExtensions::SplitAndGrabSecondary(lines[i], includeFileName))
             {
                 Logger::LogError("Could not split ", includeFileName, " from shader ", rootName, " for include parsing!");
                 return false;
@@ -38,10 +127,10 @@ bool ShaderFactory::ReadShader(const char* rootName, const char* extension, std:
             includeFileName.erase(std::remove(includeFileName.begin(), includeFileName.end(), '"'), includeFileName.end());
 
             std::stringstream includeFilenameStream;
-            includeFilenameStream << "shaders/" << includeFileName;
+            includeFilenameStream  << includeFileName;
 
             std::string shaderIncludeFile;
-            if (!StringUtils::LoadStringFromFile(includeFilenameStream.str().c_str(), shaderIncludeFile))
+            if (!StringExtensions::LoadStringFromFile(includeFilenameStream.str().c_str(), shaderIncludeFile))
             {
                 Logger::LogError("Could not load ", includeFileName, "as part of ", rootName, "!");
                 return false;

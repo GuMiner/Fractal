@@ -5,18 +5,17 @@
 #include <thread>
 
 // #include <vld.h> // Enable for memory debugging.
-//#include "Telemetry/Logger.h"
+#include "Telemetry/Logger.h"
 //#include "TemperFine.h"
 //#include "../version.h"
 #include <nlohmann/json.hpp>
-#include "Sim.h"
 #include "Data/Config/Config.h"
 #include <igl/readOFF.h>
 #include <igl/opengl/glfw/Viewer.h>
 
-//#include <GL/glew.h>
 #include <SFML/OpenGL.hpp>
-#include <SFML/Graphics.hpp>
+
+#include "Sim.h"
 
 Eigen::MatrixXd V;
 Eigen::MatrixXi F;
@@ -33,22 +32,30 @@ void Sim::SetupDiagnostics() {
     simSprite.setTexture(simTexture);
 }
 
-Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr) {
+Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr),
+    shaderFactory(nullptr)
+{
+    Logger::Setup();
 }
 
 Sim::~Sim() {
     delete fpsCounter;
     delete threadProcessor;
     delete filler;
+    delete shaderFactory;
+    Logger::Shutdown();
 }
 
-void Sim::Init() {
+
+bool Sim::Init() {
     SetupDiagnostics();
     fpsCounter = new FpsCounter();
     threadProcessor = new ThreadProcessor();
     filler = new Random2DFiller(12345);
-
     // TODO setup thread processor with some test operation.
+
+    shaderFactory = new ShaderFactory();
+    return true;
 }
 
 void Sim::Update(float currentTime) {
@@ -79,16 +86,16 @@ void Sim::Update(float currentTime) {
     fpsCounter->Update(currentTime);
 }
 
-void Sim::Render(sf::RenderWindow& window) {
-    // window.resetGLStates();
+void Sim::Render(sf::RenderWindow& window, float currentTime) {
+    // window.resetGLStates(); // TODO swap to reset.
+    glBindVertexArray(0);
     window.pushGLStates();
     window.clear(sf::Color::Black);
     window.draw(simSprite);
     fpsCounter->Render(window);
     window.popGLStates();
 
-    // TODO swap to reset.
-
+    shaderFactory->RunTestProgram(testProgram, currentTime);
 
 }
 
@@ -196,6 +203,12 @@ void Sim::Run() {
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
 
+    shaderFactory->InitCore();
+    if (!shaderFactory->CreateShaderProgram("Config/Shaders/juliaFractal", &testProgram))
+    {
+        Logger::LogError("Failed to load the test rendering shader; cannot continue.");
+        return;
+    }
     sf::ContextSettings usedSettings = window.getSettings();
 
     std::cout << "D:" << usedSettings.depthBits << ". S:" << usedSettings.stencilBits << ". A: " << usedSettings.antialiasingLevel << 
@@ -214,7 +227,7 @@ void Sim::Run() {
         }
 
         Update(currentTime);
-        Render(window);
+        Render(window, currentTime);
         window.display();
     }
 }
@@ -230,7 +243,11 @@ int main()
     viewer.launch();
 
     Sim sim;
-    sim.Init();
+    if (!sim.Init())
+    {
+        return 1;
+    }
+
     sim.Run();
 
     return 0;
@@ -249,36 +266,12 @@ int main()
 //{
 //}
 //
-//void TemperFine::LogGraphicsSettings()
-//{
-//    Logger::Log("OpenGL vendor: ", glGetString(GL_VENDOR), ", version ", glGetString(GL_VERSION), ", renderer ", glGetString(GL_RENDERER));
-//    Logger::Log("OpenGL extensions: ", glGetString(GL_EXTENSIONS));
-//
-//    GLint maxTextureUnits, maxUniformBlockSize;
-//    GLint maxVertexUniformBlocks, maxFragmentUniformBlocks;
-//    glGetIntegerv(GL_MAX_TEXTURE_UNITS, &maxTextureUnits);
-//    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &maxVertexUniformBlocks);
-//    glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &maxFragmentUniformBlocks);
-//    glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &maxUniformBlockSize);
-//
-//    Logger::Log("Max Texture Units: ", ", Max Uniform Size: ", (maxUniformBlockSize/1024), " kB");
-//    Logger::Log("Max Vertex Uniform Blocks: ", maxVertexUniformBlocks, ", Max Fragment Uniform Blocks: ", maxFragmentUniformBlocks);
-//}
+
 //
 
 //
 //Constants::Status TemperFine::LoadGraphics(sfg::Desktop* desktop)
 //{
-//    // Setup GLEW
-//    GLenum err = glewInit();
-//    if (err != GLEW_OK)
-//    {
-//        Logger::LogError("GLEW startup failure: ", err, ".");
-//        return Constants::Status::BAD_GLEW;
-//    }
-//
-//    // Log graphics information for future reference
-//    LogGraphicsSettings();
 //
 //    // Enable alpha blending
 //    glEnable(GL_BLEND);
@@ -399,61 +392,4 @@ int main()
 //    }
 //
 //    return Constants::Status::OK;
-//}
-//
-//void TemperFine::Deinitialize()
-//{
-//    // TODO Test code remove.
-//    mapManager.ClearMap(testMap);
-//
-//    Logger::Log("Music Thread Stopping...");
-//    //musicManager.Stop();
-//
-//    Logger::Log("Physica Thread Stopping...");
-//    physics.Stop();
-//    physicsThread.wait();
-//    Logger::Log("Physics Thread Stopped.");
-//
-//   // musicThread.wait();
-//    Logger::Log("Music Thread Stopped.");
-//}
-//
-//// Runs the main application.
-//int main(int argc, char* argv[])
-//{
-//    std::cout << "Sim Start!" << std::endl;
-//
-//    // Startup 'static' stuff
-//    TemperFine::Constant = Constants();
-//    TemperFine::MathOp = MathOps();
-//    TemperFine::PhysicsOp = PhysicsOps();
-//
-//    Logger::Setup();
-//
-//    Logger::Log("TemperFine ", AutoVersion::MAJOR_VERSION, ".", AutoVersion::MINOR_VERSION, ".");
-//
-//    Constants::Status runStatus;
-//    std::unique_ptr<TemperFine> temperFine(new TemperFine());
-//
-//    // Run the application.
-//    runStatus = temperFine->Initialize();
-//    if (runStatus == Constants::Status::OK)
-//    {
-//        runStatus = temperFine->Run();
-//        temperFine->Deinitialize();
-//    }
-//    else
-//    {
-//        Logger::LogError("Could not initialize Temper Fine!");
-//    }
-//
-//    // Wait before closing for display purposes.
-//    Logger::Log("Application End!");
-//    Logger::Shutdown();
-//    std::cout << "TemperFine End!" << std::endl;
-//
-//    sf::sleep(sf::milliseconds(1000));
-//
-//    // Log is auto-shutdown.
-//    return (int)runStatus;
 //}

@@ -5,7 +5,7 @@ Logger* Logger::LogStream;
 
 void Logger::Setup()
 {
-    LogStream = new Logger("temper-fine.log");
+    LogStream = new Logger("sim.log");
 }
 
 void Logger::Shutdown()

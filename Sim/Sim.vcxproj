@@ -129,21 +129,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GLCore\ShaderFactory.cpp" />
     <ClCompile Include="SimUpdateState.cpp" />
     <ClCompile Include="Random2DFiller.cpp" />
     <ClCompile Include="Sim.cpp" />
+    <ClCompile Include="Data\StringExtensions.cpp" />
     <ClCompile Include="Telemetry\Logging.cpp" />
     <ClCompile Include="ThreadProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data\Config\Config.cpp" />
     <ClInclude Include="Data\Config\Config.h" />
+    <ClInclude Include="GLCore\ShaderFactory.h" />
     <ClInclude Include="SimUpdateState.h" />
     <ClInclude Include="Random2DFiller.h" />
     <ClInclude Include="Sim.h" />
+    <ClInclude Include="Data\StringExtensions.h" />
     <ClInclude Include="Telemetry\Logger.h" />
     <ClInclude Include="Telemetry\FpsCounter.h" />
     <ClCompile Include="Telemetry\FpsCounter.cpp" />
+    <ClInclude Include="Tests\ITestable.h" />
     <ClInclude Include="ThreadProcessor.h" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +177,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\rendering.json" />
+    <CopyFileToFolders Include="Config\Shaders\juliaFractal.fs">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Config\Shaders\juliaFractal.vs">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
