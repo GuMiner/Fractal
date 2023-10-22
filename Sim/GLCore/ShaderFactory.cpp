@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <sstream>
+#include <iostream>
 #include <gl/glew.h>
 #include <vector>
 #include <glm\gtx\color_space.hpp>
@@ -75,6 +76,16 @@ bool ShaderFactory::InitCore()
     //2 -- 2 floats / vertex. 4 -- float32
     glBufferData(GL_ARRAY_BUFFER, 6 * 2 * 4, &ccwQuad[0], GL_STATIC_DRAW);
 
+    glBindTexture(GL_TEXTURE_1D, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR)
+    {
+        std::cout << "Init: " << error << std::endl;
+    }
+
     return true;
 }
 
@@ -83,19 +94,32 @@ void ShaderFactory::RunTestProgram(GLuint programId, float currentTime)
     glUseProgram(programId);
     
     glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, 0);
     glBindTexture(GL_TEXTURE_1D, rainbowTexture);
     
     GLint fractalGradientLoc = glGetUniformLocation(programId, "fractalGradient");
-    glUniform1i(fractalGradientLoc, GL_TEXTURE0);
-    
+    glUniform1i(fractalGradientLoc, 0); //  Texture location - GL_TEXTURE0
+   
     GLint maxIterationsLoc = glGetUniformLocation(programId, "maxIterations");
     glUniform1i(maxIterationsLoc, 400);
-
+    
     GLint time = glGetUniformLocation(programId, "time");
-    glUniform1f(time, currentTime);
+    glUniform1f(time, currentTime * 100.0f);
+    
+    GLint mousePos = glGetUniformLocation(programId, "c");
+    glUniform2f(mousePos, -0.55f, 0.75f);
 
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    glBindVertexArray(0);
+    glUseProgram(0);
+
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR)
+    {
+        std::cout << "Program Error:" << error << std::endl;
+    }
 }
 
 bool ShaderFactory::ReadShader(const char* rootName, const char* extension, std::string* readShader)

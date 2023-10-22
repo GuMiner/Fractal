@@ -15,6 +15,7 @@ void Random2DFiller::Fill(int yMin, int yMax, int width, unsigned char* rgbaData
 			rgbaData[pixelIdx] = rgbRange(randGenerator);
 			rgbaData[pixelIdx + 1] = rgbRange(randGenerator);
 			rgbaData[pixelIdx + 2] = rgbRange(randGenerator);
+			rgbaData[pixelIdx + 3] = 128;
 		}
 	}
 }

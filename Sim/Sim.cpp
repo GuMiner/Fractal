@@ -87,16 +87,13 @@ void Sim::Update(float currentTime) {
 }
 
 void Sim::Render(sf::RenderWindow& window, float currentTime) {
-    // window.resetGLStates(); // TODO swap to reset.
-    glBindVertexArray(0);
-    window.pushGLStates();
-    window.clear(sf::Color::Black);
+    shaderFactory->RunTestProgram(testProgram, currentTime);
+
+     window.pushGLStates();
+   // window.clear(sf::Color::Black);
     window.draw(simSprite);
     fpsCounter->Render(window);
     window.popGLStates();
-
-    shaderFactory->RunTestProgram(testProgram, currentTime);
-
 }
 
 void Sim::UpdatePerspective(unsigned int width, unsigned int height)
@@ -224,6 +221,7 @@ void Sim::Run() {
         HandleEvents(window, state);
         if (state.ShouldQuit()) {
             window.close();
+            break;
         }
 
         Update(currentTime);
@@ -235,12 +233,12 @@ void Sim::Run() {
 int main()
 {  
     // Load a mesh in OFF format
-    igl::readOFF("Config/libigl-bunny.off", V, F);
-
-    // Plot the mesh
-    igl::opengl::glfw::Viewer viewer;
-    viewer.data().set_mesh(V, F);
-    viewer.launch();
+    // igl::readOFF("Config/libigl-bunny.off", V, F);
+    // 
+    // // Plot the mesh
+    // igl::opengl::glfw::Viewer viewer;
+    // viewer.data().set_mesh(V, F);
+    // viewer.launch();
 
     Sim sim;
     if (!sim.Init())
