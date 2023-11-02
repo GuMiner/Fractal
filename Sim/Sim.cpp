@@ -4,22 +4,14 @@
 #include <sstream>
 #include <thread>
 
-// #include <vld.h> // Enable for memory debugging.
 #include "Telemetry/Logger.h"
 #include "ScreenshotTaker.h"
 //#include "TemperFine.h"
-//#include "../version.h"
 #include <nlohmann/json.hpp>
 #include "Data/Config/Config.h"
-#include <igl/readOFF.h>
-#include <igl/opengl/glfw/Viewer.h>
-
 #include <SFML/OpenGL.hpp>
 
 #include "Sim.h"
-
-Eigen::MatrixXd V;
-Eigen::MatrixXi F;
 
 using json = nlohmann::json;
 
@@ -43,7 +35,10 @@ Sim::~Sim() {
     delete fpsCounter;
     delete threadProcessor;
     delete filler;
+
     delete shaderFactory;
+
+    delete testScene;
     Logger::Shutdown();
 }
 
@@ -56,6 +51,8 @@ bool Sim::Init() {
     // TODO setup thread processor with some test operation.
 
     shaderFactory = new ShaderFactory();
+
+    testScene = new Scene();
     return true;
 }
 
@@ -90,15 +87,15 @@ void Sim::Update(float currentTime) {
 void Sim::Render(sf::RenderWindow& window, float currentTime) {
     shaderFactory->RunTestProgram(testProgram, currentTime);
 
-     window.pushGLStates();
-   // window.clear(sf::Color::Black);
+    testScene->RenderScene();
+
+    window.pushGLStates();
     window.draw(simSprite);
     fpsCounter->Render(window);
     window.popGLStates();
 }
 
-void Sim::UpdatePerspective(unsigned int width, unsigned int height)
-{
+void Sim::UpdatePerspective(unsigned int width, unsigned int height) {
     // Letterboxing is done at the top and bottom.
     float necessaryWidth = (float)height * 1.77f;
     if (necessaryWidth > width)
@@ -116,8 +113,7 @@ void Sim::UpdatePerspective(unsigned int width, unsigned int height)
     }
 }
  
-void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state)
-{
+void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state) {
     // Handle all events.
     sf::Event event;
     while (window.pollEvent(event))
@@ -131,22 +127,7 @@ void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state)
         }
         else if (event.type == sf::Event::KeyReleased)
         {
-           //if (event.key.code == KeyBindingConfig::ToggleTechTreeWindow)
-           //{
-           //    techTreeWindow.ToggleDisplay();
-           //}
-           //else if (event.key.code == KeyBindingConfig::ToggleTechProgressWindow)
-           //{
-           //    techProgressWindow.ToggleDisplay();
-           //}
-           //else if (event.key.code == KeyBindingConfig::ToggleResourcesWindow)
-           //{
-           //    resourcesWindow.ToggleDisplay();
-           //}
-           //else if (event.key.code == KeyBindingConfig::ToggleBuildingsWindow)
-           //{
-           //    buildingsWindow.ToggleDisplay();
-           //}
+
         }
         else if (event.type == sf::Event::MouseButtonPressed)
         {
@@ -207,6 +188,9 @@ void Sim::Run() {
         Logger::LogError("Failed to load the test rendering shader; cannot continue.");
         return;
     }
+
+    testScene->Init(shaderFactory);
+
     sf::ContextSettings usedSettings = window.getSettings();
 
     std::cout << "D:" << usedSettings.depthBits << ". S:" << usedSettings.stencilBits << ". A: " << usedSettings.antialiasingLevel << 
@@ -234,24 +218,13 @@ void Sim::Run() {
     }
 }
 
-int main()
-{  
-    // Load a mesh in OFF format
-    // igl::readOFF("Config/libigl-bunny.off", V, F);
-    // 
-    // // Plot the mesh
-    // igl::opengl::glfw::Viewer viewer;
-    // viewer.data().set_mesh(V, F);
-    // viewer.launch();
-
+int main() {
     Sim sim;
-    if (!sim.Init())
-    {
+    if (!sim.Init()) {
         return 1;
     }
 
     sim.Run();
-
     return 0;
 }
 

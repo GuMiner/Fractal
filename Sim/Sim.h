@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
+#include "Scene.h"
 #include "Telemetry/FpsCounter.h"
 #include "ThreadProcessor.h"
 #include "Random2DFiller.h"
@@ -22,6 +23,8 @@ class Sim
 	// Will be moved elsewhere, just testing integration
 	GLuint testProgram;
 	ShaderFactory* shaderFactory;
+
+	Scene* testScene;
 
 	void SetupDiagnostics();
 	void UpdatePerspective(unsigned int width, unsigned int height);

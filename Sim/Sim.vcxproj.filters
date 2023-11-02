@@ -103,5 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\rendering.json" />
+    <None Include="Config\Shaders\model.vs" />
+    <None Include="Config\Shaders\model.fs" />
   </ItemGroup>
 </Project>
