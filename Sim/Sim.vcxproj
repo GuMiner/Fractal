@@ -130,6 +130,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GLCore\ShaderFactory.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ScreenshotTaker.cpp" />
     <ClCompile Include="SimUpdateState.cpp" />
     <ClCompile Include="Random2DFiller.cpp" />
     <ClCompile Include="Sim.cpp" />
@@ -141,6 +144,9 @@
     <ClInclude Include="Data\Config\Config.cpp" />
     <ClInclude Include="Data\Config\Config.h" />
     <ClInclude Include="GLCore\ShaderFactory.h" />
+    <ClInclude Include="ScreenshotTaker.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SimUpdateState.h" />
     <ClInclude Include="Random2DFiller.h" />
     <ClInclude Include="Sim.h" />

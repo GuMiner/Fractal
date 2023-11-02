@@ -6,6 +6,7 @@
 
 // #include <vld.h> // Enable for memory debugging.
 #include "Telemetry/Logger.h"
+#include "ScreenshotTaker.h"
 //#include "TemperFine.h"
 //#include "../version.h"
 #include <nlohmann/json.hpp>
@@ -214,8 +215,7 @@ void Sim::Run() {
     SimUpdateState state = SimUpdateState();
 
     sf::Clock clock;
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         float currentTime = clock.getElapsedTime().asSeconds();
 
         HandleEvents(window, state);
@@ -227,6 +227,10 @@ void Sim::Run() {
         Update(currentTime);
         Render(window, currentTime);
         window.display();
+
+        if (state.IsCaptureRequested()) {
+            ScreenshotTaker::Take(window);
+        }
     }
 }
 
