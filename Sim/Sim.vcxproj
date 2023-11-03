@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLCore\ShaderFactory.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="ThreadProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Data\Config\Config.cpp" />
     <ClInclude Include="Data\Config\Config.h" />
     <ClInclude Include="GLCore\ShaderFactory.h" />

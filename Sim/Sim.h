@@ -7,7 +7,7 @@
 #include "Random2DFiller.h"
 #include "SimUpdateState.h"
 #include "GLCore/ShaderFactory.h"
-
+ 
 class Sim
 {
 	// TODO: Move to a diagnostic layer for 2D simulations?

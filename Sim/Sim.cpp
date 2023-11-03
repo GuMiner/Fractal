@@ -15,6 +15,14 @@
 
 using json = nlohmann::json;
 
+bool debugCoreOpenGl = true;
+
+//#ifdef _WIN32
+//#include <windows.h>
+//extern "C" __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+//extern "C" __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
+//#endif
+
 void Sim::SetupDiagnostics() {
     std::ifstream f("Config/diagnostics.json");
     DiagnosticsConfig config = json::parse(f).template get<DiagnosticsConfig>();
@@ -53,6 +61,7 @@ bool Sim::Init() {
     shaderFactory = new ShaderFactory();
 
     testScene = new Scene();
+
     return true;
 }
 
@@ -87,17 +96,20 @@ void Sim::Update(float currentTime) {
 void Sim::Render(sf::RenderWindow& window, float currentTime) {
     shaderFactory->RunTestProgram(testProgram, currentTime);
 
-    testScene->RenderScene();
+    testScene->RenderScene(currentTime);
 
-    window.pushGLStates();
-    window.draw(simSprite);
-    fpsCounter->Render(window);
-    window.popGLStates();
+    if (!debugCoreOpenGl)
+    {
+        window.pushGLStates();
+        window.draw(simSprite);
+        fpsCounter->Render(window);
+        window.popGLStates();
+    }
 }
 
 void Sim::UpdatePerspective(unsigned int width, unsigned int height) {
     // Letterboxing is done at the top and bottom.
-    float necessaryWidth = (float)height * 1.77f;
+    float necessaryWidth = (float)height * 1.77f; // TODO get aspect ratio from config
     if (necessaryWidth > width)
     {
         // Letterbox the top and the bottom of the screen so that the aspect ratio is met
@@ -177,7 +189,8 @@ void Sim::Run() {
     std::ifstream f("Config/graphics.json");
     GraphicsConfig config = json::parse(f).template get<GraphicsConfig>();
     sf::ContextSettings windowSettings(config.depthBits, config.stencilBits, config.antialiasingLevel,
-        config.openGlMajor, config.openGlMinor);
+        config.openGlMajor, config.openGlMinor,
+        debugCoreOpenGl ? sf::ContextSettings::Attribute::Core : sf::ContextSettings::Attribute::Default);
     sf::RenderWindow window(sf::VideoMode(config.width, config.height), "Sim", sf::Style::Default, windowSettings);
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
@@ -189,7 +202,10 @@ void Sim::Run() {
         return;
     }
 
-    testScene->Init(shaderFactory);
+    if (!testScene->Init(shaderFactory)) {
+        Logger::LogError("Failed to load the test scene");
+        return;
+    }
 
     sf::ContextSettings usedSettings = window.getSettings();
 
@@ -239,45 +255,6 @@ int main() {
 //      armorConfig(&modelManager, "config/armors.txt"), bodyConfig(&modelManager, "config/bodies.txt"), turretConfig(&modelManager, "config/turrets.txt"),
 //      physics(), scenery(&modelManager), physicsThread(&Physics::Run, &physics)
 //{
-//}
-//
-
-//
-
-//
-//Constants::Status TemperFine::LoadGraphics(sfg::Desktop* desktop)
-//{
-//
-//    // Enable alpha blending
-//    glEnable(GL_BLEND);
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//
-//    // Enable line and polygon smoothing
-//    glEnable(GL_LINE_SMOOTH);
-//    glEnable(GL_POLYGON_SMOOTH);
-//
-//    // Multisample if available
-//    glEnable(GL_MULTISAMPLE);
-//
-//    // Let OpenGL shaders determine point sizes.
-//    glEnable(GL_PROGRAM_POINT_SIZE);
-//
-//    // Disable face culling so that see-through flat objects work.
-//    glDisable(GL_CULL_FACE);
-//    glFrontFace(GL_CW);
-//
-//    // Cutout faces that are hidden by other faces.
-//    glEnable(GL_DEPTH_TEST);
-//    glDepthFunc(GL_LEQUAL);
-//
-//    // Assets
-//    if (!desktop->LoadThemeFromFile("themes/temperfine.theme"))
-//    {
-//        Logger::LogError("Could not load the GUI theme file!");
-//        return Constants::Status::BAD_THEME;
-//    }
-//
-//    return LoadAssets(desktop);
 //}
 //
 

@@ -16,7 +16,7 @@ ShaderFactory::ShaderFactory()
 void ShaderFactory::LogGraphicsSettings()
 {
     Logger::Log("OpenGL vendor: ", glGetString(GL_VENDOR), ", version ", glGetString(GL_VERSION), ", renderer ", glGetString(GL_RENDERER));
-    Logger::Log("OpenGL extensions: ", glGetString(GL_EXTENSIONS));
+   // Logger::Log("OpenGL extensions: ", glGetString(GL_EXTENSIONS));
 
     GLint maxTextureUnits, maxUniformBlockSize;
     GLint maxVertexUniformBlocks, maxFragmentUniformBlocks;
@@ -31,6 +31,7 @@ void ShaderFactory::LogGraphicsSettings()
 
 bool ShaderFactory::InitCore()
 {
+    // TODO move elsewhere
     GLenum err = glewInit();
     if (err != GLEW_OK)
     {
@@ -39,6 +40,29 @@ bool ShaderFactory::InitCore()
     }
 
     LogGraphicsSettings();
+
+    // TODO move elsewhere
+    // Alpha blending
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Enable line and polygon smoothing
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_POLYGON_SMOOTH);
+
+    // Multisample if available
+    glEnable(GL_MULTISAMPLE);
+
+    // Let OpenGL shaders determine point sizes.
+    glEnable(GL_PROGRAM_POINT_SIZE);
+
+    glEnable(GL_CULL_FACE);
+    glFrontFace(GL_CCW);
+
+    // Cutout faces that are hidden by other faces.
+    // TODO re-enable once the background is removed.
+    glDisable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
 
     glActiveTexture(GL_TEXTURE0);
     glGenTextures(1, &rainbowTexture);

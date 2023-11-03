@@ -22,7 +22,7 @@ void ScreenshotTaker::Take(sf::RenderWindow& window) {
     int monthOfDay = localTime->tm_mday;
     bool addZero = monthOfDay < 10;
     screenshotPath << "../Samples/";
-    screenshotPath << localTime->tm_mon << "-" <<
+    screenshotPath << (localTime->tm_mon + 1) << "-" <<
         (addZero ? "0" : "") << localTime->tm_mday <<  "-" <<
         (localTime->tm_year - 100) << ".png";
 
