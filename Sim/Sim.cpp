@@ -94,6 +94,8 @@ void Sim::Update(float currentTime) {
 }
 
 void Sim::Render(sf::RenderWindow& window, float currentTime) {
+
+
     shaderFactory->RunTestProgram(testProgram, currentTime);
 
     testScene->RenderScene(currentTime);

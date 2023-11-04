@@ -32,6 +32,7 @@ bool Model::Init(ShaderFactory* shaderFactory) {
     //igl::per_face_normals(V, F, N);
     igl::per_vertex_normals(V, F, N);
 
+
     // Create new OpenGL primitives
     // TODO some of this should be extracted away as this needs to exist per model object
     glGenVertexArrays(1, &modelVao);
@@ -97,7 +98,9 @@ void Model::Render(Camera* camera, float currentTime) {
     glBindVertexArray(modelVao);
 
     // Projection 
-    auto position = glm::rotate(glm::mat4(1.0), currentTime * 0.5f, glm::vec3(0, 1, 0));
+    auto position = glm::rotate(
+        glm::scale(glm::mat4(1.0), glm::vec3(6.1f)),
+        currentTime * 0.5f, glm::vec3(0, 1, 0));
     GLint model = glGetUniformLocation(modelProgram, "model");
     glUniformMatrix4fv(model, 1, GL_FALSE, &position[0][0]);
 

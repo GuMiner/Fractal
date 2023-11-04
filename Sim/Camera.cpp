@@ -3,8 +3,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Camera::Camera(): 
-	position(glm::vec3(0, 0, -0.8f)), forwards(glm::vec3(0, 0, 1)), up(glm::vec3(0, 1, 0)),
-	fovY(30.0f), aspectRatio(1.77778f), nearPlane(0.0010f), farPlane(1000.0f) {
+	position(glm::vec3(0, 0, -5.0f)), forwards(glm::vec3(0, 0, 1)), up(glm::vec3(0, 1, 0)),
+	fovY(30.0f), aspectRatio(1.77778f), nearPlane(0.10f), farPlane(1000.0f) {
 	ComputeNormals();
 
 	// TODO get view settings from config

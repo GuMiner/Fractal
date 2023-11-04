@@ -43,8 +43,8 @@ bool ShaderFactory::InitCore()
 
     // TODO move elsewhere
     // Alpha blending
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_BLEND);
+  //  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Enable line and polygon smoothing
     glEnable(GL_LINE_SMOOTH);
@@ -57,11 +57,10 @@ bool ShaderFactory::InitCore()
     glEnable(GL_PROGRAM_POINT_SIZE);
 
     glEnable(GL_CULL_FACE);
-    glFrontFace(GL_CCW);
+    glFrontFace(GL_CW);
 
     // Cutout faces that are hidden by other faces.
-    // TODO re-enable once the background is removed.
-    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
     glActiveTexture(GL_TEXTURE0);
@@ -81,13 +80,13 @@ bool ShaderFactory::InitCore()
     glTexStorage1D(GL_TEXTURE_1D, 1, GL_RGB32F, steps);
     glTexSubImage1D(GL_TEXTURE_1D, 0, 0, steps, GL_RGB, GL_FLOAT, &gradient[0]);
     
-    std::vector<glm::vec2> ccwQuad;
-    ccwQuad.push_back(glm::vec2(-1, 1));
-    ccwQuad.push_back(glm::vec2(1, -1));
-    ccwQuad.push_back(glm::vec2(1, 1));
-    ccwQuad.push_back(glm::vec2(-1, -1));
-    ccwQuad.push_back(glm::vec2(1, -1));
-    ccwQuad.push_back(glm::vec2(-1, 1));
+    std::vector<glm::vec2> cwQuad;
+    cwQuad.push_back(glm::vec2(1, 1));
+    cwQuad.push_back(glm::vec2(1, -1));
+    cwQuad.push_back(glm::vec2(-1, 1));
+    cwQuad.push_back(glm::vec2(-1, 1));
+    cwQuad.push_back(glm::vec2(1, -1));
+    cwQuad.push_back(glm::vec2(-1, -1));
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
@@ -98,7 +97,7 @@ bool ShaderFactory::InitCore()
     glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, nullptr);
 
     //2 -- 2 floats / vertex. 4 -- float32
-    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * 4, &ccwQuad[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * 4, &cwQuad[0], GL_STATIC_DRAW);
 
     glBindTexture(GL_TEXTURE_1D, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -115,6 +114,12 @@ bool ShaderFactory::InitCore()
 
 void ShaderFactory::RunTestProgram(GLuint programId, float currentTime)
 {
+    // TODO put somewhere else
+    const GLfloat color[] = { 0, 0, 0, 1 };
+    const GLfloat one = 1.0f;
+    glClearBufferfv(GL_COLOR, 0, color);
+    glClearBufferfv(GL_DEPTH, 0, &one);
+
     glUseProgram(programId);
     
     glActiveTexture(GL_TEXTURE0);
