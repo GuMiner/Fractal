@@ -1,22 +1,13 @@
-#version 330 core
+#include <cmath>
+#include <glm/geometric.hpp>
+#include <glm/vec3.hpp>
+#include "Experimental.h"
 
-// From https://github.com/Tw1ddle/Sky-Shader, modified to render on a flat plane
-in vec3 fs_pos;
-
-// TODO: Temporary to move the sun around and see the sky change
-uniform float time;
-
-out vec4 color;
-
-// Based on "A Practical Analytic Model for Daylight" aka The Preetham Model, the de facto standard analytic skydome model
-// http://www.cs.utah.edu/~shirley/papers/sunsky/sunsky.pdf
-// Original implementation by Simon Wallner: http://www.simonwallner.at/projects/atmospheric-scattering
-// Improved by Martin Upitis: http://blenderartists.org/forum/showthread.php?245954-preethams-sky-impementation-HDR
-// Three.js integration by zz85: http://twitter.com/blurspline / https://github.com/zz85 / http://threejs.org/examples/webgl_shaders_sky.html
-// Additional uniforms, refactoring and integrated with editable sky example: https://twitter.com/Sam_Twidale / https://github.com/Tw1ddle/Sky-Particles-Shader
+using namespace glm;
+using namespace std;
 
 const vec3 cameraPos = vec3(0, 0, 0); //vec3(100000.0, -40000.0, 0);
-vec3 sunPosition = vec3(0.7, abs(cos(time)), sin(time));
+const vec3 sunPosition = vec3(0, -700000, 0);
 
 // "Red sunset" values
 const float depolarizationFactor = 0.02;
@@ -40,15 +31,28 @@ const float turbidity = 4.7;
 const float PI = 3.141592653589793238462643383279502884197169;
 const vec3 UP = vec3(0.0, 1.0, 0.0);
 
+float max(float a, float b) {
+    if (a > b) {
+        return a;
+    }
+    
+    return b;
+}
+
+glm::vec3 pow(glm::vec3 val, glm::vec3 powVal) {
+    return glm::vec3(pow(val.x, powVal.x), pow(val.y, powVal.y), pow(val.z, powVal.z));
+}
+
 vec3 totalRayleigh(vec3 lambda)
 {
-    return (8.0 * pow(PI, 3.0) * pow(pow(refractiveIndex, 2.0) - 1.0, 2.0) * (6.0 + 3.0 * depolarizationFactor)) / (3.0 * numMolecules * pow(lambda, vec3(4.0)) * (6.0 - 7.0 * depolarizationFactor));
+    return (8.0f * pow(PI, 3.0f) * pow(pow(refractiveIndex, 2.0f) - 1.0f, 2.0f) * (6.0f + 3.0f * depolarizationFactor)) / 
+        (3.0f * numMolecules * pow(lambda, vec3(4.0f)) * (6.0f - 7.0f * depolarizationFactor));
 }
 
 vec3 totalMie(vec3 lambda, vec3 K, float T)
 {
     float c = 0.2 * T * 10e-18;
-    return 0.434 * c * PI * pow((2.0 * PI) / lambda, vec3(mieV - 2.0)) * K;
+    return 0.434f * c * PI * pow((2.0f * PI) / lambda, vec3(mieV - 2.0f)) * K;
 }
 
 float rayleighPhase(float cosTheta)
@@ -80,51 +84,48 @@ vec3 Uncharted2Tonemap(vec3 W)
     return ((W * (A * W + C * B) + D * E) / (W * (A * W + B) + D * F)) - E / F;
 }
 
-void main()
-{
-    vec3 vWorldPosition = fs_pos;
+void Experimental::Test() {
+    vec3 vWorldPosition = vec3(0, 0, 1);//fs_pos;
     // TODO assumes a sphere of size 450,000. Needs to be adjusted for flat projection
 
     // Rayleigh coefficient
     float sunfade = 0.4; // - clamp(1.0 - exp((sunPosition.y / 450000.0)), 0.0, 1.0);
     float rayleighCoefficient = rayleigh - (1.0 * (1.0 - sunfade));
     vec3 betaR = totalRayleigh(primaries) * rayleighCoefficient;
-    
+
     // Mie coefficient
     vec3 betaM = totalMie(primaries, mieKCoefficient, turbidity) * mieCoefficient;
-    
+
     // Optical length, cutoff angle at 90 to avoid singularity
     float zenithAngle = acos(max(0.0, dot(UP, normalize(vWorldPosition - cameraPos))));
     float denom = cos(zenithAngle) + 0.15 * pow(93.885 - ((zenithAngle * 180.0) / PI), -1.253);
     float sR = rayleighZenithLength / denom;
     float sM = mieZenithLength / denom;
-    
+
     // Combined extinction factor
     vec3 Fex = exp(-(betaR * sR + betaM * sM));
-    
+
     // In-scattering
     vec3 sunDirection = normalize(sunPosition);
     float cosTheta = dot(normalize(vWorldPosition - cameraPos), sunDirection);
     vec3 betaRTheta = betaR * rayleighPhase(cosTheta * 0.5 + 0.5);
     vec3 betaMTheta = betaM * henyeyGreensteinPhase(cosTheta, mieDirectionalG);
     float sunE = sunIntensity(dot(sunDirection, UP));
-    vec3 Lin = pow(sunE * ((betaRTheta + betaMTheta) / (betaR + betaM)) * (1.0 - Fex), vec3(1.5));
+    vec3 Lin = pow(sunE * ((betaRTheta + betaMTheta) / (betaR + betaM)) * (1.0f - Fex), vec3(1.5));
     Lin *= mix(vec3(1.0), pow(sunE * ((betaRTheta + betaMTheta) / (betaR + betaM)) * Fex, vec3(0.5)), clamp(pow(1.0 - dot(UP, sunDirection), 5.0), 0.0, 1.0));
-    
+
     // Composition + solar disc
     float sunAngularDiameterCos = cos(sunAngularDiameterDegrees);
-    float sundisk = smoothstep(sunAngularDiameterCos, sunAngularDiameterCos + 0.00002, cosTheta);
+    float sundisk = sunAngularDiameterCos; //  smoothstep(sunAngularDiameterCos, sunAngularDiameterCos + 0.00002, cosTheta);
     vec3 L0 = vec3(0.1) * Fex;
-    L0 += sunE * 19000.0 * Fex * sundisk;
+    L0 += sunE * 19000.0f * Fex * sundisk;
     vec3 texColor = Lin + L0;
     texColor *= 0.04;
-    texColor += vec3(0.0, 0.001, 0.0025) * 0.3;
-    
+    texColor += (vec3(0.0, 0.001, 0.0025) * 0.3f);
+
     // Tonemapping
-    vec3 whiteScale = 1.0 / Uncharted2Tonemap(vec3(tonemapWeighting));
-    vec3 curr = Uncharted2Tonemap((log2(2.0 / pow(luminance, 4.0))) * texColor);
+    vec3 whiteScale = 1.0f / Uncharted2Tonemap(vec3(tonemapWeighting));
+    vec3 curr = Uncharted2Tonemap(((float)log2(2.0 / pow(luminance, 4.0f))) * texColor);
     vec3 tone_color = curr * whiteScale;
     vec3 retColor = pow(tone_color, vec3(1.0 / (1.2 + (1.2 * sunfade))));
-
-    color = vec4(retColor, 1.0);
 }

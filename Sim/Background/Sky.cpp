@@ -47,14 +47,9 @@ bool Sky::Init(ShaderFactory* shaderFactory) {
 void Sky::Render(float currentTime) {
     glUseProgram(programId);
 
-    // GLint maxIterationsLoc = glGetUniformLocation(programId, "maxIterations");
-    // glUniform1i(maxIterationsLoc, 400);
-    // 
-    // GLint time = glGetUniformLocation(programId, "time");
-    // glUniform1f(time, currentTime * 100.0f);
-    // 
-    // GLint mousePos = glGetUniformLocation(programId, "c");
-    // glUniform2f(mousePos, -0.55f, 0.75f);
+    // TODO: Temporary before camera movement is in place
+    GLint time = glGetUniformLocation(programId, "time");
+    glUniform1f(time, currentTime * 0.5f);
 
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);

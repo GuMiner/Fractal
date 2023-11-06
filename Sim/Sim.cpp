@@ -12,6 +12,7 @@
 #include <SFML/OpenGL.hpp>
 
 #include "Sim.h"
+#include "Tests/Experimental.h"
 
 using json = nlohmann::json;
 
@@ -37,6 +38,11 @@ Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr),
     shaderFactory(nullptr)
 {
     Logger::Setup();
+
+    // For debugging
+    if (debugCoreOpenGl) {
+        Experimental::Test();
+    }
 }
 
 Sim::~Sim() {
