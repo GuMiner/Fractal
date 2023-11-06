@@ -62,7 +62,7 @@
     <ClInclude Include="Data\Config\Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Data\Config\Config.cpp">
+    <ClInclude Include="Data\Config\CameraConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Telemetry\FpsCounter.h">
@@ -106,9 +106,9 @@
     <CopyFileToFolders Include="Config\libigl-bunny.off" />
     <CopyFileToFolders Include="Config\Shaders\juliaFractal.vs" />
     <CopyFileToFolders Include="Config\Shaders\juliaFractal.fs" />
+    <CopyFileToFolders Include="Config\camera.json" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Config\rendering.json" />
     <None Include="Config\Shaders\model.vs" />
     <None Include="Config\Shaders\model.fs" />
   </ItemGroup>

@@ -1,10 +1,18 @@
-#include "Camera.h"
+#include <fstream>
+#include "Data/Config/CameraConfig.h"
 #include <glm/geometric.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Camera.h"
 
 Camera::Camera(): 
-	position(glm::vec3(0, 0, -5.0f)), forwards(glm::vec3(0, 0, 1)), up(glm::vec3(0, 1, 0)),
+	forwards(glm::vec3(0, 0, 1)), up(glm::vec3(0, 1, 0)),
 	fovY(30.0f), aspectRatio(1.77778f), nearPlane(0.10f), farPlane(1000.0f) {
+
+	std::ifstream f("Config/camera.json");
+    CameraConfig config = json::parse(f).template get<CameraConfig>();
+    
+	position = config.position;
+	
 	ComputeNormals();
 
 	// TODO get view settings from config
