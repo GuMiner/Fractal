@@ -1,8 +1,10 @@
 {
   "position": "0,0,-5.0",
+  "forwards":  "0,0,1",
+  "up": "0,1,0",
   "letterbox": true,
   "aspectRatio":  1.77778,
-  "fovY": 50.0,
+  "fovY": 30.0,
   "nearPlane": 0.1,
   "farPlane":  1000.0
 }

@@ -1,17 +1,21 @@
 #include <fstream>
-#include "Data/Config/CameraConfig.h"
 #include <glm/geometric.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Data/Config/CameraConfig.h"
 #include "Camera.h"
 
-Camera::Camera(): 
-	forwards(glm::vec3(0, 0, 1)), up(glm::vec3(0, 1, 0)),
-	fovY(30.0f), aspectRatio(1.77778f), nearPlane(0.10f), farPlane(1000.0f) {
-
+Camera::Camera() {
 	std::ifstream f("Config/camera.json");
     CameraConfig config = json::parse(f).template get<CameraConfig>();
     
 	position = config.position;
+	forwards = config.forwards;
+	up = config.up;
+
+	fovY = config.fovY;
+	aspectRatio = config.aspectRatio;
+	nearPlane = config.nearPlane;
+	farPlane = config.farPlane;
 	
 	ComputeNormals();
 
@@ -20,8 +24,7 @@ Camera::Camera():
 	Perspective = glm::perspectiveLH(glm::radians(fovY), aspectRatio, nearPlane, farPlane);
 }
 
-void Camera::ComputeNormals()
-{
+void Camera::ComputeNormals() {
     up = glm::normalize(up);
     forwards = glm::normalize(forwards);
 
