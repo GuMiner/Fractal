@@ -1,13 +1,13 @@
 #pragma once
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
-#include "Scene.h"
 #include "Telemetry/FpsCounter.h"
 #include "ThreadProcessor.h"
 #include "Random2DFiller.h"
 #include "SimUpdateState.h"
 #include "GLCore/ShaderFactory.h"
- 
+#include "Scene.h"
+
 class Sim
 {
 	// TODO: Move to a diagnostic layer for 2D simulations?
@@ -20,8 +20,6 @@ class Sim
 	// Single-threaded variant
 	Random2DFiller* filler;
 
-	// Will be moved elsewhere, just testing integration
-	GLuint testProgram;
 	ShaderFactory* shaderFactory;
 
 	Scene* testScene;

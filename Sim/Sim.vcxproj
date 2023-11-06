@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Background\Fractal.cpp" />
     <ClCompile Include="GLCore\ShaderFactory.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Data\Config\CameraConfig.h" />
     <ClInclude Include="Data\Config\Config.h" />
+    <ClInclude Include="Background\Fractal.h" />
     <ClInclude Include="GLCore\ShaderFactory.h" />
     <ClInclude Include="ScreenshotTaker.h" />
     <ClInclude Include="Model.h" />

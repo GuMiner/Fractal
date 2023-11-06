@@ -94,10 +94,6 @@ void Sim::Update(float currentTime) {
 }
 
 void Sim::Render(sf::RenderWindow& window, float currentTime) {
-
-
-    shaderFactory->RunTestProgram(testProgram, currentTime);
-
     testScene->RenderScene(currentTime);
 
     if (!debugCoreOpenGl)
@@ -198,12 +194,6 @@ void Sim::Run() {
     window.setActive(true);
 
     shaderFactory->InitCore();
-    if (!shaderFactory->CreateShaderProgram("Config/Shaders/juliaFractal", &testProgram))
-    {
-        Logger::LogError("Failed to load the test rendering shader; cannot continue.");
-        return;
-    }
-
     if (!testScene->Init(shaderFactory)) {
         Logger::LogError("Failed to load the test scene");
         return;
