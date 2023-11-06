@@ -54,6 +54,9 @@
     <ClCompile Include="Background\Fractal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Background\Sky.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -104,6 +107,9 @@
     <ClInclude Include="Background\Fractal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Background\Sky.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json" />
@@ -117,5 +123,7 @@
   <ItemGroup>
     <None Include="Config\Shaders\model.vs" />
     <None Include="Config\Shaders\model.fs" />
+    <None Include="Config\Shaders\sky.vs" />
+    <None Include="Config\Shaders\sky.fs" />
   </ItemGroup>
 </Project>

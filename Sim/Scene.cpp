@@ -4,6 +4,7 @@
 Scene::Scene() : camera(nullptr) {
 	testModel = new Model();
 	fractal = new Fractal();
+	sky = new Sky(); 
 }
 
 void Scene::ClearScreen() {
@@ -20,6 +21,10 @@ bool Scene::Init(ShaderFactory* shaderFactory) {
 		return false;
 	}
 
+	if (!sky->Init(shaderFactory)) {
+		return false;
+	}
+
 	if (!testModel->Init(shaderFactory)) {
 		return false;
 	}
@@ -33,5 +38,7 @@ void Scene::RenderScene(float currentTime) {
 	ClearScreen();
 
 	testModel->Render(camera, currentTime);
-	fractal->Render(currentTime);
+
+	// fractal->Render(currentTime);
+	sky->Render(currentTime);
 }

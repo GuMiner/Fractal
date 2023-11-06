@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Background\Fractal.cpp" />
+    <ClCompile Include="Background\Sky.cpp" />
     <ClCompile Include="GLCore\ShaderFactory.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Data\Config\CameraConfig.h" />
     <ClInclude Include="Data\Config\Config.h" />
     <ClInclude Include="Background\Fractal.h" />
+    <ClInclude Include="Background\Sky.h" />
     <ClInclude Include="GLCore\ShaderFactory.h" />
     <ClInclude Include="ScreenshotTaker.h" />
     <ClInclude Include="Model.h" />
@@ -186,6 +188,8 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\Shaders\sky.fs" />
+    <None Include="Config\Shaders\sky.vs" />
     <None Include="Config\Shaders\model.fs" />
     <None Include="Config\Shaders\model.vs" />
     <CopyFileToFolders Include="Config\camera.json">
