@@ -1,9 +1,9 @@
 #pragma once
 #include <glm\vec3.hpp>
 #include <glm\mat4x4.hpp>
+#include "KeyboardInput.h"
 
-class Camera
-{
+class Camera {
     float fovY;
 
     float aspectRatio;
@@ -17,12 +17,34 @@ class Camera
     glm::vec3 right; // X+, computed
     glm::vec3 target; // Where the camera points to, normalized.
 
-    void ComputeNormals();
+    // Movement data
+    float lastFrameTime;
+    bool wasMouseDown;
+    glm::ivec2 lastMousePos;
+
+    template <typename T>
+    bool DialKey(sf::Keyboard::Key posKeyId, sf::Keyboard::Key negKeyId, T amount, T* variable) const {
+        bool updated = false;
+        if (KeyboardInput::IsKeyPressed(posKeyId)) {
+            (*variable) += amount;
+            updated = true;
+        }
+
+        if (KeyboardInput::IsKeyPressed(negKeyId)) {
+            (*variable) -= amount;
+            updated = true;
+        }
+
+        return updated;
+    }
+
+    bool CheckMouseRotation();
+    void UpdateNormalsAndMatrixes();
 public:
 	glm::mat4 Perspective;
 	glm::mat4 View;
 
 	Camera();
-    
+    void Update(float currentTime);
 };
 

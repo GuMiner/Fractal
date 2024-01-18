@@ -15,7 +15,7 @@ struct CameraConfig {
 	float aspectRatio;
 	float fovY;
 	float nearPlane;
-	float farPlane;
+	float farPlane; 
 };
 
 void ParseVector(const json& j, const char* field, glm::vec3& vector) {

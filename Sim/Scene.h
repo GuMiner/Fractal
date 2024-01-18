@@ -17,5 +17,6 @@ class Scene {
 public:
     Scene();
     bool Init(ShaderFactory* shaderFactory);
+    void Update(float currentTime);
     void RenderScene(float currentTime);
 };

@@ -132,6 +132,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Background\Fractal.cpp" />
     <ClCompile Include="Background\Sky.cpp" />
+    <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="Tests\Experimental.cpp" />
     <ClCompile Include="GLCore\ShaderFactory.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Data\Config\Config.h" />
     <ClInclude Include="Background\Fractal.h" />
     <ClInclude Include="Background\Sky.h" />
+    <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="Tests\Experimental.h" />
     <ClInclude Include="GLCore\ShaderFactory.h" />
     <ClInclude Include="ScreenshotTaker.h" />

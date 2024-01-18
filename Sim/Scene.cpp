@@ -34,6 +34,10 @@ bool Scene::Init(ShaderFactory* shaderFactory) {
 	return true;
 }
 
+void Scene::Update(float currentTime) {
+	camera->Update(currentTime);
+}
+
 void Scene::RenderScene(float currentTime) {
 	ClearScreen();
 

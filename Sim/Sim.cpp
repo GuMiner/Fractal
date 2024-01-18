@@ -6,7 +6,7 @@
 
 #include "Telemetry/Logger.h"
 #include "ScreenshotTaker.h"
-//#include "TemperFine.h"
+#include "KeyboardInput.h"
 #include <nlohmann/json.hpp>
 #include "Data/Config/Config.h"
 #include <SFML/OpenGL.hpp>
@@ -16,7 +16,7 @@
 
 using json = nlohmann::json;
 
-bool debugCoreOpenGl = true;
+bool debugCoreOpenGl = false;
 
 //#ifdef _WIN32
 //#include <windows.h>
@@ -72,6 +72,7 @@ bool Sim::Init() {
 }
 
 void Sim::Update(float currentTime) {
+    /**
     sf::Vector2u textureSize = simTexture.getSize();
     sf::Uint8* pixels = new sf::Uint8[textureSize.x * textureSize.y * 4]; // * 4 because pixels have 4 components (RGBA)
     
@@ -95,8 +96,11 @@ void Sim::Update(float currentTime) {
 
     simTexture.update(pixels);
     delete[] pixels;
+    **/
 
     fpsCounter->Update(currentTime);
+    testScene->Update(currentTime);
+    
 }
 
 void Sim::Render(sf::RenderWindow& window, float currentTime) {
@@ -141,19 +145,9 @@ void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state) {
         {
             UpdatePerspective(event.size.width, event.size.height);
         }
-        else if (event.type == sf::Event::KeyReleased)
+        else if (KeyboardInput::HandleEvent(event))
         {
-
-        }
-        else if (event.type == sf::Event::MouseButtonPressed)
-        {
-           // if (event.mouseButton.button == sf::Mouse::Left && 
-           //     !techTreeWindow.WithinVisibleBounds(event.mouseButton.x, event.mouseButton.y) &&
-           //     !buildingsWindow.WithinVisibleBounds(event.mouseButton.x, event.mouseButton.y) &&
-           //     !escapeConfigWindow.WithinVisibleBounds(event.mouseButton.x, event.mouseButton.y))
-           // {
-           //     physics.QueueLeftMouseClick(event.mouseButton.x, event.mouseButton.y, window.getSize().x, window.getSize().y);
-           // }
+            // Event handled, continue from here
         }
     }
 
