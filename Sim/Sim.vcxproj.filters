@@ -63,6 +63,15 @@
     <ClCompile Include="KeyboardInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Preprocessor\TerrainTriangulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Preprocessor\GamePreprocessor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Preprocessor\stb_implementations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -122,6 +131,15 @@
     <ClInclude Include="KeyboardInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Preprocessor\TerrainTriangulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\Config\PreprocessorConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Preprocessor\GamePreprocessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json" />
@@ -137,5 +155,6 @@
     <None Include="Config\Shaders\model.fs" />
     <None Include="Config\Shaders\sky.vs" />
     <None Include="Config\Shaders\sky.fs" />
+    <None Include="Config\preprocessor.json" />
   </ItemGroup>
 </Project>

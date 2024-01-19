@@ -1,4 +1,6 @@
 #pragma once
+
+// These are setup via vcpkg. Navigate to them to figure out *which* vcpkg instance.
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
 #include "Telemetry/FpsCounter.h"

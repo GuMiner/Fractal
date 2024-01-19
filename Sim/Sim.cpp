@@ -13,10 +13,12 @@
 
 #include "Sim.h"
 #include "Tests/Experimental.h"
+#include "Preprocessor/GamePreprocessor.h"
 
 using json = nlohmann::json;
 
 bool debugCoreOpenGl = false;
+bool preprocess = false;
 
 //#ifdef _WIN32
 //#include <windows.h>
@@ -42,6 +44,11 @@ Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr),
     // For debugging
     if (debugCoreOpenGl) {
         Experimental::Test();
+    }
+
+    if (preprocess) {
+        GamePreprocessor preprocessor;
+        preprocessor.Process();
     }
 }
 

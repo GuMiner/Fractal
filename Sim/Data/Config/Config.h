@@ -33,3 +33,4 @@ void from_json(const json& j, DiagnosticsConfig& c) {
 	j.at("width").get_to(c.width);
 	j.at("height").get_to(c.height);
 }
+
