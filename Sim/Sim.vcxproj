@@ -136,6 +136,7 @@
     <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="Preprocessor\stb_implementations.cpp" />
     <ClCompile Include="Preprocessor\TerrainTriangulator.cpp" />
+    <ClCompile Include="Terrain\TerrainModel.cpp" />
     <ClCompile Include="Tests\Experimental.cpp" />
     <ClCompile Include="GLCore\ShaderFactory.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Preprocessor\GamePreprocessor.h" />
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="Preprocessor\TerrainTriangulator.h" />
+    <ClInclude Include="Terrain\TerrainModel.h" />
     <ClInclude Include="Tests\Experimental.h" />
     <ClInclude Include="GLCore\ShaderFactory.h" />
     <ClInclude Include="ScreenshotTaker.h" />

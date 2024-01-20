@@ -3,6 +3,7 @@
 
 Scene::Scene() : camera(nullptr) {
 	testModel = new Model();
+	testTerrain = new TerrainModel();
 	fractal = new Fractal();
 	sky = new Sky(); 
 }
@@ -25,12 +26,20 @@ bool Scene::Init(ShaderFactory* shaderFactory) {
 		return false;
 	}
 
+	//if (!testTerrain->Init(shaderFactory)) {
+	//	return false;
+	//}
+	//if (!testTerrain->SendMesh()) {
+	//	return false;
+	//}
+
 	if (!testModel->Init(shaderFactory)) {
 		return false;
 	}
 	if (!testModel->SendMesh()) {
 		return false;
 	}
+
 	return true;
 }
 
@@ -40,6 +49,8 @@ void Scene::Update(float currentTime) {
 
 void Scene::RenderScene(float currentTime) {
 	ClearScreen();
+
+	//testTerrain->Render(camera, currentTime);
 
 	testModel->Render(camera, currentTime);
 
