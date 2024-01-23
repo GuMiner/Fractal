@@ -5,8 +5,11 @@
 #include <sstream>
 #include <ostream>
 #include <stb_image.h>
+#include <stb_image_resize.h>
+#include <stb_image_write.h>
 #include <glm\vec3.hpp>
 #include "../Data/Config/PreprocessorConfig.h"
+#include "../Data/BinaryModel.h"
 #include "TerrainTriangulator.h"
 
 void TerrainTriangulator::GenerateMipMaps() {
@@ -24,9 +27,7 @@ void TerrainTriangulator::GenerateMipMaps() {
             if (!FileExists(outputFilePath.str())) {
                 std::cout << "Reducing " << x << ", " << y << std::endl;
 
-                std::ofstream outputFile(outputFilePath.str(), std::ios::out);
-                TriangulateTile(inputFile.str().c_str(), outputFile);
-                outputFile.close();
+                ReduceTile(inputFile.str().c_str(), outputFilePath.str().c_str());
             }
         }
     }
@@ -34,14 +35,60 @@ void TerrainTriangulator::GenerateMipMaps() {
 
 void TerrainTriangulator::ReduceTile(const char* inputFile, const char* outputFile)
 {
-    // TODO generate mip maps
     int width = 0;
     int height = 0;
     int channels = 0;
     unsigned char* imageData = stbi_load(inputFile, &width, &height, &channels, STBI_rgb_alpha);
 
-    // Assume 1000,1000
-    // 500, 500, 250, 250, 125, 125, 
+    // No matter the input (should always be ~1000x1000), go to:
+    // 512x512, then 256x256, then 128x128, then 64x64, then 32x32, then 16x16, then 8x8, then 4,4
+    // Oriented top to bottom
+
+    // This is somewhat silly, but easy to visually verify for a one-time operation.
+    int mipmapWidth = 512;
+    int mipmapHeight = 512 + 256 + 128 + 64 + 32 + 16 + 8 + 4;
+    unsigned char* mipmapData = new unsigned char[mipmapWidth * mipmapHeight * 4];
+    stbir_resize_uint8(
+        imageData, width, height, 0,
+        mipmapData, 512, 512, 0, 4);
+
+    int fullStride = 512 * 4;
+    int offset256 = 512 * fullStride;
+    stbir_resize_uint8(
+        mipmapData, 512, 512, 0,
+        mipmapData + offset256, 256, 256, fullStride, 4);
+
+    int offset128 = offset256 + 256 * fullStride;
+    stbir_resize_uint8(
+        mipmapData + offset256, 256, 256, fullStride,
+        mipmapData + offset128, 128, 128, fullStride, 4);
+
+    int offset64 = offset128 + 128 * fullStride;
+    stbir_resize_uint8(
+        mipmapData + offset128, 128, 128, fullStride,
+        mipmapData + offset64, 64, 64, fullStride, 4);
+
+    int offset32 = offset64 + 64 * fullStride;
+    stbir_resize_uint8(
+        mipmapData + offset64, 64, 64, fullStride,
+        mipmapData + offset32, 32, 32, fullStride, 4);
+
+    int offset16 = offset32 + 32 * fullStride;
+    stbir_resize_uint8(
+        mipmapData + offset32, 32, 32, fullStride,
+        mipmapData + offset16, 16, 16, fullStride, 4);
+
+    int offset8 = offset16 + 16 * fullStride;
+    stbir_resize_uint8(
+        mipmapData + offset16, 16, 16, fullStride,
+        mipmapData + offset8, 8, 8, fullStride, 4);
+
+    int offset4 = offset8 + 8 * fullStride;
+    stbir_resize_uint8(
+        mipmapData + offset8, 8, 8, fullStride,
+        mipmapData + offset4, 4, 4, fullStride, 4);
+
+    stbi_write_png(outputFile, mipmapWidth, mipmapHeight, 4, mipmapData, 0);
 }
 
 
@@ -53,36 +100,39 @@ void TerrainTriangulator::TriangulateTerrain() {
         std::cout << "Triangulation: Processing " << x << std::endl;
         for (int y = 0; y < config.height; y++) {
             std::stringstream inputFile;
-            inputFile << "Config/Terrain/Source/" << y << "/" << x << ".png";
+            inputFile << "Config/Terrain/Generated/" << y << "/" << x << "-mips.png";
 
             std::stringstream outputFilePath;
-            SetOutputFilePath(&outputFilePath, x, y);
+            SetOutputFilePath(&outputFilePath, x, y, 8); // TODO for now, just make the 8x8 mips files
             if (!FileExists(outputFilePath.str())) {
 
                 std::cout << "Triangulating " << x << ", " << y << std::endl;
-                std::ofstream outputFile(outputFilePath.str(), std::ios::out);
-                TriangulateTile(inputFile.str().c_str(), outputFile);
-                outputFile.close();
+                TriangulateTile(inputFile.str().c_str(), outputFilePath.str(), 8);
             }
         }
     }
 }
 
-void TerrainTriangulator::TriangulateTile(const char* inputFile, std::ofstream& outputFile) {
-    // Save in the OFF file format
-    outputFile << "OFF" << std::endl;
-
+void TerrainTriangulator::TriangulateTile(const char* inputFile, std::string outputFile, int mipsLevel) {
     int width = 0;
     int height = 0;
     int channels = 0;
     unsigned char* imageData = stbi_load(inputFile, &width, &height, &channels, STBI_rgb_alpha);
 
+    if (width != 512) {
+        std::cout << "This should be a mip-mapped tile, erroring out" << std::endl;
+        return;
+    }
+
     std::vector<glm::vec3> vertices;
     std::vector<glm::ivec3> faces;
 
-    for (int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-            int imageCoord = (x + y * width) * 4;
+    for (int x = 0; x < mipsLevel; x++) {
+        for (int y = 0; y < mipsLevel; y++) {
+            int xEffective = x;
+            int yEffective = y + 512 + 256 + 128 + 64 + 32 + 16; // TODO have a mips class to do this sort of calculation
+
+            int imageCoord = (xEffective + yEffective * width) * 4;
             int height = imageData[imageCoord] + (int)imageData[imageCoord] << 8; // TODO might need modifications
                 
             // V1 -- just flat plane, connectors TBD
@@ -96,21 +146,16 @@ void TerrainTriangulator::TriangulateTile(const char* inputFile, std::ofstream& 
         }
     }
 
-    outputFile << vertices.size() << " " << faces.size() << " " << 0 << "\n";
-    for (glm::vec3 vertex : vertices) {
-        outputFile << vertex.x << " " << vertex.y << " " << vertex.z << "\n";
-    }
-
-    for (glm::ivec3 face : faces) {
-        outputFile << "3 " << face.x << " " << face.y << " " << face.z << "\n";
+    if (!BinaryModel::Save(outputFile, vertices, faces)) {
+        std::cout << "Unable to save " << outputFile << "!" << std::endl;
     }
 }
 
-void TerrainTriangulator::SetOutputFilePath(std::stringstream* outputFilePath, int x, int y) {
+void TerrainTriangulator::SetOutputFilePath(std::stringstream* outputFilePath, int x, int y, int mipsLevel) {
     *outputFilePath << "Config/Terrain/Generated/" << y;
     EnsureFolderExists(outputFilePath->str());
 
-    *outputFilePath << "/" << x << ".off";
+    *outputFilePath << "/" << x << "-" << mipsLevel << ".off";
 }
 
 void TerrainTriangulator::SetMipMapOutputFilePath(std::stringstream* outputFilePath, int x, int y) {

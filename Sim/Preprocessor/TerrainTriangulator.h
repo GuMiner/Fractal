@@ -9,10 +9,10 @@ class TerrainTriangulator
 	void EnsureFolderExists(const std::string& folder);
 	
 	void ReduceTile(const char* inputFile, const char* outputFile);
-	void TriangulateTile(const char* inputFile, std::ofstream& outputFile);
+	void TriangulateTile(const char* inputFile, std::string outputFile, int mipsLevel);
 
 	void SetMipMapOutputFilePath(std::stringstream* outputFilePath, int x, int y);
-	void SetOutputFilePath(std::stringstream* outputFilePath, int x, int y);
+	void SetOutputFilePath(std::stringstream* outputFilePath, int x, int y, int mipsLevel);
 public:
 	void GenerateMipMaps();
 	void TriangulateTerrain();

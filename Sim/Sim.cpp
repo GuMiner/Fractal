@@ -31,7 +31,7 @@ void Sim::SetupDiagnostics() {
     DiagnosticsConfig config = json::parse(f).template get<DiagnosticsConfig>();
     simTexture.create(config.width, config.height);
     simTexture.setRepeated(false);
-    simTexture.setSmooth(false);
+    simTexture.setSmooth(false); 
 
     simSprite.setTexture(simTexture);
 }

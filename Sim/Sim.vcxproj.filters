@@ -75,6 +75,9 @@
     <ClCompile Include="Terrain\TerrainModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Data\BinaryModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -146,6 +149,9 @@
     <ClInclude Include="Terrain\TerrainModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Data\BinaryModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json" />
@@ -162,5 +168,8 @@
     <None Include="Config\Shaders\sky.vs" />
     <None Include="Config\Shaders\sky.fs" />
     <None Include="Config\preprocessor.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="DebugObjectFormats.natvis" />
   </ItemGroup>
 </Project>

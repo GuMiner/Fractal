@@ -2,17 +2,11 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <gl/glew.h>
 #include <igl/readOFF.h>
-#include <igl/per_face_normals.h>
 #include <igl/per_vertex_normals.h>
 
 #include "Telemetry/Logger.h"
 #include "Model.h"
-
-
-// TODO allow for different model types
-Eigen::MatrixXf V;
-Eigen::MatrixXi F;
-Eigen::MatrixXf N;
+#include "Data/BinaryModel.h"
 
 Model::Model() {
 }
@@ -24,13 +18,67 @@ bool Model::Init(ShaderFactory* shaderFactory) {
         return false;
     }
 
-    if (!igl::readOFF("Config/libigl-bunny.off", V, F)) {
-        Logger::LogError("Unable to read test input file, cannot continue");
+
+
+    // //TODO move to a igl converter.
+   // std::vector<glm::vec3> vertices2;
+   // std::vector<glm::ivec3> faces2;
+   // Eigen::MatrixXf V;
+   // Eigen::MatrixXi F;
+   // 
+   // if (!igl::readOFF("Config/libigl-bunny.off", V, F)) {
+   //     Logger::LogError("Unable to read test input file, cannot continue");
+   //     return false;
+   // }
+   // 
+   // for (int i = 0; i < V.rows(); i++) {
+   //     vertices2.push_back(glm::vec3(V(i, 0), V(i, 1), V(i, 2)));
+   // }
+   // for (int i = 0; i < F.rows(); i++) {
+   //     faces2.push_back(glm::ivec3(F(i, 0), F(i, 1), F(i, 2)));
+   // }
+   // 
+   // BinaryModel::Save("Config/libigl-bunny-binary.off", vertices2, faces2);
+
+
+    if (!BinaryModel::Load("Config/libigl-bunny-binary.off", vertices, faces))
+    {
+        Logger::LogError("Cannot read test input file");
         return false;
     }
 
-    //igl::per_face_normals(V, F, N);
+    // TODO random normals for debugging
+   //  for (int i = 0; i < faces.size(); i++) {
+   //      for (int idx = 0; idx < 3; idx++) {
+   //          normals.push_back(glm::vec3((float)(rand() % 256) / 256, (float)(rand() % 256) / 256, (float)(rand() % 256) / 256)); // test code for now
+   //      }
+   //  }
+
+    // TODO move to an IGL helper class as I'm solidifying back to glm
+    Eigen::MatrixXf V;
+    Eigen::MatrixXi F;
+    Eigen::MatrixXf N;
+
+    V.resize(vertices.size(), 3);
+    F.resize(faces.size(), 3);
+
+    for (int i = 0; i < V.rows(); i++) {
+        V(i, 0) = vertices[i].x;
+        V(i, 1) = vertices[i].y;
+        V(i, 2) = vertices[i].z;
+    }
+    for (int i = 0; i < F.rows(); i++) {
+        F(i, 0) = faces[i].x;
+        F(i, 1) = faces[i].y;
+        F(i, 2) = faces[i].z;
+    }
+
     igl::per_vertex_normals(V, F, N);
+
+    for (int i = 0; i < N.rows(); i++) {
+        normals.push_back(glm::vec3(N(i, 0), N(i, 1), N(i, 2)));
+    }
+
 
 
     // Create new OpenGL primitives
@@ -40,13 +88,13 @@ bool Model::Init(ShaderFactory* shaderFactory) {
 
     glGenBuffers(1, &positionVbo);
     glBindBuffer(GL_ARRAY_BUFFER, positionVbo);
-    glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableVertexAttribArray(0);
 
     glGenBuffers(1, &normalVbo);
     glBindBuffer(GL_ARRAY_BUFFER, normalVbo);
-    glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, nullptr);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableVertexAttribArray(1);
 
@@ -68,16 +116,13 @@ bool Model::SendMesh() {
     glBindVertexArray(modelVao);
 
     glBindBuffer(GL_ARRAY_BUFFER, positionVbo);
-    Eigen::MatrixXf VT = V.transpose(); // TODO auto detect and either transpose or don't
-    glBufferData(GL_ARRAY_BUFFER, V.size() * 4, VT.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ARRAY_BUFFER, normalVbo);
-    Eigen::MatrixXf NT = N.transpose();
-    glBufferData(GL_ARRAY_BUFFER, N.size() * 4, NT.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
-    Eigen::MatrixXi FT = F.transpose();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * F.size(), FT.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, faces.size() * sizeof(glm::ivec3), &faces[0], GL_DYNAMIC_DRAW);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Order important!
@@ -151,7 +196,7 @@ void Model::Render(Camera* camera, float currentTime) {
     GLint pLightDiffuse = glGetUniformLocation(modelProgram, "pLightDiffuse");
     glUniform3f(pLightDiffuse, 0.8f, 0.8f, 0.8f);
 
-    glDrawElements(GL_TRIANGLES, 3 * F.rows(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 3 * faces.size(), GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
     glUseProgram(0);
