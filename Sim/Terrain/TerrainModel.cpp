@@ -1,12 +1,11 @@
 #include <iostream>
+#include <limits>
 #include <glm\gtc\matrix_transform.hpp>
 #include <gl/glew.h>
-#include <igl/per_face_normals.h>
-#include <igl/per_vertex_normals.h>
-
+#include "../Data/BinaryModel.h"
+#include "../GLCore/VectorMath.h"
 #include "../Telemetry/Logger.h"
 #include "TerrainModel.h"
-
 
 
 TerrainModel::TerrainModel() {
@@ -19,19 +18,27 @@ bool TerrainModel::Init(ShaderFactory* shaderFactory) {
         return false;
     }
 
-
-    // TODO allow for different model types
-
-
-    if (!igl::readOFF("Config/Terrain/Generated/0/0.off", V, F)) {
-        Logger::LogError("Unable to read test input file, cannot continue");
+    if (!BinaryModel::Load("Config/Terrain/Generated/0/0-8.off", vertices, faces))
+    {
+        Logger::LogError("Cannot read test input file");
         return false;
     }
 
+    VectorMath::ComputeNormals(vertices, faces, normals);
 
-    //igl::per_face_normals(V, F, N);
-    igl::per_vertex_normals(V, F, N);
+    // Compute test scaling factors
+    float minZ = std::numeric_limits<float>::max();
+    float maxZ = std::numeric_limits<float>::min();
+    for (int i = 0; i < vertices.size(); i++) {
+        minZ = std::min(minZ, vertices[i].z);
+        maxZ = std::max(maxZ, vertices[i].z);
+    }
 
+    // Scale from 0-5
+    scaleFactor = 5.0 / (maxZ - minZ);
+    offsetFactor = -maxZ;
+    std::cout << scaleFactor << " " << offsetFactor << " " << std::endl;
+    
 
     // Create new OpenGL primitives
     // TODO some of this should be extracted away as this needs to exist per model object
@@ -68,16 +75,13 @@ bool TerrainModel::SendMesh() {
     glBindVertexArray(modelVao);
 
     glBindBuffer(GL_ARRAY_BUFFER, positionVbo);
-    Eigen::MatrixXf VT = V.transpose(); // TODO auto detect and either transpose or don't
-    glBufferData(GL_ARRAY_BUFFER, V.size() * 4, VT.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ARRAY_BUFFER, normalVbo);
-    Eigen::MatrixXf NT = N.transpose();
-    glBufferData(GL_ARRAY_BUFFER, N.size() * 4, NT.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
-    Eigen::MatrixXi FT = F.transpose();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * F.size(), FT.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, faces.size() * sizeof(glm::ivec3), &faces[0], GL_DYNAMIC_DRAW);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Order important!
@@ -98,9 +102,10 @@ void TerrainModel::Render(Camera* camera, float currentTime) {
     glBindVertexArray(modelVao);
 
     // Projection 
-    auto position = glm::rotate(
-        glm::translate(glm::mat4(1.0), glm::vec3(0, 0, -109544)),
-        currentTime * 0.5f, glm::vec3(0, 1, 0));
+    auto position =
+        glm::translate(
+            glm::scale(glm::mat4(1.0), glm::vec3(1.0f, 1.0f, scaleFactor)), // 0.01f)), //glm::rotate(glm::mat4(1.0), currentTime * 0.5f, glm::vec3(0, 1, 0)),
+            glm::vec3(0, 0, offsetFactor)); //-109544));
     GLint model = glGetUniformLocation(modelProgram, "model");
     glUniformMatrix4fv(model, 1, GL_FALSE, &position[0][0]);
 
@@ -151,7 +156,7 @@ void TerrainModel::Render(Camera* camera, float currentTime) {
     GLint pLightDiffuse = glGetUniformLocation(modelProgram, "pLightDiffuse");
     glUniform3f(pLightDiffuse, 0.8f, 0.8f, 0.8f);
 
-    glDrawElements(GL_TRIANGLES, 3 * F.rows(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 3 * faces.size(), GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
     glUseProgram(0);

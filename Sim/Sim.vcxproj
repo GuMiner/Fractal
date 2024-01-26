@@ -149,6 +149,7 @@
     <ClCompile Include="Data\StringExtensions.cpp" />
     <ClCompile Include="Telemetry\Logging.cpp" />
     <ClCompile Include="ThreadProcessor.cpp" />
+    <ClCompile Include="GLCore\VectorMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data\BinaryModel.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Telemetry\FpsCounter.cpp" />
     <ClInclude Include="Tests\ITestable.h" />
     <ClInclude Include="ThreadProcessor.h" />
+    <ClInclude Include="GLCore\VectorMath.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json">

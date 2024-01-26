@@ -12,9 +12,12 @@ class TerrainModel
     GLuint normalVbo;
     GLuint indexVbo;
 
-    Eigen::MatrixXf V;
-    Eigen::MatrixXi F;
-    Eigen::MatrixXf N;
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec3> normals;
+    std::vector<glm::ivec3> faces;
+
+    float scaleFactor;
+    float offsetFactor;
 
 public:
     TerrainModel();
