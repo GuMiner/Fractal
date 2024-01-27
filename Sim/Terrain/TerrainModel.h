@@ -1,12 +1,8 @@
 #pragma once
-#include <igl/readOFF.h>
 #include "../GLCore/ShaderFactory.h"
 #include "../Camera.h"
 
-class TerrainModel
-{
-    GLuint modelProgram;
-
+class TerrainModel {
     GLuint modelVao;
     GLuint positionVbo;
     GLuint normalVbo;
@@ -16,12 +12,14 @@ class TerrainModel
     std::vector<glm::vec3> normals;
     std::vector<glm::ivec3> faces;
 
-    float scaleFactor;
-    float offsetFactor;
-
 public:
+
+    float scaleFactor;
+    float offsetFactor; // TODO shared scale and offset
     TerrainModel();
-    bool Init(ShaderFactory* shaderFactory);
+    bool Load(int tileX, int tileY);
     bool SendMesh();
-    void Render(Camera* camera, float currentTime);
+
+    GLuint GetVao();
+    GLsizei GetFaceCount();
 };

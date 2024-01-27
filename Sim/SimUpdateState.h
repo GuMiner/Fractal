@@ -9,7 +9,8 @@ class SimUpdateState
 	bool isCaptureRequested;
 public:
 	SimUpdateState();
-	bool IsPaused();
+	bool IsFocusPaused();
+	bool IsEscapePaused();
 	bool IsCaptureRequested();
 	bool ShouldQuit();
 	void Update(sf::Event& event);

@@ -143,19 +143,26 @@ void Sim::UpdatePerspective(unsigned int width, unsigned int height) {
 void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state) {
     // Handle all events.
     sf::Event event;
-    while (window.pollEvent(event))
-    {
+    while (window.pollEvent(event)) {
+        KeyboardInput::ResetMouseDelta();
+
+        sf::Vector2i newMousePos = window.getPosition() + sf::Vector2i(window.getSize().x / 2, window.getSize().y / 2);
+        sf::Mouse::setPosition(newMousePos);
+        KeyboardInput::SetMouseCenter(glm::ivec2(newMousePos.x, newMousePos.y));
+
         // Handle generic pause and window events
         state.Update(event);
 
         if (event.type == sf::Event::Resized)
         {
-            UpdatePerspective(event.size.width, event.size.height);
+            // UpdatePerspective(event.size.width, event.size.height);
+            KeyboardInput::SetMouseCenter(glm::ivec2(event.size.width / 2, event.size.height / 2));
         }
-        else if (KeyboardInput::HandleEvent(event))
-        {
+        else if (KeyboardInput::HandleEvent(event)) {
             // Event handled, continue from here
         }
+
+
     }
 
     // Update the player's research progress. if the user clicked a tech tile on the tech tree.
@@ -173,20 +180,6 @@ void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state) {
    //
    //     // TODO play a sound if you fail to (or succeed in) switching research.
    // }
-   //
-   // // Update windows based on size resizing.
-   // resourcesWindow.MoveToScreenBottom(window.getSize());
-   // techProgressWindow.MoveToScreenBottomLeft(window.getSize());
-   //
-   // // Handle pausing the physics thread if we're paused.
-   // if (escapePaused || focusPaused)
-   // {
-   //     physics.Pause();
-   // }
-   // else
-   // {
-   //     physics.Resume();
-   // }
 }
 
 void Sim::Run() {
@@ -199,6 +192,8 @@ void Sim::Run() {
     sf::RenderWindow window(sf::VideoMode(config.width, config.height), "Sim", sf::Style::Default, windowSettings);
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
+    window.setMouseCursorGrabbed(true);
+    window.setMouseCursorVisible(false);
 
     shaderFactory->InitCore();
     if (!testScene->Init(shaderFactory)) {
@@ -218,7 +213,7 @@ void Sim::Run() {
         float currentTime = clock.getElapsedTime().asSeconds();
 
         HandleEvents(window, state);
-        if (state.ShouldQuit()) {
+        if (state.IsEscapePaused()) { // .ShouldQuit()) {
             window.close();
             break;
         }

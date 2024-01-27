@@ -22,6 +22,10 @@ class Camera {
     bool wasMouseDown;
     glm::ivec2 lastMousePos;
 
+    float speedMultiplier;
+    bool wasSpeedUpPressed;
+    bool wasSpeedDownPressed;
+
     template <typename T>
     bool DialKey(sf::Keyboard::Key posKeyId, sf::Keyboard::Key negKeyId, T amount, T* variable) const {
         bool updated = false;

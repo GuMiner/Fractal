@@ -1,8 +1,10 @@
 #include "KeyboardInput.h"
+#include <iostream>
 
 std::set<sf::Keyboard::Key> KeyboardInput::pressedKeys;
 std::set<sf::Mouse::Button> KeyboardInput::pressedMouseButtons;
-glm::ivec2 KeyboardInput::mousePos;
+glm::ivec2 KeyboardInput::centralMousePos;
+glm::ivec2 KeyboardInput::lastMouseDelta = glm::ivec2(1, 1);
 
 // Returns true if a key was pressed, false otherwise.
 bool KeyboardInput::IsKeyPressed(sf::Keyboard::Key keyId) {
@@ -13,8 +15,16 @@ bool KeyboardInput::IsMouseButtonPressed(sf::Mouse::Button mouseButton) {
     return pressedMouseButtons.find(mouseButton) != pressedMouseButtons.end();
 }
 
-glm::ivec2 KeyboardInput::GetMousePos() {
-    return glm::ivec2(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+glm::ivec2 KeyboardInput::GetMouseDelta() {
+    return lastMouseDelta;
+}
+
+void KeyboardInput::ResetMouseDelta() {
+    lastMouseDelta = glm::ivec2(sf::Mouse::getPosition().x - centralMousePos.x, sf::Mouse::getPosition().y - centralMousePos.y);
+}
+
+void KeyboardInput::SetMouseCenter(glm::ivec2 center) {
+    centralMousePos = center;
 }
 
 bool KeyboardInput::HandleEvent(sf::Event event) {

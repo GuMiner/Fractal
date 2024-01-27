@@ -2,14 +2,14 @@
 #include "GLCore/ShaderFactory.h"
 #include "Camera.h"
 #include "Model.h"
-#include "Terrain/TerrainModel.h"
+#include "Terrain/Terrain.h"
 #include "Background/Fractal.h"
 #include "Background/Sky.h"
 
 class Scene {
     Camera* camera;
     Model* testModel;
-    TerrainModel* testTerrain;
+    Terrain* testTerrain;
 
     Fractal* fractal;
     Sky* sky;

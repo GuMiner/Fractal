@@ -3,7 +3,7 @@
 
 Scene::Scene() : camera(nullptr) {
 	testModel = new Model();
-	testTerrain = new TerrainModel();
+	testTerrain = new Terrain();
 	fractal = new Fractal();
 	sky = new Sky(); 
 }
@@ -27,9 +27,6 @@ bool Scene::Init(ShaderFactory* shaderFactory) {
 	}
 
 	if (!testTerrain->Init(shaderFactory)) {
-		return false;
-	}
-	if (!testTerrain->SendMesh()) {
 		return false;
 	}
 

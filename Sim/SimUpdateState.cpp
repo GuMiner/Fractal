@@ -5,8 +5,12 @@ SimUpdateState::SimUpdateState() :
 {
 }
 
-bool SimUpdateState::IsPaused() {
-	return focusPaused || escapePaused;
+bool SimUpdateState::IsFocusPaused() {
+	return focusPaused;
+}
+
+bool SimUpdateState::IsEscapePaused() {
+    return escapePaused;
 }
 
 bool SimUpdateState::IsCaptureRequested() {

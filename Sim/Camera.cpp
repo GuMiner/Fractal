@@ -22,8 +22,12 @@ Camera::Camera() {
 	farPlane = config.farPlane;
 
     lastFrameTime = -1;
-	
+    lastMousePos = glm::ivec2(-1, -1);
     UpdateNormalsAndMatrixes();
+
+    speedMultiplier = 1.0;
+    wasSpeedUpPressed = false;
+    wasSpeedDownPressed = false;
 }
 
 void Camera::UpdateNormalsAndMatrixes() {
@@ -34,27 +38,21 @@ void Camera::UpdateNormalsAndMatrixes() {
     target = position + forwards;
 
     View = glm::lookAtLH(position, target, up);
-    Perspective = glm::perspectiveLH(glm::radians(fovY), aspectRatio, nearPlane, farPlane);
+    Perspective = glm::infinitePerspectiveLH(glm::radians(fovY),
+        aspectRatio, nearPlane);// glm::perspectiveLH(, aspectRatio, nearPlane, farPlane);
 }
 
 // TODO put in constants elsewhere
-#define MOUSE_ROTATION_SPEED 0.001f
+#define MOUSE_ROTATION_SPEED 0.0015f
 #define KEYBOARD_MOVEMENT_SPEED 0.8f
 #define KEYBOARD_ROLL_SPEED 0.5f
 
 bool Camera::CheckMouseRotation() {
     bool rotatedAroundUp = false;
     bool rotatedAroundRight = false;
-    if (KeyboardInput::IsMouseButtonPressed(sf::Mouse::Button::Right)) {
-        if (!wasMouseDown) {
-            wasMouseDown = true;
-            lastMousePos = KeyboardInput::GetMousePos();
-            return true;
-        }
+    if (true) {
 
-        glm::ivec2 currentMousePos = KeyboardInput::GetMousePos();
-        glm::ivec2 difference = currentMousePos - lastMousePos;
-        lastMousePos = currentMousePos;
+        glm::ivec2 difference = KeyboardInput::GetMouseDelta();
 
         glm::vec2 rotation = MOUSE_ROTATION_SPEED * glm::vec2(-(float)difference.x, -(float)difference.y);
         if (difference.x != 0) {
@@ -76,17 +74,33 @@ bool Camera::CheckMouseRotation() {
 }
 
 
-void Camera::Update(float currentTime)
-{
+void Camera::Update(float currentTime) {
     float frameTime = std::max(0.1f, currentTime - lastFrameTime);
     lastFrameTime = currentTime;
 
+    if (KeyboardInput::IsKeyPressed(Key::Num1) && !wasSpeedDownPressed) {
+        wasSpeedDownPressed = true;
+        speedMultiplier /= 2;
+        std::cout << speedMultiplier << std::endl;
+    }
+    else if (!KeyboardInput::IsKeyPressed(Key::Num1) && wasSpeedDownPressed) {
+        wasSpeedDownPressed = false;
+    }
 
-    float speed = frameTime * KEYBOARD_MOVEMENT_SPEED; // TODO constant somewhere, or configurable speed
+    if (KeyboardInput::IsKeyPressed(Key::Num2) && !wasSpeedUpPressed) {
+        wasSpeedUpPressed = true;
+        speedMultiplier *= 2;
+        std::cout << speedMultiplier << std::endl;
+    }
+    else if (!KeyboardInput::IsKeyPressed(Key::Num2) && wasSpeedUpPressed) {
+        wasSpeedUpPressed = false;
+    }
 
+    float speed = frameTime * KEYBOARD_MOVEMENT_SPEED * speedMultiplier; // TODO constant somewhere, or configurable speed
+    float SIDEWAYS_DIVISOR = 4;
     bool movedForwards = DialKey(Key::A, Key::Z, speed * forwards, &position);
-    bool movedLeftRight = DialKey(Key::W, Key::Q, speed * right, &position);
-    bool movedUpDown = DialKey(Key::S, Key::X, speed * up, &position);
+    bool movedLeftRight = DialKey(Key::W, Key::Q, speed * right / SIDEWAYS_DIVISOR, &position);
+    bool movedUpDown = DialKey(Key::S, Key::X, speed * up / SIDEWAYS_DIVISOR, &position);
 
     bool mouseRotated = CheckMouseRotation();
 

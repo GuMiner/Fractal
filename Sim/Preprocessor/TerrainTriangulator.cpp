@@ -96,6 +96,7 @@ void TerrainTriangulator::TriangulateTerrain() {
     std::ifstream f("Config/preprocessor.json");
     PreprocessorConfig config = json::parse(f).template get<PreprocessorConfig>();
 
+    // TODO swap back once testing is done
     for (int x = 0; x < config.width; x++) {
         std::cout << "Triangulation: Processing " << x << std::endl;
         for (int y = 0; y < config.height; y++) {
@@ -104,10 +105,11 @@ void TerrainTriangulator::TriangulateTerrain() {
 
             std::stringstream outputFilePath;
             SetOutputFilePath(&outputFilePath, x, y, 8); // TODO for now, just make the 8x8 mips files
-            if (!FileExists(outputFilePath.str())) {
+            if (true || !FileExists(outputFilePath.str())) {
 
                 std::cout << "Triangulating " << x << ", " << y << std::endl;
                 TriangulateTile(inputFile.str().c_str(), outputFilePath.str(), 8);
+                //return; // Only do the starter tile to test the generation  
             }
         }
     }
@@ -129,26 +131,41 @@ void TerrainTriangulator::TriangulateTile(const char* inputFile, std::string out
 
     for (int x = 0; x < mipsLevel; x++) {
         for (int y = 0; y < mipsLevel; y++) {
-            int xEffective = x;
-            int yEffective = y + 512 + 256 + 128 + 64 + 32 + 16; // TODO have a mips class to do this sort of calculation
+            int xEffective = x; // TODO don't assume mips level 8 here
+            int mipsOffset = 512 + 256 + 128 + 64 + 32 + 16;
+            int yEffective = y + mipsOffset; // TODO have a mips class to do this sort of calculation
 
             int imageCoord = (xEffective + yEffective * width) * 4;
             int height = imageData[imageCoord] + (int)imageData[imageCoord] << 8; // TODO might need modifications
-                
+            
+            // TODO needs to be able to load other images and get edges from that. 
+            // This probably could be done by re-mip-mapping the images, or done here
+            int xPlus1 = x == mipsLevel - 1 ? x : x + 1;
+            int yPlus1 = (y == mipsLevel - 1 ? y : y + 1) + mipsOffset;
+
+            int imageCoordX = (xPlus1 + yEffective * width) * 4;
+            int imageCoordY = (xEffective + yPlus1 * width) * 4;
+            int imageCoordXY = (xPlus1 + yPlus1 * width) * 4;
+            int heightX = imageData[imageCoordX] + (int)imageData[imageCoordX] << 8;
+            int heightY = imageData[imageCoordY] + (int)imageData[imageCoordY] << 8;
+            int heightXY = imageData[imageCoordXY] + (int)imageData[imageCoordXY] << 8;
+
             // V1 -- just flat plane, connectors TBD
             int vs = vertices.size();
             faces.push_back(glm::ivec3(vs, vs + 1, vs + 2)); // CW faces of the top plane
             faces.push_back(glm::ivec3(vs, vs + 2, vs + 3));
             vertices.push_back(glm::vec3(x, y, height));
-            vertices.push_back(glm::vec3(x, y + 1, height));
-            vertices.push_back(glm::vec3(x + 1, y + 1, height));
-            vertices.push_back(glm::vec3(x + 1, y, height));
+            vertices.push_back(glm::vec3(x, y + 1, heightY));
+            vertices.push_back(glm::vec3(x + 1, y + 1, heightXY));
+            vertices.push_back(glm::vec3(x + 1, y, heightX));
         }
     }
 
     if (!BinaryModel::Save(outputFile, vertices, faces)) {
         std::cout << "Unable to save " << outputFile << "!" << std::endl;
     }
+
+    stbi_image_free(imageData);
 }
 
 void TerrainTriangulator::SetOutputFilePath(std::stringstream* outputFilePath, int x, int y, int mipsLevel) {

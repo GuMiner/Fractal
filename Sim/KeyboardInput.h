@@ -9,12 +9,15 @@ class KeyboardInput
     // List of pressed keys.
     static std::set<sf::Keyboard::Key> pressedKeys;
     static std::set<sf::Mouse::Button> pressedMouseButtons;
-    static glm::ivec2 mousePos;
+    static glm::ivec2 centralMousePos;
+    static glm::ivec2 lastMouseDelta;
 
 public:
     static bool IsKeyPressed(sf::Keyboard::Key key);
     static bool IsMouseButtonPressed(sf::Mouse::Button mouseButton);
-    static glm::ivec2 GetMousePos();
+    static void ResetMouseDelta();
+    static glm::ivec2 GetMouseDelta();
+    static void SetMouseCenter(glm::ivec2 center);
     static bool HandleEvent(sf::Event event);
 };
 

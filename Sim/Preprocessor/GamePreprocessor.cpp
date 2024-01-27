@@ -7,7 +7,7 @@ GamePreprocessor::GamePreprocessor() {
 
 bool GamePreprocessor::Process() {
 	TerrainTriangulator triangulator;
-	triangulator.GenerateMipMaps();
+	// All done! triangulator.GenerateMipMaps();
 	triangulator.TriangulateTerrain();
 	return true;
 }
