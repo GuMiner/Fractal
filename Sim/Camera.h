@@ -19,8 +19,6 @@ class Camera {
 
     // Movement data
     float lastFrameTime;
-    bool wasMouseDown;
-    glm::ivec2 lastMousePos;
 
     float speedMultiplier;
     bool wasSpeedUpPressed;

@@ -22,7 +22,6 @@ Camera::Camera() {
 	farPlane = config.farPlane;
 
     lastFrameTime = -1;
-    lastMousePos = glm::ivec2(-1, -1);
     UpdateNormalsAndMatrixes();
 
     speedMultiplier = 1.0;
@@ -50,26 +49,20 @@ void Camera::UpdateNormalsAndMatrixes() {
 bool Camera::CheckMouseRotation() {
     bool rotatedAroundUp = false;
     bool rotatedAroundRight = false;
-    if (true) {
 
-        glm::ivec2 difference = KeyboardInput::GetMouseDelta();
+    glm::ivec2 difference = KeyboardInput::GetMouseDelta();
 
-        glm::vec2 rotation = MOUSE_ROTATION_SPEED * glm::vec2(-(float)difference.x, -(float)difference.y);
-        if (difference.x != 0) {
-            forwards = glm::rotate(forwards, rotation.x, up);
-            rotatedAroundUp = true;
-        }
-
-        if (difference.y != 0) {
-            up = glm::rotate(up, rotation.y, right);
-            forwards = glm::rotate(forwards, rotation.y, right);
-            rotatedAroundRight = true;
-        }
-    }
-    else {
-        wasMouseDown = false;
+    glm::vec2 rotation = MOUSE_ROTATION_SPEED * glm::vec2(-(float)difference.x, -(float)difference.y);
+    if (difference.x != 0) {
+        forwards = glm::rotate(forwards, rotation.x, up);
+        rotatedAroundUp = true;
     }
 
+    if (difference.y != 0) {
+        up = glm::rotate(up, rotation.y, right);
+        forwards = glm::rotate(forwards, rotation.y, right);
+        rotatedAroundRight = true;
+    }
     return rotatedAroundUp || rotatedAroundRight;
 }
 

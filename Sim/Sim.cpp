@@ -141,14 +141,15 @@ void Sim::UpdatePerspective(unsigned int width, unsigned int height) {
 }
  
 void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state) {
+    KeyboardInput::ResetMouseDelta();
+
+    sf::Vector2i newMousePos = window.getPosition() + sf::Vector2i(window.getSize().x / 2, window.getSize().y / 2);
+    sf::Mouse::setPosition(newMousePos);
+    KeyboardInput::SetMouseCenter(glm::ivec2(newMousePos.x, newMousePos.y));
+
     // Handle all events.
     sf::Event event;
     while (window.pollEvent(event)) {
-        KeyboardInput::ResetMouseDelta();
-
-        sf::Vector2i newMousePos = window.getPosition() + sf::Vector2i(window.getSize().x / 2, window.getSize().y / 2);
-        sf::Mouse::setPosition(newMousePos);
-        KeyboardInput::SetMouseCenter(glm::ivec2(newMousePos.x, newMousePos.y));
 
         // Handle generic pause and window events
         state.Update(event);
@@ -193,7 +194,7 @@ void Sim::Run() {
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
     window.setMouseCursorGrabbed(true);
-    window.setMouseCursorVisible(false);
+    window.setMouseCursorVisible(true);
 
     shaderFactory->InitCore();
     if (!testScene->Init(shaderFactory)) {

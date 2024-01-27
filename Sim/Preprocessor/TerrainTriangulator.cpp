@@ -136,7 +136,7 @@ void TerrainTriangulator::TriangulateTile(const char* inputFile, std::string out
             int yEffective = y + mipsOffset; // TODO have a mips class to do this sort of calculation
 
             int imageCoord = (xEffective + yEffective * width) * 4;
-            int height = imageData[imageCoord] + (int)imageData[imageCoord] << 8; // TODO might need modifications
+            int height = imageData[imageCoord] + ((int)imageData[imageCoord + 1] << 8); // TODO might need modifications
             
             // TODO needs to be able to load other images and get edges from that. 
             // This probably could be done by re-mip-mapping the images, or done here
@@ -146,9 +146,9 @@ void TerrainTriangulator::TriangulateTile(const char* inputFile, std::string out
             int imageCoordX = (xPlus1 + yEffective * width) * 4;
             int imageCoordY = (xEffective + yPlus1 * width) * 4;
             int imageCoordXY = (xPlus1 + yPlus1 * width) * 4;
-            int heightX = imageData[imageCoordX] + (int)imageData[imageCoordX] << 8;
-            int heightY = imageData[imageCoordY] + (int)imageData[imageCoordY] << 8;
-            int heightXY = imageData[imageCoordXY] + (int)imageData[imageCoordXY] << 8;
+            int heightX = imageData[imageCoordX] + ((int)imageData[imageCoordX + 1] << 8);
+            int heightY = imageData[imageCoordY] + ((int)imageData[imageCoordY + 1] << 8);
+            int heightXY = imageData[imageCoordXY] + ((int)imageData[imageCoordXY + 1] << 8);
 
             // V1 -- just flat plane, connectors TBD
             int vs = vertices.size();
