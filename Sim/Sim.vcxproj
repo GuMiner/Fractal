@@ -133,6 +133,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Background\Fractal.cpp" />
     <ClCompile Include="Background\Sky.cpp" />
+    <ClCompile Include="Data\Config\TerrainConfig.cpp" />
     <ClCompile Include="Preprocessor\GamePreprocessor.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="Preprocessor\stb_implementations.cpp" />
@@ -156,7 +157,7 @@
   <ItemGroup>
     <ClInclude Include="Data\BinaryModel.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Data\Config\PreprocessorConfig.h" />
+    <ClInclude Include="Data\Config\TerrainConfig.h" />
     <ClInclude Include="Data\Config\CameraConfig.h" />
     <ClInclude Include="Data\Config\Config.h" />
     <ClInclude Include="Background\Fractal.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Preprocessor\GamePreprocessor.h" />
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="Preprocessor\TerrainTriangulator.h" />
+    <ClInclude Include="Terrain\TerrainMips.h" />
     <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Terrain\TerrainRenderer.h" />
     <ClInclude Include="Terrain\TerrainModel.h" />
@@ -208,7 +210,7 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Config\preprocessor.json" />
+    <None Include="Config\terrain.json" />
     <None Include="Config\Shaders\sky.fs" />
     <None Include="Config\Shaders\sky.vs" />
     <None Include="Config\Shaders\model.fs" />

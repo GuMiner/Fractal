@@ -55,22 +55,16 @@ void BinaryModel::ReadVector(std::ifstream& inputStream, std::vector<glm::vec3>&
 {
 	unsigned int size;
 	inputStream.read((char*)&size, sizeof(unsigned int));
-	for (unsigned int i = 0; i < size; i++)
-	{
-		glm::vec3 point;
-		inputStream.read((char*)&point, sizeof(glm::vec3));
-		vector.push_back(point);
-	}
+
+	vector.resize(size);
+	inputStream.read((char*)&vector[0], sizeof(glm::vec3) * size);
 }
 
 void BinaryModel::ReadVectorI(std::ifstream& inputStream, std::vector<glm::ivec3>& vector)
 {
 	unsigned int size;
 	inputStream.read((char*)&size, sizeof(unsigned int));
-	for (unsigned int i = 0; i < size; i++)
-	{
-		glm::ivec3 point;
-		inputStream.read((char*)&point, sizeof(glm::ivec3));
-		vector.push_back(point);
-	}
+
+	vector.resize(size);
+	inputStream.read((char*)&vector[0], sizeof(glm::ivec3) * size);
 }

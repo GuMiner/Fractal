@@ -87,6 +87,9 @@
     <ClCompile Include="Terrain\Terrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Data\Config\TerrainConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -149,7 +152,7 @@
     <ClInclude Include="Preprocessor\TerrainTriangulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Data\Config\PreprocessorConfig.h">
+    <ClInclude Include="Data\Config\TerrainConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Preprocessor\GamePreprocessor.h">
@@ -170,6 +173,9 @@
     <ClInclude Include="Terrain\Terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Terrain\TerrainMips.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json" />
@@ -185,7 +191,7 @@
     <None Include="Config\Shaders\model.fs" />
     <None Include="Config\Shaders\sky.vs" />
     <None Include="Config\Shaders\sky.fs" />
-    <None Include="Config\preprocessor.json" />
+    <None Include="Config\terrain.json" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="DebugObjectFormats.natvis" />

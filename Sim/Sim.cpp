@@ -18,7 +18,7 @@
 using json = nlohmann::json;
 
 bool debugCoreOpenGl = false;
-bool preprocess = false;
+bool preprocess = true;
 
 //#ifdef _WIN32
 //#include <windows.h>
