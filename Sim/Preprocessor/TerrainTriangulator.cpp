@@ -12,7 +12,8 @@
 #include "TerrainTriangulator.h"
 
 bool forceRegenerateMipMaps = false;
-bool updateEdges = true;
+bool updateEdges = false;
+bool updateCorners = false;
 
 bool forceRegenerateTerrain = true;
 
@@ -41,7 +42,7 @@ void TerrainTriangulator::GenerateMipMaps() {
     for (int x = 0; x < config.width; x++) {
         std::cout << "MipMaps: Edge copying " << x << std::endl;
         for (int y = 0; y < config.height; y++) {
-            if (updateEdges) {
+            if (updateEdges || updateCorners) {
                 std::cout << " Updating " << x << ", " << y << std::endl;
 
                 CopyEdges(x, y);
@@ -115,8 +116,9 @@ void TerrainTriangulator::CopyEdges(int x, int y) {
     int channels = 0;
     unsigned char* imageData = stbi_load(targetFile.str().c_str(), &width, &height, &channels, STBI_rgb_alpha);
 
-    unsigned char* xPlus = LoadMipsImage(x + 1, y);
-    unsigned char* yPlus = LoadMipsImage(x, y + 1);
+    unsigned char* xPlus = updateEdges ? LoadMipsImage(x + 1, y) : nullptr;
+    unsigned char* yPlus = updateEdges ? LoadMipsImage(x, y + 1) : nullptr;
+    unsigned char* xyPlus = updateCorners ? LoadMipsImage(x + 1, y + 1) : nullptr;
 
     for (int i = 0; i < config.mipsLevels.size(); i++) {
         int mipsLevel = config.mipsLevels[i];
@@ -126,43 +128,58 @@ void TerrainTriangulator::CopyEdges(int x, int y) {
             // TODO special-case logic for the largest image
         } else {
             int yOffset = config.GetMipsYOffset(mipsLevel);
-            if (xPlus != nullptr) {
-                int xSource = 0;
-                int ySource = yOffset;
-                int xTarget = mipsLevel + 1;
-                int yTarget = yOffset;
+            if (updateEdges) {
+                if (xPlus != nullptr) {
+                    int xSource = 0;
+                    int ySource = yOffset;
+                    int xTarget = mipsLevel + 1;
+                    int yTarget = yOffset;
 
-                for (int i = 0; i < mipsLevel; i++) {
-                    for (int channel = 0; channel < channels; channel++) {
-                        imageData[(xTarget + yTarget * width) * channels + channel] =
-                            xPlus[(xSource + ySource * width) * channels + channel];
+                    for (int i = 0; i < mipsLevel; i++) {
+                        for (int channel = 0; channel < channels; channel++) {
+                            imageData[(xTarget + yTarget * width) * channels + channel] =
+                                xPlus[(xSource + ySource * width) * channels + channel];
+                        }
+
+                        ySource++;
+                        yTarget++;
                     }
+                }
 
-                    ySource++;
-                    yTarget++;
+                if (yPlus != nullptr) {
+                    int xSource = 0;
+                    int ySource = yOffset;
+                    int xTarget = mipsLevel + 3; // aka, mips-image + <buffer> + edge
+                    int yTarget = yOffset;
+
+                    for (int i = 0; i < mipsLevel; i++) {
+                        for (int channel = 0; channel < channels; channel++) {
+                            imageData[(xTarget + yTarget * width) * channels + channel] =
+                                yPlus[(xSource + ySource * width) * channels + channel];
+                        }
+
+                        // Saved with left-to-right mapped to top-to-bottom
+                        xSource++;
+                        yTarget++;
+                    }
                 }
             }
 
-            if (yPlus != nullptr) {
+            if (updateCorners && xyPlus != nullptr) {
+                // Only copy the corner
+                int xTarget = mipsLevel + 5;
+                int yTarget = 1 + yOffset;
+
                 int xSource = 0;
                 int ySource = yOffset;
-                int xTarget = mipsLevel + 3; // aka, mips-image + <buffer> + edge
-                int yTarget = yOffset;
-                
-                for (int i = 0; i < mipsLevel; i++) {
-                    for (int channel = 0; channel < channels; channel++) {
-                        imageData[(xTarget + yTarget * width) * channels + channel] =
-                            yPlus[(xSource + ySource * width) * channels + channel];
-                    }
 
-                    // Saved with left-to-right mapped to top-to-bottom
-                    xSource++;
-                    yTarget++;
+                for (int channel = 0; channel < channels; channel++) {
+                    imageData[(xTarget + yTarget * width) * channels + channel] =
+                        xyPlus[(xSource + ySource * width) * channels + channel];
                 }
             }
         }
     }
-
 
     stbi_write_png(targetFile.str().c_str(), width, height, 4, imageData, 0);
     stbi_image_free(imageData);
@@ -173,6 +190,10 @@ void TerrainTriangulator::CopyEdges(int x, int y) {
 
     if (yPlus != nullptr) {
         stbi_image_free(yPlus);
+    }
+
+    if (xyPlus != nullptr) {
+        stbi_image_free(xyPlus);
     }
 }
 
@@ -196,8 +217,58 @@ void TerrainTriangulator::TriangulateTerrain() {
     }
 }
 
+int GetHeight(int x, int y, int mipsYOffset, int width, unsigned char* imageData) {
+    int yEffective = y + mipsYOffset;
+    int imageCoord = (x + yEffective * width) * 4;
+    int height = imageData[imageCoord] + ((int)imageData[imageCoord + 1] << 8);
+    return height;
+}
+
+int GetHeightXPlus(int x, int y, int mipsYOffset, int mipsLevel, int width, unsigned char* imageData) {
+    int xPlus1 = x + 1;
+    if (xPlus1 == mipsLevel) {
+        xPlus1 = mipsLevel + 1; // Grab from the edge
+    }
+
+    return GetHeight(xPlus1, y, mipsYOffset, width, imageData);
+}
+
+int GetHeightYPlus(int x, int y, int mipsYOffset, int mipsLevel, int width, unsigned char* imageData) {
+    int yPlus1 = y + 1;
+    if (yPlus1 == mipsLevel) {
+        // Grab from the y-edge
+        yPlus1 = x;
+        x = mipsLevel + 3;
+    }
+
+    return GetHeight(x, yPlus1, mipsYOffset, width, imageData);
+}
+
+int GetHeightXYPlus(int x, int y, int mipsYOffset, int mipsLevel, int width, unsigned char* imageData) {
+    int xPlus1 = x + 1;
+    int yPlus1 = y + 1;
+    if (xPlus1 == mipsLevel && yPlus1 == mipsLevel) {
+        // Get the special corner pixel
+        x = mipsLevel + 5;
+        y = 1;
+        return GetHeight(x, y, mipsYOffset, width, imageData);
+    }
+    else if (xPlus1 == mipsLevel) {
+        // Can assume y+ is fine, so use existing logic
+        return GetHeightXPlus(x, yPlus1, mipsYOffset, mipsLevel, width, imageData);
+    }
+    else if (yPlus1 == mipsLevel) {
+        // Can assume x+ is fine, so use existing logic
+        return GetHeightYPlus(xPlus1, y, mipsYOffset, mipsLevel, width, imageData);
+    }
+
+    // Neither X+ or Y+ exceed the image, so return the hiehg
+    return GetHeight(xPlus1, yPlus1, mipsYOffset, width, imageData);
+}
+
 void TerrainTriangulator::TriangulateTile(int x, int y, std::string outputFile, int mipsLevel) {
     unsigned char* imageData = LoadMipsImage(x, y);
+
     int width = config.mipsLevels[0];
 
     std::vector<glm::vec3> vertices;
@@ -206,26 +277,15 @@ void TerrainTriangulator::TriangulateTile(int x, int y, std::string outputFile, 
     int mipsYOffset = config.GetMipsYOffset(mipsLevel);
     for (int x = 0; x < mipsLevel; x++) {
         for (int y = 0; y < mipsLevel; y++) {
-            int xEffective = x;
-            int yEffective = y + mipsYOffset;
-
-            int imageCoord = (xEffective + yEffective * width) * 4;
-            int height = imageData[imageCoord] + ((int)imageData[imageCoord + 1] << 8); // TODO might need modifications
+            int height = GetHeight(x, y, mipsYOffset, width, imageData);
             
-            // TODO needs to be able to load other images and get edges from that. 
-            // This probably could be done by re-mip-mapping the images, or done here
-            int xPlus1 = x == mipsLevel - 1 ? x : x + 1;
-            int yPlus1 = (y == mipsLevel - 1 ? y : y + 1) + mipsYOffset;
-
-            int imageCoordX = (xPlus1 + yEffective * width) * 4;
-            int imageCoordY = (xEffective + yPlus1 * width) * 4;
-            int imageCoordXY = (xPlus1 + yPlus1 * width) * 4;
-            int heightX = imageData[imageCoordX] + ((int)imageData[imageCoordX + 1] << 8);
-            int heightY = imageData[imageCoordY] + ((int)imageData[imageCoordY + 1] << 8);
-            int heightXY = imageData[imageCoordXY] + ((int)imageData[imageCoordXY + 1] << 8);
+            // TODO handle mips level 0 (512x512), the below methods do not
+            int heightX = GetHeightXPlus(x, y, mipsYOffset, mipsLevel, width, imageData);
+            int heightY = GetHeightYPlus(x, y, mipsYOffset, mipsLevel, width, imageData);
+            int heightXY = GetHeightXYPlus(x, y, mipsYOffset, mipsLevel, width, imageData);
 
             // V1 -- just flat plane, connectors TBD
-            // TODO can reuse vertices now, saving lots of 
+            // TODO can reuse vertices now, improving performance a bunch
             int vs = vertices.size();
             faces.push_back(glm::ivec3(vs, vs + 1, vs + 2)); // CW faces of the top plane
             faces.push_back(glm::ivec3(vs, vs + 2, vs + 3));
