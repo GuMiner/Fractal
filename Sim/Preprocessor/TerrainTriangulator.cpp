@@ -11,9 +11,10 @@
 #include "../Data/BinaryModel.h"
 #include "TerrainTriangulator.h"
 
-bool forceRegenerateMipMaps = false;
-bool updateEdges = false;
-bool updateCorners = false;
+bool skipMipmapsEntirely = true;
+    bool forceRegenerateMipMaps = false;
+    bool updateEdges = false;
+    bool updateCorners = false;
 
 bool forceRegenerateTerrain = true;
 
@@ -23,6 +24,10 @@ TerrainTriangulator::TerrainTriangulator() {
 }
 
 void TerrainTriangulator::GenerateMipMaps() {
+    if (skipMipmapsEntirely) {
+        return;
+    }
+
     for (int x = 0; x < config.width; x++) {
         std::cout << "MipMaps: Processing " << x << std::endl;
         for (int y = 0; y < config.height; y++) {
@@ -225,45 +230,34 @@ int GetHeight(int x, int y, int mipsYOffset, int width, unsigned char* imageData
 }
 
 int GetHeightXPlus(int x, int y, int mipsYOffset, int mipsLevel, int width, unsigned char* imageData) {
-    int xPlus1 = x + 1;
-    if (xPlus1 == mipsLevel) {
-        xPlus1 = mipsLevel + 1; // Grab from the edge
-    }
-
-    return GetHeight(xPlus1, y, mipsYOffset, width, imageData);
+    x = mipsLevel + 1; // Grab from the edge
+    return GetHeight(x, y, mipsYOffset, width, imageData);
 }
 
 int GetHeightYPlus(int x, int y, int mipsYOffset, int mipsLevel, int width, unsigned char* imageData) {
-    int yPlus1 = y + 1;
-    if (yPlus1 == mipsLevel) {
-        // Grab from the y-edge
-        yPlus1 = x;
-        x = mipsLevel + 3;
-    }
-
-    return GetHeight(x, yPlus1, mipsYOffset, width, imageData);
+    y = x;
+    x = mipsLevel + 3;
+    return GetHeight(x, y, mipsYOffset, width, imageData);
 }
 
-int GetHeightXYPlus(int x, int y, int mipsYOffset, int mipsLevel, int width, unsigned char* imageData) {
-    int xPlus1 = x + 1;
-    int yPlus1 = y + 1;
-    if (xPlus1 == mipsLevel && yPlus1 == mipsLevel) {
+int GetHeightXOrYPlus(int x, int y, int mipsYOffset, int mipsLevel, int width, unsigned char* imageData) {
+    if (x == mipsLevel && y == mipsLevel) {
         // Get the special corner pixel
         x = mipsLevel + 5;
         y = 1;
         return GetHeight(x, y, mipsYOffset, width, imageData);
     }
-    else if (xPlus1 == mipsLevel) {
+    else if (x == mipsLevel) {
         // Can assume y+ is fine, so use existing logic
-        return GetHeightXPlus(x, yPlus1, mipsYOffset, mipsLevel, width, imageData);
+        return GetHeightXPlus(x, y, mipsYOffset, mipsLevel, width, imageData);
     }
-    else if (yPlus1 == mipsLevel) {
+    else if (y == mipsLevel) {
         // Can assume x+ is fine, so use existing logic
-        return GetHeightYPlus(xPlus1, y, mipsYOffset, mipsLevel, width, imageData);
+        return GetHeightYPlus(x, y, mipsYOffset, mipsLevel, width, imageData);
     }
 
-    // Neither X+ or Y+ exceed the image, so return the hiehg
-    return GetHeight(xPlus1, yPlus1, mipsYOffset, width, imageData);
+    // Neither X+ or Y+ exceed the image, so return the height directly
+    return GetHeight(x, y, mipsYOffset, width, imageData);
 }
 
 void TerrainTriangulator::TriangulateTile(int x, int y, std::string outputFile, int mipsLevel) {
@@ -274,25 +268,22 @@ void TerrainTriangulator::TriangulateTile(int x, int y, std::string outputFile, 
     std::vector<glm::vec3> vertices;
     std::vector<glm::ivec3> faces;
 
+    // Reuse vertices, at the cost of needing to compute face normals instead of vertex normals for flat shading
+    // This simplifies tile corners because averaged vertex normals don't align correctly
     int mipsYOffset = config.GetMipsYOffset(mipsLevel);
-    for (int x = 0; x < mipsLevel; x++) {
-        for (int y = 0; y < mipsLevel; y++) {
-            int height = GetHeight(x, y, mipsYOffset, width, imageData);
-            
-            // TODO handle mips level 0 (512x512), the below methods do not
-            int heightX = GetHeightXPlus(x, y, mipsYOffset, mipsLevel, width, imageData);
-            int heightY = GetHeightYPlus(x, y, mipsYOffset, mipsLevel, width, imageData);
-            int heightXY = GetHeightXYPlus(x, y, mipsYOffset, mipsLevel, width, imageData);
-
-            // V1 -- just flat plane, connectors TBD
-            // TODO can reuse vertices now, improving performance a bunch
-            int vs = vertices.size();
-            faces.push_back(glm::ivec3(vs, vs + 1, vs + 2)); // CW faces of the top plane
-            faces.push_back(glm::ivec3(vs, vs + 2, vs + 3));
+    for (int y = 0; y < mipsLevel + 1; y++) {
+        for (int x = 0; x < mipsLevel + 1; x++) {
+            int height = GetHeightXOrYPlus(x, y, mipsYOffset, mipsLevel, width, imageData);
             vertices.push_back(glm::vec3(x, y, height));
-            vertices.push_back(glm::vec3(x, y + 1, heightY));
-            vertices.push_back(glm::vec3(x + 1, y + 1, heightXY));
-            vertices.push_back(glm::vec3(x + 1, y, heightX));
+
+            if (x < mipsLevel && y < mipsLevel) {
+                int vertex = x + y * (mipsLevel + 1);
+                int vertexXPlus = (x + 1) + y * (mipsLevel + 1);
+                int vertexYPlus = x + (y + 1) * (mipsLevel + 1);
+                int vertexXYPlus = (x + 1) + (y + 1) * (mipsLevel + 1);
+                faces.push_back(glm::ivec3(vertex, vertexYPlus, vertexXYPlus));
+                faces.push_back(glm::ivec3(vertex, vertexXYPlus, vertexXPlus));
+            }
         }
     }
 

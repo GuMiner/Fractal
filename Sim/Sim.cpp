@@ -139,6 +139,8 @@ void Sim::UpdatePerspective(unsigned int width, unsigned int height) {
         glViewport((GLint)widthDelta, (GLint)0, (GLsizei)necessaryWidth, (GLsizei)height);
     }
 }
+
+bool wireframe = false; // TODO move to debug class
  
 void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state) {
     KeyboardInput::ResetMouseDelta();
@@ -161,9 +163,16 @@ void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state) {
         }
         else if (KeyboardInput::HandleEvent(event)) {
             // Event handled, continue from here
+            if (KeyboardInput::IsKeyPressed(sf::Keyboard::Key::R)) {
+                wireframe = !wireframe;
+                if (wireframe) {
+                    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                }
+                else {
+                    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                }
+            }
         }
-
-
     }
 
     // Update the player's research progress. if the user clicked a tech tile on the tech tree.
@@ -238,20 +247,6 @@ int main() {
     sim.Run();
     return 0;
 }
-
-//// Static definitions.
-//Constants TemperFine::Constant;
-//MathOps TemperFine::MathOp;
-//PhysicsOps TemperFine::PhysicsOp;
-//
-//TemperFine::TemperFine()
-//    : graphicsConfig("config/graphics.txt"), keyBindingConfig("config/keyBindings.txt"), physicsConfig("config/physics.txt"),
-//      imageManager(), modelManager(&imageManager), techConfig("config/technologies.txt"),
-//      armorConfig(&modelManager, "config/armors.txt"), bodyConfig(&modelManager, "config/bodies.txt"), turretConfig(&modelManager, "config/turrets.txt"),
-//      physics(), scenery(&modelManager), physicsThread(&Physics::Run, &physics)
-//{
-//}
-//
 
 //void TemperFine::PerformGuiThreadUpdates(float currentGameTime)
 //{

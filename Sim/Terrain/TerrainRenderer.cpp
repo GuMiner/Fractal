@@ -8,35 +8,32 @@ TerrainRenderer::TerrainRenderer() {
 }
 
 bool TerrainRenderer::Init(ShaderFactory* shaderFactory) {
-    if (!shaderFactory->CreateShaderProgram("Config/Shaders/model", &modelProgram))
+    if (!shaderFactory->CreateShaderProgramWithGeometryShader("Config/Shaders/terrain", &modelProgram))
     {
-        Logger::LogError("Failed to load the model rendering shader; cannot continue.");
+        Logger::LogError("Failed to load the terrain rendering shader; cannot continue.");
         return false;
     }
 
     return true;
 }
 
-
-void TerrainRenderer::Render(Camera* camera, float currentTime, TerrainModel* model, glm::mat4 position) {
+void TerrainRenderer::StartRender(Camera* camera, float currentTime) {
     glUseProgram(modelProgram);
-    glBindVertexArray(model->GetVao());
+
+    glActiveTexture(GL_TEXTURE0);
+
+    GLint normalsTexture = glGetUniformLocation(modelProgram, "normals");
+    glUniform1i(normalsTexture, 0);
 
     // Projection 
-    GLint modelPos = glGetUniformLocation(modelProgram, "model");
-    glUniformMatrix4fv(modelPos, 1, GL_FALSE, &position[0][0]);
+    modelShaderPos = glGetUniformLocation(modelProgram, "model");
+    normalMatrixShaderPos = glGetUniformLocation(modelProgram, "normalMatrix");
 
     GLint view = glGetUniformLocation(modelProgram, "view");
     glUniformMatrix4fv(view, 1, GL_FALSE, &camera->View[0][0]);
 
     GLint perspective = glGetUniformLocation(modelProgram, "perspective");
     glUniformMatrix4fv(perspective, 1, GL_FALSE, &camera->Perspective[0][0]);
-
-    GLint normalMatrix = glGetUniformLocation(modelProgram, "normalMatrix");
-    glm::mat4 normalMatrixComputed = glm::transpose(glm::inverse(camera->View * position));
-
-    glUniformMatrix4fv(normalMatrix, 1, GL_FALSE, &normalMatrixComputed[0][0]);
-
 
     // Lighting
     GLint ambient = glGetUniformLocation(modelProgram, "ambient");
@@ -72,9 +69,25 @@ void TerrainRenderer::Render(Camera* camera, float currentTime, TerrainModel* mo
 
     GLint pLightDiffuse = glGetUniformLocation(modelProgram, "pLightDiffuse");
     glUniform3f(pLightDiffuse, 0.8f, 0.8f, 0.8f);
+}
+
+void TerrainRenderer::StopRender() {
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindVertexArray(0);
+    glUseProgram(0);
+}
+
+void TerrainRenderer::Render(Camera* camera, glm::mat4 position, TerrainModel* model) {
+    glBindVertexArray(model->GetVao());
+
+    glBindTexture(GL_TEXTURE_2D, model->GetNormalTexture());
+
+    glUniformMatrix4fv(modelShaderPos, 1, GL_FALSE, &position[0][0]);
+
+    glm::mat4 normalMatrixComputed = glm::transpose(glm::inverse(camera->View * position));
+    glUniformMatrix4fv(normalMatrixShaderPos, 1, GL_FALSE, &normalMatrixComputed[0][0]);
 
     glDrawElements(GL_TRIANGLES, 3 * model->GetFaceCount(), GL_UNSIGNED_INT, 0);
 
-    glBindVertexArray(0);
-    glUseProgram(0);
+
 }

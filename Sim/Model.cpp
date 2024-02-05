@@ -48,7 +48,7 @@ bool Model::Init(ShaderFactory* shaderFactory) {
         return false;
     }
 
-    VectorMath::ComputeNormals(vertices, faces, normals);
+    VectorMath::ComputeVertexNormals(vertices, faces, normals);
 
     // Create new OpenGL primitives
     // TODO some of this should be extracted away as this needs to exist per model object

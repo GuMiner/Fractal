@@ -210,6 +210,9 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\Shaders\terrain.gs" />
+    <None Include="Config\Shaders\terrain.fs" />
+    <None Include="Config\Shaders\terrain.vs" />
     <None Include="Config\terrain.json" />
     <None Include="Config\Shaders\sky.fs" />
     <None Include="Config\Shaders\sky.vs" />

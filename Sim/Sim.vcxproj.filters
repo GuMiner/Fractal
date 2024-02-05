@@ -192,6 +192,9 @@
     <None Include="Config\Shaders\sky.vs" />
     <None Include="Config\Shaders\sky.fs" />
     <None Include="Config\terrain.json" />
+    <None Include="Config\Shaders\terrain.fs" />
+    <None Include="Config\Shaders\terrain.vs" />
+    <None Include="Config\Shaders\terrain.gs" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="DebugObjectFormats.natvis" />

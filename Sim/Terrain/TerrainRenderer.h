@@ -7,9 +7,14 @@ class TerrainRenderer
 {
     GLuint modelProgram;
 
+    GLint modelShaderPos;
+    GLint normalMatrixShaderPos;
+
 public:
     TerrainRenderer();
     bool Init(ShaderFactory* shaderFactory);
-    void Render(Camera* camera, float currentTime, TerrainModel* model, glm::mat4 position);
+    void StartRender(Camera* camera, float currentTime);
+    void StopRender();
+    void Render(Camera* camera, glm::mat4 position, TerrainModel* model);
 };
 

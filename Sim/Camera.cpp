@@ -24,7 +24,7 @@ Camera::Camera() {
     lastFrameTime = -1;
     UpdateNormalsAndMatrixes();
 
-    speedMultiplier = 1.0;
+    speedMultiplier = 128.0;
     wasSpeedUpPressed = false;
     wasSpeedDownPressed = false;
 }

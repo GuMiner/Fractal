@@ -33,6 +33,7 @@ bool Terrain::Init(ShaderFactory* shaderFactory) {
 
 
 void Terrain::Render(Camera* camera, float currentTime) {
+	renderer->StartRender(camera, currentTime);
 	TerrainModel* anchorModel = models[0];
 	for (int x = 0; x < 70; x++) {
 		for (int y = 0; y < 70; y++) {
@@ -43,7 +44,9 @@ void Terrain::Render(Camera* camera, float currentTime) {
 			
 			// TODO need to determine an anchor mipmap and scale everything to that instead of offseting by 8
 			position = glm::translate(position, glm::vec3(x * 8, y * 8, 1.0f));
-			renderer->Render(camera, currentTime, models[x + y * 70], position);
+			renderer->Render(camera, position, models[x + y * 70]);
 		}
 	}
+
+	renderer->StopRender();
 }
