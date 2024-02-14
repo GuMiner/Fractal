@@ -1,4 +1,5 @@
 #pragma once
+#include <glm/vec3.hpp>
 #include <SFML\System.hpp>
 
 class Time {
@@ -24,5 +25,8 @@ public:
 
 	bool IsDay();
 	int Day();
+
+	glm::vec3 SunDirection();
+	float SunIntensity();
 };
 

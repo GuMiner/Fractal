@@ -3,7 +3,7 @@
 // From https://github.com/Tw1ddle/Sky-Shader, modified to render on a flat plane
 in vec3 fs_pos;
 
-uniform float time;
+uniform vec3 sunDirection;
 
 out vec4 color;
 
@@ -13,10 +13,6 @@ out vec4 color;
 // Improved by Martin Upitis: http://blenderartists.org/forum/showthread.php?245954-preethams-sky-impementation-HDR
 // Three.js integration by zz85: http://twitter.com/blurspline / https://github.com/zz85 / http://threejs.org/examples/webgl_shaders_sky.html
 // Additional uniforms, refactoring and integrated with editable sky example: https://twitter.com/Sam_Twidale / https://github.com/Tw1ddle/Sky-Particles-Shader
-
-// TODO this is using timing config that should be in a config file. See Time.cpp
-float dayTime = (time - 5.0) * radians(180) / 10.0;
-vec3 sunPosition = vec3(cos(dayTime), 0, sin(dayTime));
 
 // "Red sunset" values
 const float depolarizationFactor = 0.02;
@@ -103,7 +99,6 @@ void main()
     vec3 Fex = exp(-(betaR * sR + betaM * sM));
     
     // In-scattering
-    vec3 sunDirection = normalize(sunPosition);
     float cosTheta = dot(normalize(vWorldPosition), sunDirection);
     vec3 betaRTheta = betaR * rayleighPhase(cosTheta * 0.5 + 0.5);
     vec3 betaMTheta = betaM * henyeyGreensteinPhase(cosTheta, mieDirectionalG);

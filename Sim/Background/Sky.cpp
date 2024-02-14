@@ -45,8 +45,9 @@ bool Sky::Init(ShaderFactory* shaderFactory) {
 void Sky::Render(Camera* camera) {
     glUseProgram(programId);
 
-    GLint time = glGetUniformLocation(programId, "time");
-    glUniform1f(time, Time::GlobalTime->GameTime());
+    auto sunDirection = Time::GlobalTime->SunDirection();
+    GLint sunDirectionLoc = glGetUniformLocation(programId, "sunDirection");
+    glUniform3f(sunDirectionLoc, sunDirection.x, sunDirection.y, sunDirection.z);
 
     GLint view = glGetUniformLocation(programId, "view");
     glUniformMatrix4fv(view, 1, GL_FALSE, &camera->View[0][0]);

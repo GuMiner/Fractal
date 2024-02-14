@@ -1,6 +1,7 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <gl/glew.h>
 #include "../Telemetry/Logger.h"
+#include "../Time.h"
 #include "TerrainRenderer.h"
 
 TerrainRenderer::TerrainRenderer() {
@@ -37,7 +38,7 @@ void TerrainRenderer::StartRender(Camera* camera) {
 
     // Lighting
     GLint ambient = glGetUniformLocation(modelProgram, "ambient");
-    glUniform3f(ambient, 0.51f, 0.51f, 0.51f);
+    glUniform3f(ambient, 0.501f, 0.501f, 0.501f);
 
     GLint diffuse = glGetUniformLocation(modelProgram, "diffuse");
     glUniform3f(diffuse, 0.51f, 0.51f, 0.51f);
@@ -48,25 +49,27 @@ void TerrainRenderer::StartRender(Camera* camera) {
     GLint specular = glGetUniformLocation(modelProgram, "specular");
     glUniform1f(specular, 4.0f);
 
+    auto lightDirection = Time::GlobalTime->SunDirection();
+    auto lightIntensity = Time::GlobalTime->SunIntensity() * 0.9f;
+
     GLint dLightDirection = glGetUniformLocation(modelProgram, "dLightDirection");
-    auto lightDirection = glm::normalize(glm::vec3(1.0f, 2.0f, 1.0f));
     glUniform3f(dLightDirection, lightDirection.x, lightDirection.y, lightDirection.z);
 
     GLint dLightAmbient = glGetUniformLocation(modelProgram, "dLightAmbient");
-    glUniform3f(dLightAmbient, 0.1f, 0.1f, 0.1f);
+    glUniform3f(dLightAmbient, lightIntensity / 2, lightIntensity / 2, lightIntensity / 2);
 
     GLint dLightDiffuse = glGetUniformLocation(modelProgram, "dLightDiffuse");
-    glUniform3f(dLightDiffuse, 0.5f, 0.5f, 0.5f);
+    glUniform3f(dLightDiffuse, lightIntensity, lightIntensity, lightIntensity);
 
     GLint pLightPosition = glGetUniformLocation(modelProgram, "pLightPosition");
     auto lightPosition = glm::vec3(5.0f, 5.0f, -5.0);
     glUniform3f(pLightPosition, lightPosition.x, lightPosition.y, lightPosition.z);
 
     GLint pLightAmbient = glGetUniformLocation(modelProgram, "pLightAmbient");
-    glUniform3f(pLightAmbient, 0.2f, 0.2f, 0.2f);
+    glUniform3f(pLightAmbient, 0.002f, 0.002f, 0.002f);
 
     GLint pLightDiffuse = glGetUniformLocation(modelProgram, "pLightDiffuse");
-    glUniform3f(pLightDiffuse, 0.8f, 0.8f, 0.8f);
+    glUniform3f(pLightDiffuse, 0.008f, 0.008f, 0.008f);
 }
 
 void TerrainRenderer::StopRender() {
