@@ -1,5 +1,33 @@
+#include <string>
 #include <igl/per_vertex_normals.h>
+#include <igl/per_face_normals.h>
+#include <igl/readOFF.h>
+#include "../Data/BinaryModel.h"
+#include "../Telemetry/Logger.h"
 #include "VectorMath.h"
+
+bool VectorMath::ConvertOffToBinaryOff(std::string inputFile, std::string outputFile) {
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::ivec3> faces;
+    Eigen::MatrixXf V;
+    Eigen::MatrixXi F;
+
+    if (!igl::readOFF(inputFile, V, F)) {
+        Logger::LogError("Unable to read input file to convert, cannot continue");
+        return false;
+    }
+
+    for (int i = 0; i < V.rows(); i++) {
+        vertices.push_back(glm::vec3(V(i, 0), V(i, 1), V(i, 2)));
+    }
+    for (int i = 0; i < F.rows(); i++) {
+        faces.push_back(glm::ivec3(F(i, 0), F(i, 1), F(i, 2)));
+    }
+
+    BinaryModel::Save(outputFile, vertices, faces);
+
+    return true;
+}
 
 void VectorMath::ComputeVertexNormals(
 	std::vector<glm::vec3>& vertices, std::vector<glm::ivec3>& faces,

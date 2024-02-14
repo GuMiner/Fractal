@@ -17,7 +17,7 @@ bool TerrainRenderer::Init(ShaderFactory* shaderFactory) {
     return true;
 }
 
-void TerrainRenderer::StartRender(Camera* camera, float currentTime) {
+void TerrainRenderer::StartRender(Camera* camera) {
     glUseProgram(modelProgram);
 
     glActiveTexture(GL_TEXTURE0);
@@ -59,9 +59,7 @@ void TerrainRenderer::StartRender(Camera* camera, float currentTime) {
     glUniform3f(dLightDiffuse, 0.5f, 0.5f, 0.5f);
 
     GLint pLightPosition = glGetUniformLocation(modelProgram, "pLightPosition");
-    auto lightPosition =
-        glm::rotate(glm::mat4(1.0f), -2.1f * currentTime, glm::vec3(0, 1, 0))
-        * glm::vec4(5.0f, 5.0f, -5.0f, 1.0f);
+    auto lightPosition = glm::vec3(5.0f, 5.0f, -5.0);
     glUniform3f(pLightPosition, lightPosition.x, lightPosition.y, lightPosition.z);
 
     GLint pLightAmbient = glGetUniformLocation(modelProgram, "pLightAmbient");

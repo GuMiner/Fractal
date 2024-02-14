@@ -1,9 +1,10 @@
 #include <iostream>
 #include <sstream>
+#include "../Time.h"
 #include "FpsCounter.h"
 
 FpsCounter::FpsCounter() :
-    lastTime(0.0f), timeTotal(0.1f), frameTotal(1)
+    timeTotal(0.1f), frameTotal(1)
 {
     fpsFont = new sf::Font();
     if (!fpsFont->loadFromFile("Config/Fonts/DejaVuSans.ttf"))
@@ -18,10 +19,9 @@ FpsCounter::FpsCounter() :
     fpsText->setString("FPS: ");
 }
 
-void FpsCounter::Update(float currentTime)
-{
+void FpsCounter::Update() {
     ++frameTotal;
-    timeTotal += (currentTime - lastTime);
+    timeTotal += Time::GlobalTime->LastFrameInterval();
 
     // Only update every half second
     if (timeTotal > 0.50f)
@@ -35,18 +35,14 @@ void FpsCounter::Update(float currentTime)
         fpsString << std::fixed << "FPS: " << lastFrameRate;
         fpsText->setString(fpsString.str());
     }
-
-    lastTime = currentTime;
 }
 
 
-void FpsCounter::Render(sf::RenderWindow& window)
-{
+void FpsCounter::Render(sf::RenderWindow& window) {
     window.draw(*fpsText);
 }
 
-FpsCounter::~FpsCounter()
-{
+FpsCounter::~FpsCounter() {
     delete fpsText;
     delete fpsFont;
 }

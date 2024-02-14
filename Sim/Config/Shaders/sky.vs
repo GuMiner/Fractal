@@ -1,14 +1,14 @@
 #version 330 core
 
-layout (location = 0) in vec2 position;
+layout (location = 0) in vec3 position;
+
+uniform mat4 view;
+uniform mat4 perspective;
 
 out vec3 fs_pos;
 
-void main(void)
-{
-    // TODO Doesn't account for camera rotation
-    fs_pos = normalize(vec3(position, 1)); // FOV == 30
-    
-    // 1.0f for Z corresponds to the far plane
-    gl_Position = vec4(position, 1.0f, 1.0f);
+void main(void) {
+    fs_pos = position;
+
+    gl_Position = perspective * view * vec4(position, 1.0);
 }

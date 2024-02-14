@@ -4,8 +4,10 @@
 Scene::Scene() : camera(nullptr) {
 	testModel = new Model();
 	testTerrain = new Terrain();
-	fractal = new Fractal();
 	sky = new Sky(); 
+
+	fractal = new Fractal();
+	compass = new Compass();
 }
 
 void Scene::ClearScreen() {
@@ -17,10 +19,6 @@ void Scene::ClearScreen() {
 
 bool Scene::Init(ShaderFactory* shaderFactory) {
 	camera = new Camera();
-
-	if (!fractal->Init(shaderFactory)) {
-		return false;
-	}
 
 	if (!sky->Init(shaderFactory)) {
 		return false;
@@ -37,20 +35,32 @@ bool Scene::Init(ShaderFactory* shaderFactory) {
 		return false;
 	}
 
+	if (!fractal->Init(shaderFactory)) {
+		return false;
+	}
+
+	if (!compass->Init(shaderFactory)) {
+		return false;
+	}
+	if (!compass->SendMesh()) {
+		return false;
+	}
+
 	return true;
 }
 
-void Scene::Update(float currentTime) {
-	camera->Update(currentTime);
+void Scene::Update() {
+	camera->Update();
 }
 
-void Scene::RenderScene(float currentTime) {
+void Scene::RenderScene() {
 	ClearScreen();
 
-	testTerrain->Render(camera, currentTime);
+	compass->Render(camera);
+	testModel->Render(camera);
 
-	testModel->Render(camera, currentTime);
+	testTerrain->Render(camera);
 
 	// fractal->Render(currentTime);
-	sky->Render(currentTime);
+	sky->Render(camera);
 }

@@ -281,8 +281,9 @@ void TerrainTriangulator::TriangulateTile(int x, int y, std::string outputFile, 
                 int vertexXPlus = (x + 1) + y * (mipsLevel + 1);
                 int vertexYPlus = x + (y + 1) * (mipsLevel + 1);
                 int vertexXYPlus = (x + 1) + (y + 1) * (mipsLevel + 1);
-                faces.push_back(glm::ivec3(vertex, vertexYPlus, vertexXYPlus));
-                faces.push_back(glm::ivec3(vertex, vertexXYPlus, vertexXPlus));
+
+                faces.push_back(glm::ivec3(vertex, vertexXYPlus, vertexYPlus));
+                faces.push_back(glm::ivec3(vertex, vertexXPlus, vertexXYPlus));
             }
         }
     }

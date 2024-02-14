@@ -9,7 +9,6 @@
 #include "SimUpdateState.h"
 #include "GLCore/ShaderFactory.h"
 #include "Scene.h"
-
 class Sim
 {
 	// TODO: Move to a diagnostic layer for 2D simulations?
@@ -29,8 +28,8 @@ class Sim
 	void SetupDiagnostics();
 	void UpdatePerspective(unsigned int width, unsigned int height);
 	void HandleEvents(sf::RenderWindow& window, SimUpdateState& state);
-	void Update(float currentTime);
-	void Render(sf::RenderWindow& window, float currentTime);
+	void Update();
+	void Render(sf::RenderWindow& window);
 
 public:
 	Sim();

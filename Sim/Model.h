@@ -19,5 +19,5 @@ public:
     Model();
     bool Init(ShaderFactory* shaderFactory);
     bool SendMesh();
-    void Render(Camera* camera, float currentTime);
+    void Render(Camera* camera);
 };

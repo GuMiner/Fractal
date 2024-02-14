@@ -1,9 +1,6 @@
 #include <iostream>
 #include <glm\gtc\matrix_transform.hpp>
 #include <gl/glew.h>
-#include <igl/readOFF.h>
-#include <igl/per_vertex_normals.h>
-
 #include "Telemetry/Logger.h"
 #include "Model.h"
 #include "Data/BinaryModel.h"
@@ -18,29 +15,6 @@ bool Model::Init(ShaderFactory* shaderFactory) {
         Logger::LogError("Failed to load the model rendering shader; cannot continue.");
         return false;
     }
-
-
-
-    // //TODO move to a igl converter.
-   // std::vector<glm::vec3> vertices2;
-   // std::vector<glm::ivec3> faces2;
-   // Eigen::MatrixXf V;
-   // Eigen::MatrixXi F;
-   // 
-   // if (!igl::readOFF("Config/libigl-bunny.off", V, F)) {
-   //     Logger::LogError("Unable to read test input file, cannot continue");
-   //     return false;
-   // }
-   // 
-   // for (int i = 0; i < V.rows(); i++) {
-   //     vertices2.push_back(glm::vec3(V(i, 0), V(i, 1), V(i, 2)));
-   // }
-   // for (int i = 0; i < F.rows(); i++) {
-   //     faces2.push_back(glm::ivec3(F(i, 0), F(i, 1), F(i, 2)));
-   // }
-   // 
-   // BinaryModel::Save("Config/libigl-bunny-binary.off", vertices2, faces2);
-
 
     if (!BinaryModel::Load("Config/libigl-bunny-binary.off", vertices, faces))
     {
@@ -107,14 +81,12 @@ bool Model::SendMesh() {
     return true;
 }
 
-void Model::Render(Camera* camera, float currentTime) {
+void Model::Render(Camera* camera) {
     glUseProgram(modelProgram);
     glBindVertexArray(modelVao);
 
     // Projection 
-    auto position = glm::rotate(
-        glm::scale(glm::mat4(1.0), glm::vec3(6.1f)),
-        currentTime * 0.5f, glm::vec3(0, 1, 0));
+    auto position = glm::scale(glm::mat4(1.0), glm::vec3(6.1f));
     GLint model = glGetUniformLocation(modelProgram, "model");
     glUniformMatrix4fv(model, 1, GL_FALSE, &position[0][0]);
 
@@ -154,9 +126,7 @@ void Model::Render(Camera* camera, float currentTime) {
     glUniform3f(dLightDiffuse, 0.5f, 0.5f, 0.5f);
     
     GLint pLightPosition = glGetUniformLocation(modelProgram, "pLightPosition");
-    auto lightPosition = 
-        glm::rotate(glm::mat4(1.0f), -2.1f*currentTime, glm::vec3(0, 1, 0))
-        * glm::vec4(5.0f, 5.0f, -5.0f, 1.0f);
+    auto lightPosition = glm::vec3(5.0f, 5.0f, -5.0f);
     glUniform3f(pLightPosition, lightPosition.x, lightPosition.y, lightPosition.z);
     
     GLint pLightAmbient = glGetUniformLocation(modelProgram, "pLightAmbient");

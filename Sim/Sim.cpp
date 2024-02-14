@@ -11,6 +11,7 @@
 #include "Data/Config/Config.h"
 #include <SFML/OpenGL.hpp>
 
+#include "Time.h"
 #include "Sim.h"
 #include "Tests/Experimental.h"
 #include "Preprocessor/GamePreprocessor.h"
@@ -39,6 +40,8 @@ void Sim::SetupDiagnostics() {
 Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr),
     shaderFactory(nullptr)
 {
+    Time::GlobalTime = new Time();
+
     Logger::Setup();
 
     // For debugging
@@ -53,6 +56,8 @@ Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr),
 }
 
 Sim::~Sim() {
+    delete Time::GlobalTime;
+
     delete fpsCounter;
     delete threadProcessor;
     delete filler;
@@ -78,7 +83,7 @@ bool Sim::Init() {
     return true;
 }
 
-void Sim::Update(float currentTime) {
+void Sim::Update() {
     /**
     sf::Vector2u textureSize = simTexture.getSize();
     sf::Uint8* pixels = new sf::Uint8[textureSize.x * textureSize.y * 4]; // * 4 because pixels have 4 components (RGBA)
@@ -105,13 +110,13 @@ void Sim::Update(float currentTime) {
     delete[] pixels;
     **/
 
-    fpsCounter->Update(currentTime);
-    testScene->Update(currentTime);
+    fpsCounter->Update();
+    testScene->Update();
     
 }
 
-void Sim::Render(sf::RenderWindow& window, float currentTime) {
-    testScene->RenderScene(currentTime);
+void Sim::Render(sf::RenderWindow& window) {
+    testScene->RenderScene();
 
     if (!debugCoreOpenGl)
     {
@@ -140,13 +145,16 @@ void Sim::UpdatePerspective(unsigned int width, unsigned int height) {
     }
 }
 
+bool cursorGrabbed = false;
 bool wireframe = false; // TODO move to debug class
  
 void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state) {
     KeyboardInput::ResetMouseDelta();
 
     sf::Vector2i newMousePos = window.getPosition() + sf::Vector2i(window.getSize().x / 2, window.getSize().y / 2);
-    sf::Mouse::setPosition(newMousePos);
+    if (!cursorGrabbed) {
+        sf::Mouse::setPosition(newMousePos);
+    }
     KeyboardInput::SetMouseCenter(glm::ivec2(newMousePos.x, newMousePos.y));
 
     // Handle all events.
@@ -165,12 +173,12 @@ void Sim::HandleEvents(sf::RenderWindow& window, SimUpdateState& state) {
             // Event handled, continue from here
             if (KeyboardInput::IsKeyPressed(sf::Keyboard::Key::R)) {
                 wireframe = !wireframe;
-                if (wireframe) {
-                    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                }
-                else {
-                    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-                }
+                glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
+            }
+            else if (KeyboardInput::IsKeyPressed(sf::Keyboard::Key::G)) {
+                cursorGrabbed = !cursorGrabbed;
+                window.setMouseCursorGrabbed(cursorGrabbed);
+                std::cout << "Cursor grabbed: " << cursorGrabbed << std::endl;
             }
         }
     }
@@ -218,9 +226,9 @@ void Sim::Run() {
 
     SimUpdateState state = SimUpdateState();
 
-    sf::Clock clock;
+    bool isPaused = false;
     while (window.isOpen()) {
-        float currentTime = clock.getElapsedTime().asSeconds();
+        Time::GlobalTime->Update(isPaused);
 
         HandleEvents(window, state);
         if (state.IsEscapePaused()) { // .ShouldQuit()) {
@@ -228,8 +236,8 @@ void Sim::Run() {
             break;
         }
 
-        Update(currentTime);
-        Render(window, currentTime);
+        Update();
+        Render(window);
         window.display();
 
         if (state.IsCaptureRequested()) {
@@ -279,59 +287,4 @@ int main() {
 //   //// Update useful statistics that are fancier than the standard GUI
 //   //statistics.UpdateRunTime(currentGameTime);
 //   //statistics.UpdateViewPos(physicsSyncBuffer.GetViewerPosition());
-//}
-//
-//
-//Constants::Status TemperFine::Run()
-//{
-//
-//    // Now that we have an OpenGL Context, load our graphics.
-//    Constants::Status firstTimeSetup = LoadGraphics(&desktop);
-//    if (firstTimeSetup != Constants::Status::OK)
-//    {
-//        return firstTimeSetup;
-//    }
-//
-//    Logger::Log("Graphics Initialized!");
-//
-//    sf::Clock clock;
-//    sf::Clock guiClock;
-//    sf::Time clockStartTime;
-//    bool alive = true;
-//    bool focusPaused = false;
-//    bool escapePaused = false;
-//    vec::mat4 viewMatrix;
-//    while (alive)
-//    {
-//        clockStartTime = clock.getElapsedTime();
-//        viewMatrix = physicsSyncBuffer.GetViewMatrix();
-//
-//        HandleEvents(desktop, window, alive, focusPaused, escapePaused);
-//        PerformGuiThreadUpdates(clock.getElapsedTime().asSeconds());
-//
-//        // Render, only if non-paused.
-//        if (!focusPaused && !escapePaused)
-//        {
-//            Render(desktop, window, viewMatrix);
-//        }
-//
-//        // GUI is always updated, as else when we're paused, we can't see it!
-//        
-//        // Renders the UI, unbinding the current vertex array to avoid messiness as SFGUI also uses OpenGL, of course.
-//        glBindVertexArray(0);
-//        glUseProgram(0);
-//        glViewport(0, 0, window.getSize().x, window.getSize().y);
-//        desktop.Update(guiClock.restart().asSeconds());
-//        sfgui.Display(window);
-//
-//        // Display what we rendered.
-//        UpdatePerspective(window.getSize().x, window.getSize().y);
-//        window.display();
-//
-//        // Delay to run approximately at our maximum framerate.
-//        sf::Int64 sleepDelay = (1000000 / Constants::MAX_FRAMERATE) - clock.getElapsedTime().asMicroseconds() - clockStartTime.asMicroseconds();
-//        sf::sleep(sf::microseconds(sleepDelay));
-//    }
-//
-//    return Constants::Status::OK;
 //}

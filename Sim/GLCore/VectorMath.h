@@ -4,6 +4,7 @@
 
 class VectorMath {
 public:
+	static bool ConvertOffToBinaryOff(std::string inputFile, std::string outputFile);
 	static void ComputeVertexNormals(
 		std::vector<glm::vec3>& vertices, std::vector<glm::ivec3>& faces,
 		std::vector<glm::vec3>& normals);

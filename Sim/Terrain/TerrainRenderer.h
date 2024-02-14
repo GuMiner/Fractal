@@ -13,7 +13,7 @@ class TerrainRenderer
 public:
     TerrainRenderer();
     bool Init(ShaderFactory* shaderFactory);
-    void StartRender(Camera* camera, float currentTime);
+    void StartRender(Camera* camera);
     void StopRender();
     void Render(Camera* camera, glm::mat4 position, TerrainModel* model);
 };

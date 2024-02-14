@@ -129,6 +129,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Background\Cube.cpp" />
+    <ClCompile Include="Telemetry\Compass.cpp" />
     <ClCompile Include="Data\BinaryModel.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Background\Fractal.cpp" />
@@ -153,8 +155,11 @@
     <ClCompile Include="Telemetry\Logging.cpp" />
     <ClCompile Include="ThreadProcessor.cpp" />
     <ClCompile Include="GLCore\VectorMath.cpp" />
+    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Background\Cube.h" />
+    <ClInclude Include="Telemetry\Compass.h" />
     <ClInclude Include="Data\BinaryModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Data\Config\TerrainConfig.h" />
@@ -184,6 +189,7 @@
     <ClInclude Include="Tests\ITestable.h" />
     <ClInclude Include="ThreadProcessor.h" />
     <ClInclude Include="GLCore\VectorMath.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json">
@@ -210,6 +216,8 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\Shaders\compass.fs" />
+    <None Include="Config\Shaders\compass.vs" />
     <None Include="Config\Shaders\terrain.gs" />
     <None Include="Config\Shaders\terrain.fs" />
     <None Include="Config\Shaders\terrain.vs" />

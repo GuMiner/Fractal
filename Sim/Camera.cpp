@@ -3,6 +3,8 @@
 #include <glm/geometric.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#include "Time.h"
 #include "Data/Config/CameraConfig.h"
 #include "Camera.h"
 
@@ -21,7 +23,6 @@ Camera::Camera() {
 	nearPlane = config.nearPlane;
 	farPlane = config.farPlane;
 
-    lastFrameTime = -1;
     UpdateNormalsAndMatrixes();
 
     speedMultiplier = 128.0;
@@ -37,6 +38,7 @@ void Camera::UpdateNormalsAndMatrixes() {
     target = position + forwards;
 
     View = glm::lookAtLH(position, target, up);
+    RotationOnlyView = glm::lookAtLH(glm::vec3(0, 0, 0), forwards, up);
     Perspective = glm::infinitePerspectiveLH(glm::radians(fovY),
         aspectRatio, nearPlane);// glm::perspectiveLH(, aspectRatio, nearPlane, farPlane);
 }
@@ -67,9 +69,8 @@ bool Camera::CheckMouseRotation() {
 }
 
 
-void Camera::Update(float currentTime) {
-    float frameTime = std::max(0.1f, currentTime - lastFrameTime);
-    lastFrameTime = currentTime;
+void Camera::Update() {
+    float frameTime = std::max(0.1f, Time::GlobalTime->LastFrameInterval());
 
     if (KeyboardInput::IsKeyPressed(Key::Num1) && !wasSpeedDownPressed) {
         wasSpeedDownPressed = true;
@@ -111,4 +112,12 @@ void Camera::Update(float currentTime) {
     if (movedForwards || movedLeftRight || movedUpDown || keyRotated || mouseRotated) {
         UpdateNormalsAndMatrixes();
     }
+}
+
+glm::vec3 Camera::Position() {
+    return position;
+}
+
+glm::vec3 Camera::Forwards() {
+    return forwards;
 }

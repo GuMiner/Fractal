@@ -12,6 +12,6 @@ class Terrain
 public:
     Terrain();
     bool Init(ShaderFactory* shaderFactory);
-    void Render(Camera* camera, float currentTime);
+    void Render(Camera* camera);
 };
 

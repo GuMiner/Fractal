@@ -90,6 +90,15 @@
     <ClCompile Include="Data\Config\TerrainConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Telemetry\Compass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Background\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -176,6 +185,15 @@
     <ClInclude Include="Terrain\TerrainMips.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Telemetry\Compass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Background\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json" />
@@ -195,6 +213,8 @@
     <None Include="Config\Shaders\terrain.fs" />
     <None Include="Config\Shaders\terrain.vs" />
     <None Include="Config\Shaders\terrain.gs" />
+    <None Include="Config\Shaders\compass.fs" />
+    <None Include="Config\Shaders\compass.vs" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="DebugObjectFormats.natvis" />

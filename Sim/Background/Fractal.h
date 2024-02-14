@@ -9,6 +9,6 @@ class Fractal {
 
 public:
     bool Init(ShaderFactory* shaderFactory);
-    void Render(float currentTime);
+    void Render();
 };
 

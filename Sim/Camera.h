@@ -18,8 +18,6 @@ class Camera {
     glm::vec3 target; // Where the camera points to, normalized.
 
     // Movement data
-    float lastFrameTime;
-
     float speedMultiplier;
     bool wasSpeedUpPressed;
     bool wasSpeedDownPressed;
@@ -45,8 +43,11 @@ class Camera {
 public:
 	glm::mat4 Perspective;
 	glm::mat4 View;
+    glm::mat4 RotationOnlyView;
 
 	Camera();
-    void Update(float currentTime);
+    void Update();
+    glm::vec3 Position();
+    glm::vec3 Forwards();
 };
 

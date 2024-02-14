@@ -3,7 +3,6 @@
 // From https://github.com/Tw1ddle/Sky-Shader, modified to render on a flat plane
 in vec3 fs_pos;
 
-// TODO: Temporary to move the sun around and see the sky change
 uniform float time;
 
 out vec4 color;
@@ -15,8 +14,9 @@ out vec4 color;
 // Three.js integration by zz85: http://twitter.com/blurspline / https://github.com/zz85 / http://threejs.org/examples/webgl_shaders_sky.html
 // Additional uniforms, refactoring and integrated with editable sky example: https://twitter.com/Sam_Twidale / https://github.com/Tw1ddle/Sky-Particles-Shader
 
-const vec3 cameraPos = vec3(0, 0, 0); //vec3(100000.0, -40000.0, 0);
-vec3 sunPosition = vec3(0.7, abs(cos(time)), sin(time));
+// TODO this is using timing config that should be in a config file. See Time.cpp
+float dayTime = (time - 5.0) * radians(180) / 10.0;
+vec3 sunPosition = vec3(cos(dayTime), 0, sin(dayTime));
 
 // "Red sunset" values
 const float depolarizationFactor = 0.02;
@@ -38,7 +38,7 @@ const float tonemapWeighting = 9.50;
 const float turbidity = 4.7;
 
 const float PI = 3.141592653589793238462643383279502884197169;
-const vec3 UP = vec3(0.0, 1.0, 0.0);
+const vec3 UP = vec3(0.0, 0.0, 1.0);
 
 vec3 totalRayleigh(vec3 lambda)
 {
@@ -94,7 +94,7 @@ void main()
     vec3 betaM = totalMie(primaries, mieKCoefficient, turbidity) * mieCoefficient;
     
     // Optical length, cutoff angle at 90 to avoid singularity
-    float zenithAngle = acos(max(0.0, dot(UP, normalize(vWorldPosition - cameraPos))));
+    float zenithAngle = acos(max(0.0, dot(UP, normalize(vWorldPosition))));
     float denom = cos(zenithAngle) + 0.15 * pow(93.885 - ((zenithAngle * 180.0) / PI), -1.253);
     float sR = rayleighZenithLength / denom;
     float sM = mieZenithLength / denom;
@@ -104,7 +104,7 @@ void main()
     
     // In-scattering
     vec3 sunDirection = normalize(sunPosition);
-    float cosTheta = dot(normalize(vWorldPosition - cameraPos), sunDirection);
+    float cosTheta = dot(normalize(vWorldPosition), sunDirection);
     vec3 betaRTheta = betaR * rayleighPhase(cosTheta * 0.5 + 0.5);
     vec3 betaMTheta = betaM * henyeyGreensteinPhase(cosTheta, mieDirectionalG);
     float sunE = sunIntensity(dot(sunDirection, UP));

@@ -3,8 +3,6 @@
 #include <SFML\Graphics.hpp>
 
 class FpsCounter {
-    float lastTime;
-
     float timeTotal;
     int frameTotal;
 
@@ -13,7 +11,7 @@ class FpsCounter {
 
 public:
     FpsCounter();
-    void Update(float currentTime);
+    void Update();
     void Render(sf::RenderWindow& window);
     ~FpsCounter();
 };

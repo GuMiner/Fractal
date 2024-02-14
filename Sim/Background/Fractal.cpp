@@ -3,6 +3,7 @@
 #include <glm/vec3.hpp>
 #include <glm/gtx/color_space.hpp>
 #include <gl/glew.h>
+#include "../Time.h"
 #include "Fractal.h"
 
 bool Fractal::Init(ShaderFactory* shaderFactory) {
@@ -61,7 +62,7 @@ bool Fractal::Init(ShaderFactory* shaderFactory) {
     return true;
 }
 
-void Fractal::Render(float currentTime) {
+void Fractal::Render() {
     glUseProgram(programId);
 
     glActiveTexture(GL_TEXTURE0);
@@ -75,7 +76,7 @@ void Fractal::Render(float currentTime) {
     glUniform1i(maxIterationsLoc, 400);
 
     GLint time = glGetUniformLocation(programId, "time");
-    glUniform1f(time, currentTime * 100.0f);
+    glUniform1f(time, Time::GlobalTime->GameTime() * 100.0f);
 
     GLint mousePos = glGetUniformLocation(programId, "c");
     glUniform2f(mousePos, -0.55f, 0.75f);
