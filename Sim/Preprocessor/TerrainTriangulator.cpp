@@ -209,7 +209,7 @@ void TerrainTriangulator::TriangulateTerrain() {
             std::stringstream inputFile;
             inputFile << config.generatedPath << y << "/" << x << "-mips.png";
 
-            int testMipsLevels[] = { 8 };
+            int testMipsLevels[] = { 16, 32, 64, 128, 256 };
             for (int mipsLevel : testMipsLevels) { //config.mipsLevels) {
                 std::stringstream outputFilePath;
                 SetOutputFilePath(&outputFilePath, x, y, mipsLevel);
@@ -288,7 +288,7 @@ void TerrainTriangulator::TriangulateTile(int x, int y, std::string outputFile, 
         }
     }
 
-    if (!BinaryModel::Save(outputFile, vertices, faces)) {
+    if (!BinaryModel::SaveCompressed(outputFile, vertices, faces)) {
         std::cout << "Unable to save " << outputFile << "!" << std::endl;
     }
 

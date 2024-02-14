@@ -12,10 +12,10 @@ TerrainModel::TerrainModel() {
 }
 
 bool TerrainModel::Load(int tileX, int tileY) {
-    int mipsLevel = 8; // TODO figure out mips
+    int mipsLevel = 16; // TODO figure out mips
     std::stringstream loadPath;
     loadPath << "Config/Terrain/Generated/" << tileY << "/" << tileX << "-" << mipsLevel << ".off";
-    if (!BinaryModel::Load(loadPath.str(), vertices, faces))
+    if (!BinaryModel::LoadCompressed(loadPath.str(), vertices, faces))
     {
         Logger::LogError("Cannot read test input file");
         return false;
