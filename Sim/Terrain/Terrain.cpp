@@ -1,9 +1,19 @@
 #include <iostream>
+#include <fstream>
 #include <glm\gtc\matrix_transform.hpp>
 #include "Terrain.h"
 
 Terrain::Terrain() {
 	renderer = new TerrainRenderer();
+
+	std::ifstream f("Config/terrain.json");
+	config = json::parse(f).template get<TerrainConfig>();
+}
+
+int Terrain::GetTileIndex(int x, int y, int mipsLevel) {
+	int baseIndex = x + y * config.width;
+	int multipliedIndex = baseIndex * config.mipsLevels.size();
+	return multipliedIndex + config.MipsLevelIndex(mipsLevel);
 }
 
 bool Terrain::Init(ShaderFactory* shaderFactory) {
@@ -11,12 +21,12 @@ bool Terrain::Init(ShaderFactory* shaderFactory) {
 		return false;
 	}
 
-	// TODO add grid of models 
-	for (int x = 0; x < 70; x++) {
-		std::cout << x << std::endl;
-		for (int y = 0; y < 70; y++) {
+	int minMipsLevel = config.MinMipsLevel();
+	for (int x = 0; x < config.width; x++) {
+		std::cout << "Loaded basic terrain column " << x << std::endl;
+		for (int y = 0; y < config.height; y++) {
 			auto model = new TerrainModel();
-			if (!model->Load(x, y)) {
+			if (!model->Load(x, y, minMipsLevel)) {
 				return false;
 			}
 
@@ -24,7 +34,7 @@ bool Terrain::Init(ShaderFactory* shaderFactory) {
 				return false;
 			}
 
-			models[x + y * 70] = model;
+			models[GetTileIndex(x, y, minMipsLevel)] = model;
 		}
 	}
 
@@ -33,20 +43,23 @@ bool Terrain::Init(ShaderFactory* shaderFactory) {
 
 
 void Terrain::Render(Camera* camera) {
-	int mipsLevel = 16; // TODO distance based mips 
-	float scale = 8.0f / (float)mipsLevel;
+	int minMipsLevel = config.MinMipsLevel();
+
+	int mipsLevel = minMipsLevel;
+	float scale = (float)minMipsLevel / (float)mipsLevel;
 	renderer->StartRender(camera);
-	TerrainModel* anchorModel = models[0];
-	for (int x = 0; x < 70; x++) {
-		for (int y = 0; y < 70; y++) {
+
+	TerrainModel* anchorModel = models[GetTileIndex(0, 0, mipsLevel)];
+	for (int x = 0; x < config.width; x++) {
+		for (int y = 0; y < config.height; y++) {
 			auto position =
 				glm::translate(
-					glm::scale(glm::mat4(1.0), glm::vec3(0.1f, 0.1f, anchorModel->scaleFactor / 25.0f)), // 0.01f)), //glm::rotate(glm::mat4(1.0), currentTime * 0.5f, glm::vec3(0, 1, 0)),
+					glm::scale(glm::mat4(1.0), glm::vec3(scale, scale, anchorModel->scaleFactor / 25.0f)),
 					glm::vec3(0, 0, anchorModel->offsetFactor)); //-109544));
 			
 			// TODO need to determine an anchor mipmap and scale everything to that instead of offseting by 8
-			position = glm::translate(position, glm::vec3(x * 16, y * 16, 1.0f));
-			renderer->Render(camera, position, models[x + y * 70]);
+			position = glm::translate(position, glm::vec3(x * mipsLevel, y * mipsLevel, 1.0f));
+			renderer->Render(camera, position, models[GetTileIndex(x, y, mipsLevel)]);
 		}
 	}
 

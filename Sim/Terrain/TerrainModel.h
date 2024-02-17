@@ -18,7 +18,7 @@ public:
     float scaleFactor;
     float offsetFactor; // TODO shared scale and offset
     TerrainModel();
-    bool Load(int tileX, int tileY);
+    bool Load(int tileX, int tileY, int mipsLevel);
     bool SendMesh();
 
     GLuint GetVao();

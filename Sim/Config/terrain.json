@@ -1,7 +1,7 @@
 {
   "width": 70,
   "height":  70,
-  "mipsLevels": [512, 256, 128, 64, 32, 16, 8, 4],
+  "mipsLevels": [512, 256, 128, 64, 32, 16, 8],
   "sourcePath": "Config/Terrain/Source",
   "generatedPath": "Config/Terrain/Generated"
 }

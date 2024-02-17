@@ -42,10 +42,11 @@ int Time::Day() {
 
 // TODO actually move with time again
 glm::vec3 Time::SunDirection() {
+	float time = 4.0f; // GameTime();
 	float halfDay = oneDay / 2;
 
 	float sunAngle =
-		4.0f * glm::radians(180.0f) / halfDay;
+		time * glm::radians(180.0f) / halfDay;
 	auto flat = glm::vec3(glm::cos(sunAngle), 0, glm::sin(sunAngle));
 
 	// Adjust for standard solar angle, averaging summer/winter
@@ -54,10 +55,11 @@ glm::vec3 Time::SunDirection() {
 }
 
 float Time::SunIntensity() {
+	float time = 4.0f; // GameTime();
 	float halfDay = oneDay / 2;
 
 	float sunAngle =
-		4.0f * glm::radians(180.0f) / halfDay;
+		time * glm::radians(180.0f) / halfDay;
 
 	// TODO add a night cycle
 	return std::abs(glm::sin(sunAngle));

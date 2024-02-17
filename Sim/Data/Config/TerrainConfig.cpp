@@ -12,6 +12,21 @@ int TerrainConfig::GetMipsYOffset(int mipsLevel) {
 	return offset;
 }
 
+int TerrainConfig::MipsLevelIndex(int mipsLevel) {
+	// Find mips level index
+	int index = 0;
+	for (int level : mipsLevels) {
+		if (mipsLevel == level) {
+			break;
+		}
+		index++;
+	}
+
+	assert(index != config.mipsLevels.size());
+
+	return index;
+}
+
 int TerrainConfig::TotalMipsHeight() {
 	int mipsHeight = 0;
 	for (int mipsLevel : mipsLevels) {
@@ -21,6 +36,12 @@ int TerrainConfig::TotalMipsHeight() {
 	return mipsHeight;
 }
 
+int TerrainConfig::MinMipsLevel() {
+	return mipsLevels[mipsLevels.size() - 1];
+}
+int TerrainConfig::MaxMipsLevel() {
+	return mipsLevels[0];
+}
 
 void from_json(const json& j, TerrainConfig& c) {
 	j.at("width").get_to(c.width);

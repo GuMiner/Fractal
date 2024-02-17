@@ -11,8 +11,7 @@
 TerrainModel::TerrainModel() {
 }
 
-bool TerrainModel::Load(int tileX, int tileY) {
-    int mipsLevel = 16; // TODO figure out mips
+bool TerrainModel::Load(int tileX, int tileY, int mipsLevel) {
     std::stringstream loadPath;
     loadPath << "Config/Terrain/Generated/" << tileY << "/" << tileX << "-" << mipsLevel << ".off";
     if (!BinaryModel::LoadCompressed(loadPath.str(), vertices, faces))
@@ -36,7 +35,7 @@ bool TerrainModel::Load(int tileX, int tileY) {
     // Scale from 0-5
     scaleFactor = 5.0 / (maxZ - minZ);
     offsetFactor = -maxZ;
-    // std::cout << scaleFactor << " " << offsetFactor << " " << std::endl;
+    // std::cout << tileX << ", " << tileY << "." <<  scaleFactor << " " << offsetFactor << " " << std::endl;
     
 
     // Create new OpenGL primitives
