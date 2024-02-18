@@ -3,6 +3,10 @@
 #include "../Camera.h"
 
 class TerrainModel {
+    int mipsLevel;
+    bool readyToSync;
+    bool readyToRender;
+
     GLuint modelVao;
     GLuint positionVbo;
     GLuint indexVbo;
@@ -13,11 +17,15 @@ class TerrainModel {
     std::vector<glm::ivec3> faces;
 
 public:
-    TerrainModel();
-    bool Load(int tileX, int tileY, int mipsLevel);
+    TerrainModel(int mipsLevel);
+    bool Load(int tileX, int tileY);
     bool SendMesh();
 
     GLuint GetVao();
     GLuint GetNormalTexture();
     GLsizei GetFaceCount();
+
+    int GetMipsLevel();
+    bool ReadyToSync();
+    bool ReadyToRender();
 };

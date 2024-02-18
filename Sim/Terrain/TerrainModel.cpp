@@ -8,10 +8,11 @@
 #include "TerrainModel.h"
 
 
-TerrainModel::TerrainModel() {
+TerrainModel::TerrainModel(int mipsLevel): 
+    mipsLevel(mipsLevel), readyToSync(false), readyToRender(false) {
 }
 
-bool TerrainModel::Load(int tileX, int tileY, int mipsLevel) {
+bool TerrainModel::Load(int tileX, int tileY) {
     std::stringstream loadPath;
     loadPath << "Config/Terrain/Generated/" << tileY << "/" << tileX << "-" << mipsLevel << ".off";
     if (!BinaryModel::LoadCompressed(loadPath.str(), vertices, faces))
@@ -24,7 +25,12 @@ bool TerrainModel::Load(int tileX, int tileY, int mipsLevel) {
     assert(faces.size() == normals.size());
     assert(mipsLevel * mipsLevel * 2 == normals.size());
 
-    // Create new OpenGL primitives
+    readyToSync = true;
+    return true;
+}
+
+bool TerrainModel::SendMesh() {
+    // Prep VAO, VBO, normal texture
     glGenVertexArrays(1, &modelVao);
     glBindVertexArray(modelVao);
 
@@ -36,8 +42,6 @@ bool TerrainModel::Load(int tileX, int tileY, int mipsLevel) {
 
     glGenBuffers(1, &indexVbo);
 
-    glBindVertexArray(0);
-
     glActiveTexture(GL_TEXTURE0);
     glGenTextures(1, &normalTexture);
 
@@ -47,18 +51,7 @@ bool TerrainModel::Load(int tileX, int tileY, int mipsLevel) {
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR)
-    {
-        std::cout << "Init: " << error << std::endl;
-        return false;
-    }
-    return true;
-}
-
-bool TerrainModel::SendMesh() {
-    glBindVertexArray(modelVao);
-
+    // Send the data over to OpenGL / GPU
     glBindBuffer(GL_ARRAY_BUFFER, positionVbo);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
 
@@ -75,6 +68,8 @@ bool TerrainModel::SendMesh() {
         std::cout << "Init: " << error << std::endl;
         return false;
     }
+
+    readyToRender = true;
     return true;
 }
 
@@ -88,4 +83,16 @@ GLuint TerrainModel::GetNormalTexture() {
 
 GLsizei TerrainModel::GetFaceCount() {
     return faces.size();
+}
+
+int TerrainModel::GetMipsLevel() {
+    return mipsLevel;
+}
+
+bool TerrainModel::ReadyToSync() {
+    return readyToSync;
+}
+
+bool TerrainModel::ReadyToRender() {
+    return readyToRender;
 }

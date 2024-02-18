@@ -1,5 +1,7 @@
 #pragma once
+#include <atomic>
 #include <map>
+#include <thread>
 #include "../GLCore/ShaderFactory.h"
 #include "../Camera.h"
 #include "../Data/Config/TerrainConfig.h"
@@ -11,6 +13,7 @@ class Terrain {
 
     std::map<int, TerrainModel*> models;
     TerrainRenderer* renderer;
+    std::thread* terrainLoader;
 
     // Scaling factors
     float xTileRatio;
@@ -21,7 +24,13 @@ class Terrain {
     int lastCameraTileY;
 
     int GetTileIndex(int x, int y, int mipsLevel);
-    TerrainModel* EnsureTileCached(int x, int y, int mipsLevel);
+
+    TerrainModel* TryCacheTile(int x, int y, int mipsIndex, int* gpuCounter);
+    TerrainModel* EnsureTileCached(int x, int y, int mipsIndex, int* gpuCounter);
+
+    void LoadTerrainAsync();
+
+    bool WithinRegion(int x, int y, int maxDist);
 public:
     Terrain();
     bool Init(ShaderFactory* shaderFactory);
