@@ -11,6 +11,10 @@ struct TerrainConfig {
 	std::vector<int> mipsLevels;
 	std::string sourcePath;
 	std::string generatedPath;
+	int maxHeight;
+	int scaleX;
+	int scaleY;
+	int scaleZ;
 
 	// Y offset of the current mips image
 	int GetMipsYOffset(int mipsLevel);

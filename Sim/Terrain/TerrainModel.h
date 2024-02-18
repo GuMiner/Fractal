@@ -6,7 +6,6 @@ class TerrainModel {
     GLuint modelVao;
     GLuint positionVbo;
     GLuint indexVbo;
-   // GLuint normalVbo;
     GLuint normalTexture;
 
     std::vector<glm::vec3> vertices;
@@ -14,9 +13,6 @@ class TerrainModel {
     std::vector<glm::ivec3> faces;
 
 public:
-
-    float scaleFactor;
-    float offsetFactor; // TODO shared scale and offset
     TerrainModel();
     bool Load(int tileX, int tileY, int mipsLevel);
     bool SendMesh();

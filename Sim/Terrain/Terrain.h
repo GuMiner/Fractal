@@ -12,8 +12,16 @@ class Terrain {
     std::map<int, TerrainModel*> models;
     TerrainRenderer* renderer;
 
-    int GetTileIndex(int x, int y, int mipsLevel);
+    // Scaling factors
+    float xTileRatio;
+    float yXRatio;
+    float scaleZ;
 
+    int lastCameraTileX;
+    int lastCameraTileY;
+
+    int GetTileIndex(int x, int y, int mipsLevel);
+    TerrainModel* EnsureTileCached(int x, int y, int mipsLevel);
 public:
     Terrain();
     bool Init(ShaderFactory* shaderFactory);

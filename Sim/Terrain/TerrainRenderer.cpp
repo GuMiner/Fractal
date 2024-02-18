@@ -89,6 +89,4 @@ void TerrainRenderer::Render(Camera* camera, glm::mat4 position, TerrainModel* m
     glUniformMatrix4fv(normalMatrixShaderPos, 1, GL_FALSE, &normalMatrixComputed[0][0]);
 
     glDrawElements(GL_TRIANGLES, 3 * model->GetFaceCount(), GL_UNSIGNED_INT, 0);
-
-
 }

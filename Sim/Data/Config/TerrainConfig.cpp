@@ -22,7 +22,7 @@ int TerrainConfig::MipsLevelIndex(int mipsLevel) {
 		index++;
 	}
 
-	assert(index != config.mipsLevels.size());
+	assert(index != mipsLevels.size());
 
 	return index;
 }
@@ -49,4 +49,8 @@ void from_json(const json& j, TerrainConfig& c) {
 	j.at("mipsLevels").get_to(c.mipsLevels);
 	j.at("sourcePath").get_to(c.sourcePath);
 	j.at("generatedPath").get_to(c.generatedPath);
+	j.at("maxHeight").get_to(c.maxHeight);
+	j.at("scaleX").get_to(c.scaleX);
+	j.at("scaleY").get_to(c.scaleY);
+	j.at("scaleZ").get_to(c.scaleZ);
 }

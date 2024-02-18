@@ -24,22 +24,7 @@ bool TerrainModel::Load(int tileX, int tileY, int mipsLevel) {
     assert(faces.size() == normals.size());
     assert(mipsLevel * mipsLevel * 2 == normals.size());
 
-    // Compute test scaling factors
-    float minZ = std::numeric_limits<float>::max();
-    float maxZ = std::numeric_limits<float>::min();
-    for (int i = 0; i < vertices.size(); i++) {
-        minZ = std::min(minZ, vertices[i].z);
-        maxZ = std::max(maxZ, vertices[i].z);
-    }
-
-    // Scale from 0-5
-    scaleFactor = 5.0 / (maxZ - minZ);
-    offsetFactor = -maxZ;
-    // std::cout << tileX << ", " << tileY << "." <<  scaleFactor << " " << offsetFactor << " " << std::endl;
-    
-
     // Create new OpenGL primitives
-    // TODO some of this should be extracted away as this needs to exist per model object
     glGenVertexArrays(1, &modelVao);
     glBindVertexArray(modelVao);
 
@@ -48,12 +33,6 @@ bool TerrainModel::Load(int tileX, int tileY, int mipsLevel) {
     glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, nullptr);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableVertexAttribArray(0);
-
-    // glGenBuffers(1, &normalVbo);
-    // glBindBuffer(GL_ARRAY_BUFFER, normalVbo);
-    // glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, nullptr);
-    // glBindBuffer(GL_ARRAY_BUFFER, 0);
-    // glEnableVertexAttribArray(1);
 
     glGenBuffers(1, &indexVbo);
 
@@ -82,9 +61,6 @@ bool TerrainModel::SendMesh() {
 
     glBindBuffer(GL_ARRAY_BUFFER, positionVbo);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
-
-    // glBindBuffer(GL_ARRAY_BUFFER, normalVbo);
-    // glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexVbo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, faces.size() * sizeof(glm::ivec3), &faces[0], GL_STATIC_DRAW);

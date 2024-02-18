@@ -17,7 +17,7 @@ bool Sky::Init(ShaderFactory* shaderFactory) {
     }
 
     // Invert scale to swap the triangle orientation because we are in the cube
-    Cube::Create(skyBox, -100000.0f);
+    Cube::Create(skyBox, -1000000.0f);
 
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
