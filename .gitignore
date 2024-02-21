@@ -258,3 +258,6 @@ paket-files/
 
 # Terrain data
 Sim/Config/Terrain/*
+
+# Temp save data
+save.json

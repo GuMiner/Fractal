@@ -28,6 +28,7 @@ class Terrain {
     TerrainModel* TryCacheTile(int x, int y, int mipsIndex, int* gpuCounter);
     TerrainModel* EnsureTileCached(int x, int y, int mipsIndex, int* gpuCounter);
 
+    bool stopSync;
     void LoadTerrainAsync();
 
     bool WithinRegion(int x, int y, int maxDist);
@@ -35,5 +36,7 @@ public:
     Terrain();
     bool Init(ShaderFactory* shaderFactory);
     void Render(Camera* camera);
+
+    ~Terrain();
 };
 

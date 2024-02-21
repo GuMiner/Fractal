@@ -130,6 +130,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background\Cube.cpp" />
+    <ClCompile Include="Data\SaveFile.cpp" />
+    <ClCompile Include="Data\Config\SaveConfig.cpp" />
     <ClCompile Include="Telemetry\Compass.cpp" />
     <ClCompile Include="Data\BinaryModel.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -159,6 +161,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background\Cube.h" />
+    <ClInclude Include="Data\Config\SaveConfig.h" />
+    <ClInclude Include="Data\SaveFile.h" />
     <ClInclude Include="Telemetry\Compass.h" />
     <ClInclude Include="Data\BinaryModel.h" />
     <ClInclude Include="Camera.h" />
@@ -238,6 +242,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </CopyFileToFolders>
+    <None Include="Config\save.json" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="DebugObjectFormats.natvis" />

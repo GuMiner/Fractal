@@ -21,13 +21,18 @@ Camera::Camera() {
 	fovY = config.fovY;
 	aspectRatio = config.aspectRatio;
 	nearPlane = config.nearPlane;
-	farPlane = config.farPlane;
 
     UpdateNormalsAndMatrixes();
 
     speedMultiplier = 128.0;
     wasSpeedUpPressed = false;
     wasSpeedDownPressed = false;
+}
+
+void Camera::Reset(glm::vec3 position, glm::vec3 forwards, glm::vec3 up) {
+    this->position = position;
+    this->forwards = forwards;
+    this->up = up;
 }
 
 void Camera::UpdateNormalsAndMatrixes() {
@@ -39,8 +44,7 @@ void Camera::UpdateNormalsAndMatrixes() {
 
     View = glm::lookAtLH(position, target, up);
     RotationOnlyView = glm::lookAtLH(glm::vec3(0, 0, 0), forwards, up);
-    Perspective = glm::infinitePerspectiveLH(glm::radians(fovY),
-        aspectRatio, nearPlane);// glm::perspectiveLH(, aspectRatio, nearPlane, farPlane);
+    Perspective = glm::infinitePerspectiveLH(glm::radians(fovY), aspectRatio, nearPlane);
 }
 
 // TODO put in constants elsewhere
@@ -120,4 +124,8 @@ glm::vec3 Camera::Position() {
 
 glm::vec3 Camera::Forwards() {
     return forwards;
+}
+
+glm::vec3 Camera::Up() {
+    return up;
 }

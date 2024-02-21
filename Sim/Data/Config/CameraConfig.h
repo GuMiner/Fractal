@@ -15,7 +15,6 @@ struct CameraConfig {
 	float aspectRatio;
 	float fovY;
 	float nearPlane;
-	float farPlane; 
 };
 
 void ParseVector(const json& j, const char* field, glm::vec3& vector) {
@@ -39,5 +38,4 @@ void from_json(const json& j, CameraConfig& c) {
 	j.at("aspectRatio").get_to(c.aspectRatio);
 	j.at("fovY").get_to(c.fovY);
 	j.at("nearPlane").get_to(c.nearPlane);
-	j.at("farPlane").get_to(c.farPlane);
 }

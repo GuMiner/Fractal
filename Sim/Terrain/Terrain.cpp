@@ -35,6 +35,11 @@ void Terrain::LoadTerrainAsync() {
 				assert(result);
 
 				models[GetTileIndex(x, y, mipsLevel)] = model;
+
+				if (stopSync) {
+					std::cout << "Stopping terrain sync." << std::endl;
+					return;
+				}
 			}
 		}
 
@@ -87,6 +92,7 @@ bool Terrain::Init(ShaderFactory* shaderFactory) {
 		return false;
 	}
 
+	stopSync = false;
 	terrainLoader = new std::thread(&Terrain::LoadTerrainAsync, this);
 
 	return true;
@@ -155,4 +161,16 @@ void Terrain::Render(Camera* camera) {
 	}
 
 	renderer->StopRender();
+}
+
+Terrain::~Terrain() {
+	stopSync = true;
+	if (terrainLoader != nullptr) {
+		terrainLoader->join();
+		delete terrainLoader;
+	}
+
+	delete renderer;
+
+	// TODO delete all loaded models
 }

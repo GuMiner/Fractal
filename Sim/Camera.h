@@ -8,7 +8,6 @@ class Camera {
 
     float aspectRatio;
     float nearPlane;
-    float farPlane;
 
     glm::vec3 position;
     glm::vec3 forwards; // Starts at Z+, normalized
@@ -46,8 +45,10 @@ public:
     glm::mat4 RotationOnlyView;
 
 	Camera();
+    void Reset(glm::vec3 position, glm::vec3 forwards, glm::vec3 up);
     void Update();
     glm::vec3 Position();
     glm::vec3 Forwards();
+    glm::vec3 Up();
 };
 

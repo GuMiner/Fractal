@@ -2,6 +2,7 @@
 #include "GLCore/ShaderFactory.h"
 #include "Camera.h"
 #include "Model.h"
+#include "Data/SaveFile.h"
 #include "Terrain/Terrain.h"
 #include "Background/Sky.h"
 
@@ -10,6 +11,8 @@
 #include "Telemetry/Compass.h"
 
 class Scene {
+    SaveFile* save;
+
     Camera* camera;
     Model* testModel;
     Terrain* testTerrain;
@@ -26,4 +29,6 @@ public:
     bool Init(ShaderFactory* shaderFactory);
     void Update();
     void RenderScene();
+
+    ~Scene();
 };

@@ -18,7 +18,9 @@ void Scene::ClearScreen() {
 }
 
 bool Scene::Init(ShaderFactory* shaderFactory) {
+	save = new SaveFile();
 	camera = new Camera();
+	camera->Reset(save->Config.position, save->Config.forwards, save->Config.up);
 
 	if (!sky->Init(shaderFactory)) {
 		return false;
@@ -63,4 +65,25 @@ void Scene::RenderScene() {
 
 	// fractal->Render(currentTime);
 	sky->Render(camera);
+}
+
+Scene::~Scene() {
+	// Update save file
+	save->Config.position = camera->Position();
+	save->Config.forwards = camera->Forwards();
+	save->Config.up = camera->Up();
+	save->Save();
+
+	delete save;
+
+	if (camera != nullptr) {
+		delete camera;
+	}
+
+	delete compass;
+	delete fractal;
+
+	delete sky;
+	delete testTerrain;
+	delete testModel;
 }
