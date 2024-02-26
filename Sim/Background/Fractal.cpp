@@ -48,7 +48,7 @@ bool Fractal::Init(ShaderFactory* shaderFactory) {
     //2 -- 2 floats / vertex. 4 -- float32
     glBufferData(GL_ARRAY_BUFFER, 6 * 2 * 4, &cwQuad[0], GL_STATIC_DRAW);
     
-    // Reset everything to not interfere with SFML
+    // Reset everything to not interfere with other renderers
     glBindTexture(GL_TEXTURE_1D, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

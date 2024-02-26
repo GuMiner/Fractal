@@ -2,10 +2,9 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <SFML\System.hpp>
 
 // A simple class for logging program events out to a file.
-class Logger : sf::NonCopyable
+class Logger
 {
 public:
     enum LogType { INFO, WARN, ERR };
@@ -69,7 +68,7 @@ public:
 
 private:
     std::ofstream logFile;
-    sf::Mutex writeLock;
+    //sf::Mutex writeLock;
 
     // Recursion finale.
     template<typename T>

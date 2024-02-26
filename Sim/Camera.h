@@ -1,7 +1,7 @@
 #pragma once
 #include <glm\vec3.hpp>
 #include <glm\mat4x4.hpp>
-#include "KeyboardInput.h"
+#include "Input/Input.h"
 
 class Camera {
     float fovY;
@@ -22,14 +22,14 @@ class Camera {
     bool wasSpeedDownPressed;
 
     template <typename T>
-    bool DialKey(sf::Keyboard::Key posKeyId, sf::Keyboard::Key negKeyId, T amount, T* variable) const {
+    bool DialKey(GlfwKey posKeyId, GlfwKey negKeyId, T amount, T* variable) const {
         bool updated = false;
-        if (KeyboardInput::IsKeyPressed(posKeyId)) {
+        if (Input::IsKeyPressed(posKeyId)) {
             (*variable) += amount;
             updated = true;
         }
 
-        if (KeyboardInput::IsKeyPressed(negKeyId)) {
+        if (Input::IsKeyPressed(negKeyId)) {
             (*variable) -= amount;
             updated = true;
         }

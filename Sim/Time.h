@@ -1,10 +1,7 @@
 #pragma once
 #include <glm/vec3.hpp>
-#include <SFML\System.hpp>
 
 class Time {
-	sf::Clock clock;
-
 	float gameTime;
 	
 	float lastFrameTime;

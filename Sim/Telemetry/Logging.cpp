@@ -1,11 +1,19 @@
 #include <ctime>
+#include <iostream>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include "Logger.h"
 
 Logger* Logger::LogStream;
 
+void LogGlfwErrors(int error, const char* description) {
+    std::cout << "  ERROR: " << error << ". Description: " << description << std::endl;
+}
+
 void Logger::Setup()
 {
     LogStream = new Logger("sim.log");
+    glfwSetErrorCallback(LogGlfwErrors);
 }
 
 void Logger::Shutdown()
@@ -27,12 +35,13 @@ Logger::Logger(const char* fileName)
 // Logs a message out the logger
 void Logger::LogInternal(LogType logType, const char* message)
 {
-    writeLock.lock();
+    // TODO reimplement
+    // writeLock.lock();
 
     LogTime();
     logFile << GetLogType(logType) << message << std::endl;
 
-    writeLock.unlock();
+    // writeLock.unlock();
 }
 
 // Logs the current time out to the log file.

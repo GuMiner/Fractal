@@ -130,8 +130,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background\Cube.cpp" />
+    <ClCompile Include="Data\Config\Config.cpp" />
     <ClCompile Include="Data\SaveFile.cpp" />
     <ClCompile Include="Data\Config\SaveConfig.cpp" />
+    <ClCompile Include="GLCore\ImguiRenderer.cpp" />
+    <ClCompile Include="GLCore\OpenGl.cpp" />
+    <ClCompile Include="GLCore\OpenGlCapabilities.cpp" />
     <ClCompile Include="Telemetry\Compass.cpp" />
     <ClCompile Include="Data\BinaryModel.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -139,7 +143,7 @@
     <ClCompile Include="Background\Sky.cpp" />
     <ClCompile Include="Data\Config\TerrainConfig.cpp" />
     <ClCompile Include="Preprocessor\GamePreprocessor.cpp" />
-    <ClCompile Include="KeyboardInput.cpp" />
+    <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Preprocessor\stb_implementations.cpp" />
     <ClCompile Include="Preprocessor\TerrainTriangulator.cpp" />
     <ClCompile Include="Terrain\Terrain.cpp" />
@@ -150,7 +154,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ScreenshotTaker.cpp" />
-    <ClCompile Include="SimUpdateState.cpp" />
     <ClCompile Include="Random2DFiller.cpp" />
     <ClCompile Include="Sim.cpp" />
     <ClCompile Include="Data\StringExtensions.cpp" />
@@ -163,6 +166,11 @@
     <ClInclude Include="Background\Cube.h" />
     <ClInclude Include="Data\Config\SaveConfig.h" />
     <ClInclude Include="Data\SaveFile.h" />
+    <ClInclude Include="GLCore\ImguiRenderer.h" />
+    <ClInclude Include="GLCore\OpenGl.h" />
+    <ClInclude Include="GLCore\OpenGlCapabilities.h" />
+    <ClInclude Include="Input\IGlfwKeyHandler.h" />
+    <ClInclude Include="Input\IGlfwMouseHandler.h" />
     <ClInclude Include="Telemetry\Compass.h" />
     <ClInclude Include="Data\BinaryModel.h" />
     <ClInclude Include="Camera.h" />
@@ -172,7 +180,7 @@
     <ClInclude Include="Background\Fractal.h" />
     <ClInclude Include="Background\Sky.h" />
     <ClInclude Include="Preprocessor\GamePreprocessor.h" />
-    <ClInclude Include="KeyboardInput.h" />
+    <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Preprocessor\TerrainTriangulator.h" />
     <ClInclude Include="Terrain\TerrainMips.h" />
     <ClInclude Include="Terrain\Terrain.h" />
@@ -183,7 +191,6 @@
     <ClInclude Include="ScreenshotTaker.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SimUpdateState.h" />
     <ClInclude Include="Random2DFiller.h" />
     <ClInclude Include="Sim.h" />
     <ClInclude Include="Data\StringExtensions.h" />
@@ -222,6 +229,8 @@
   <ItemGroup>
     <None Include="Config\Shaders\compass.fs" />
     <None Include="Config\Shaders\compass.vs" />
+    <None Include="Config\Shaders\imgui.fs" />
+    <None Include="Config\Shaders\imgui.vs" />
     <None Include="Config\Shaders\terrain.gs" />
     <None Include="Config\Shaders\terrain.fs" />
     <None Include="Config\Shaders\terrain.vs" />

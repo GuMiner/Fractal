@@ -30,9 +30,6 @@
     <ClCompile Include="Random2DFiller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SimUpdateState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GLCore\ShaderFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,7 +57,7 @@
     <ClCompile Include="Tests\Experimental.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardInput.cpp">
+    <ClCompile Include="Input\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Preprocessor\TerrainTriangulator.cpp">
@@ -105,6 +102,18 @@
     <ClCompile Include="Data\Config\SaveConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GLCore\OpenGl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLCore\OpenGlCapabilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLCore\ImguiRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\Config\Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -126,9 +135,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Random2DFiller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SimUpdateState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GLCore\ShaderFactory.h">
@@ -161,7 +167,7 @@
     <ClInclude Include="Tests\Experimental.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyboardInput.h">
+    <ClInclude Include="Input\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Preprocessor\TerrainTriangulator.h">
@@ -206,6 +212,21 @@
     <ClInclude Include="Data\Config\SaveConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GLCore\OpenGl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLCore\OpenGlCapabilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\IGlfwMouseHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\IGlfwKeyHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLCore\ImguiRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json" />
@@ -228,6 +249,8 @@
     <None Include="Config\Shaders\compass.fs" />
     <None Include="Config\Shaders\compass.vs" />
     <None Include="Config\save.json" />
+    <None Include="Config\Shaders\imgui.fs" />
+    <None Include="Config\Shaders\imgui.vs" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="DebugObjectFormats.natvis" />

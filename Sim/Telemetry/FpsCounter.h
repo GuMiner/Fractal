@@ -6,13 +6,11 @@ class FpsCounter {
     float timeTotal;
     int frameTotal;
 
-    sf::Font* fpsFont;
-    sf::Text* fpsText;
+    float lastFrameRateToRender;
 
 public:
     FpsCounter();
     void Update();
-    void Render(sf::RenderWindow& window);
-    ~FpsCounter();
+    void Render();
 };
 

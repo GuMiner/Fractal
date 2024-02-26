@@ -1,10 +1,12 @@
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <glm\trigonometric.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 #include "Time.h"
 
 Time* Time::GlobalTime;
 
-Time::Time(): clock(), gameTime(0.0f), lastFrameTime(0.0f),
+Time::Time(): gameTime(0.0f), lastFrameTime(0.0f),
 	lastFrameInterval(-1), oneDay(20.0f) {
 
 }
@@ -19,7 +21,7 @@ void Time::Update(bool isPaused) {
 }
 
 float Time::RunTime() {
-	return clock.getElapsedTime().asSeconds();
+	return (float)glfwGetTime();
 }
 
 float Time::GameTime() {

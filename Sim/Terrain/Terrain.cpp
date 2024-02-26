@@ -44,6 +44,7 @@ void Terrain::LoadTerrainAsync() {
 		}
 
 		std::cout << "Loaded all terrain of resolution " << mipsLevel << std::endl;
+		return;
 	}
 }
 

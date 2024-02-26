@@ -8,8 +8,6 @@
 #include "Data/Config/CameraConfig.h"
 #include "Camera.h"
 
-using Key = sf::Keyboard::Key;
-
 Camera::Camera() {
 	std::ifstream f("Config/camera.json");
     CameraConfig config = json::parse(f).template get<CameraConfig>();
@@ -56,7 +54,7 @@ bool Camera::CheckMouseRotation() {
     bool rotatedAroundUp = false;
     bool rotatedAroundRight = false;
 
-    glm::ivec2 difference = KeyboardInput::GetMouseDelta();
+    glm::ivec2 difference = Input::GetMouseDelta();
 
     glm::vec2 rotation = MOUSE_ROTATION_SPEED * glm::vec2(-(float)difference.x, -(float)difference.y);
     if (difference.x != 0) {
@@ -76,39 +74,39 @@ bool Camera::CheckMouseRotation() {
 void Camera::Update() {
     float frameTime = std::max(0.1f, Time::GlobalTime->LastFrameInterval());
 
-    if (KeyboardInput::IsKeyPressed(Key::Num1) && !wasSpeedDownPressed) {
+    if (Input::IsKeyPressed(GLFW_KEY_1) && !wasSpeedDownPressed) {
         wasSpeedDownPressed = true;
         speedMultiplier /= 2;
         std::cout << speedMultiplier << std::endl;
     }
-    else if (!KeyboardInput::IsKeyPressed(Key::Num1) && wasSpeedDownPressed) {
+    else if (!Input::IsKeyPressed(GLFW_KEY_1) && wasSpeedDownPressed) {
         wasSpeedDownPressed = false;
     }
 
-    if (KeyboardInput::IsKeyPressed(Key::Num2) && !wasSpeedUpPressed) {
+    if (Input::IsKeyPressed(GLFW_KEY_2) && !wasSpeedUpPressed) {
         wasSpeedUpPressed = true;
         speedMultiplier *= 2;
         std::cout << speedMultiplier << std::endl;
     }
-    else if (!KeyboardInput::IsKeyPressed(Key::Num2) && wasSpeedUpPressed) {
+    else if (!Input::IsKeyPressed(GLFW_KEY_2) && wasSpeedUpPressed) {
         wasSpeedUpPressed = false;
     }
 
     float speed = frameTime * KEYBOARD_MOVEMENT_SPEED * speedMultiplier; // TODO constant somewhere, or configurable speed
     float SIDEWAYS_DIVISOR = 4;
-    bool movedForwards = DialKey(Key::A, Key::Z, speed * forwards, &position);
-    bool movedLeftRight = DialKey(Key::W, Key::Q, speed * right / SIDEWAYS_DIVISOR, &position);
-    bool movedUpDown = DialKey(Key::S, Key::X, speed * up / SIDEWAYS_DIVISOR, &position);
+    bool movedForwards = DialKey(GLFW_KEY_A, GLFW_KEY_Z, speed * forwards, &position);
+    bool movedLeftRight = DialKey(GLFW_KEY_W, GLFW_KEY_Q, speed * right / SIDEWAYS_DIVISOR, &position);
+    bool movedUpDown = DialKey(GLFW_KEY_S, GLFW_KEY_X, speed * up / SIDEWAYS_DIVISOR, &position);
 
     bool mouseRotated = CheckMouseRotation();
 
     bool keyRotated = false;
-    if (KeyboardInput::IsKeyPressed(Key::E)) {
+    if (Input::IsKeyPressed(GLFW_KEY_E)) {
         up = glm::rotate(up, KEYBOARD_ROLL_SPEED * frameTime, forwards);
         keyRotated = true;
     }
 
-    if (KeyboardInput::IsKeyPressed(Key::D)) {
+    if (Input::IsKeyPressed(GLFW_KEY_D)) {
         up = glm::rotate(up, -KEYBOARD_ROLL_SPEED * frameTime, forwards);
         keyRotated = true;
     }

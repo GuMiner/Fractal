@@ -12,63 +12,6 @@ ShaderFactory::ShaderFactory()
 {
 }
 
-void ShaderFactory::LogGraphicsSettings()
-{
-    Logger::Log("OpenGL vendor: ", glGetString(GL_VENDOR), ", version ", glGetString(GL_VERSION), ", renderer ", glGetString(GL_RENDERER));
-   // Logger::Log("OpenGL extensions: ", glGetString(GL_EXTENSIONS));
-
-    GLint maxTextureUnits, maxUniformBlockSize;
-    GLint maxVertexUniformBlocks, maxFragmentUniformBlocks;
-    glGetIntegerv(GL_MAX_TEXTURE_UNITS, &maxTextureUnits);
-    glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &maxVertexUniformBlocks);
-    glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &maxFragmentUniformBlocks);
-    glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &maxUniformBlockSize);
-
-    Logger::Log("Max Texture Units: ", ", Max Uniform Size: ", (maxUniformBlockSize / 1024), " kB");
-    Logger::Log("Max Vertex Uniform Blocks: ", maxVertexUniformBlocks, ", Max Fragment Uniform Blocks: ", maxFragmentUniformBlocks);
-}
-
-bool ShaderFactory::InitCore() {
-    // TODO move elsewhere
-    GLenum err = glewInit();
-    if (err != GLEW_OK) {
-        Logger::LogError("GLEW startup failure: ", err, ".");
-        return false;
-    }
-
-    LogGraphicsSettings();
-
-    // TODO move elsewhere
-    // Alpha blending
-    //glEnable(GL_BLEND);
-  //  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    // Enable line and polygon smoothing
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_POLYGON_SMOOTH);
-
-    // Multisample if available
-    glEnable(GL_MULTISAMPLE);
-
-    // Let OpenGL shaders determine point sizes.
-    glEnable(GL_PROGRAM_POINT_SIZE);
-
-    glEnable(GL_CULL_FACE);
-    glFrontFace(GL_CW);
-
-    // Cutout faces that are hidden by other faces.
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
-        std::cout << "Init: " << error << std::endl;
-        return false;
-    }
-
-    return true;
-}
-
 bool ShaderFactory::ReadShader(const char* rootName, const char* extension, std::string* readShader)
 {
     std::stringstream filenameStream;

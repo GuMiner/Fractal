@@ -1,7 +1,7 @@
 #pragma once
+#include <GL/glew.h>
 #include <string>
 #include <vector>
-#include <SFML/OpenGL.hpp>
 
 // Handles loading and deleting shaders from a common 'shaders' folder
 class ShaderFactory
@@ -11,11 +11,8 @@ class ShaderFactory
     bool CreateProgram(std::vector<GLuint> shaders, GLuint* program);
 
     std::vector<GLuint> shaderPrograms;
-
-    void LogGraphicsSettings();
 public:
     ShaderFactory();
-    bool InitCore();
     bool CreateShaderProgram(const char* rootName, GLuint* programId);
     bool CreateShaderProgramWithGeometryShader(const char* rootName, GLuint* programId);
     bool CreateShaderProgramWithTesselation(const char* rootName, GLuint* programId);

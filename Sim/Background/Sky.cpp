@@ -30,7 +30,7 @@ bool Sky::Init(ShaderFactory* shaderFactory) {
     glBufferData(GL_ARRAY_BUFFER, skyBox.size() * sizeof(glm::vec3), &skyBox[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    // Reset to not interfere with SFML
+    // Reset to not interfere with other renderers
     glBindVertexArray(0);
 
     GLenum error = glGetError();
