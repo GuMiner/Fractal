@@ -1,8 +1,9 @@
 #pragma once
-#include <SFML\Graphics.hpp>
+#include <gl/glew.h>
+#include <GLFW/glfw3.h>
 
 class ScreenshotTaker
 {
 public:
-    static void Take(sf::RenderWindow& window);
+    static void Take(GLFWwindow* window);
 };

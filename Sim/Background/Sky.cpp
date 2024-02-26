@@ -35,7 +35,7 @@ bool Sky::Init(ShaderFactory* shaderFactory) {
 
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
-        std::cout << "Init: " << error << std::endl;
+        std::cout << "Sky Init: " << error << std::endl;
         return false;
     }  
 

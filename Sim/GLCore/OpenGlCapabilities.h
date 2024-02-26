@@ -18,7 +18,6 @@ public:
     std::string vendor;
     std::string renderer;
     std::string version;
-    std::vector<std::string> shadingLanguageVersions;
     std::vector<std::string> extensions;
 
     // Texture capabilities

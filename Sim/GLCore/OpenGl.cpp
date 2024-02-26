@@ -40,11 +40,12 @@ bool OpenGl::Load(GraphicsConfig& config) {
     }
 
     // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    // 
-    // // Enable alpha blending
-    // glEnable(GL_BLEND);
-    // glBlendEquation(GL_FUNC_ADD);
-    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Enable alpha blending
+    // Necessary for IMGui displays
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Enable line, but not polygon smoothing.
     glEnable(GL_LINE_SMOOTH);
@@ -67,7 +68,7 @@ bool OpenGl::Load(GraphicsConfig& config) {
 
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
-        std::cout << "Init: " << error << std::endl;
+        std::cout << "OpenGl Init: " << error << std::endl;
         return false;
     }
 

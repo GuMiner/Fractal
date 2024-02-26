@@ -14,12 +14,6 @@ void OpenGlCapabilities::GetRendererCapabilities() {
     renderer = std::string((const char*)glGetString(GL_RENDERER));
     version = std::string((const char*)glGetString(GL_VERSION));
 
-    int shadingLanguageCount = 0;
-    glGetIntegerv(GL_NUM_SHADING_LANGUAGE_VERSIONS, &shadingLanguageCount);
-    for (int i = 0; i < shadingLanguageCount; i++) {
-        shadingLanguageVersions.push_back(std::string((const char*)glGetStringi(GL_SHADING_LANGUAGE_VERSION, i)));
-    }
-
     int extensionCount = 0;
     glGetIntegerv(GL_NUM_EXTENSIONS, &extensionCount);
     for (int i = 0; i < extensionCount; i++) {
@@ -58,10 +52,6 @@ void OpenGlCapabilities::LogRetrievedInformation() {
 
 
     std::cout << "  CPU Cores: " << logicalCoreCount << std::endl;
-    std::cout << "Shading Language Versions Supported:" << std::endl; 
-    for (const std::string& version : shadingLanguageVersions) {
-        std::cout << "  " << version << std::endl; 
-    }
 
     if (verboseRenderLogs) {
         std::cout << "Extensions:" << std::endl;

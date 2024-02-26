@@ -13,6 +13,7 @@
 #include "Time.h"
 #include "Tests/Experimental.h"
 #include "Preprocessor/GamePreprocessor.h"
+#include "GameMode.h"
 #include "Sim.h"
 
 using json = nlohmann::json;
@@ -38,6 +39,7 @@ Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr),
     shaderFactory(nullptr)
 {
     Time::GlobalTime = new Time();
+    GameMode::State = new GameMode();
 
     Logger::Setup();
 
@@ -58,7 +60,10 @@ bool Sim::Init() {
     std::ifstream f("Config/graphics.json");
     GraphicsConfig config = json::parse(f).template get<GraphicsConfig>();
     opengl = new OpenGl();
-    opengl->Load(config);
+    if (!opengl->Load(config)) {
+        std::cout << "Failed to load basic opengl!" << std::endl;
+        return false;
+    }
 
     Input::Setup(opengl->GetWindow(), config);
     ImGui::CreateContext();
@@ -104,7 +109,6 @@ Sim::~Sim() {
     Logger::Shutdown();
 }
 
-bool wireframe = false; // TODO move to debug class
 void Sim::Update() {
     /**
     sf::Vector2u textureSize = simTexture.getSize();
@@ -131,15 +135,13 @@ void Sim::Update() {
     simTexture.update(pixels);
     delete[] pixels;
     **/
-
-    if (Input::IsKeyPressed(GLFW_KEY_R)) {
-        wireframe = !wireframe;
-        glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
-    }
+    
+    GameMode::State->Update(opengl->GetWindow());
+    Input::UpdateMouseDelta(opengl->GetWindow());
+    guiRenderer->Update(Time::GlobalTime->RunTime(), Time::GlobalTime->LastFrameInterval());
 
     fpsCounter->Update();
     testScene->Update();
-    guiRenderer->Update(Time::GlobalTime->RunTime(), Time::GlobalTime->LastFrameInterval());
 }
 
 void Sim::Render() {
@@ -154,15 +156,15 @@ void Sim::Run() {
     while (!glfwWindowShouldClose(opengl->GetWindow())) {
         glfwPollEvents();
 
-        bool isPaused = false;
-        Time::GlobalTime->Update(isPaused);
+        Time::GlobalTime->Update(GameMode::State->IsPaused);
 
         Update();
         Render();
 
-        // if (state.IsCaptureRequested()) {
-        //     ScreenshotTaker::Take(window);
-        // }
+        if (GameMode::State->IsCaptureRequested && !GameMode::State->WasCaptured) {
+            ScreenshotTaker::Take(opengl->GetWindow());
+            GameMode::State->WasCaptured = true;
+        }
     }
 }
 

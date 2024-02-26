@@ -48,7 +48,7 @@ bool Model::Init(ShaderFactory* shaderFactory) {
     GLenum error = glGetError();
     if (error != GL_NO_ERROR)
     {
-        std::cout << "Init: " << error << std::endl;
+        std::cout << "Model Init: " << error << std::endl;
         return false;
     }
     return true;
@@ -75,7 +75,7 @@ bool Model::SendMesh() {
     GLenum error = glGetError();
     if (error != GL_NO_ERROR)
     {
-        std::cout << "Init: " << error << std::endl;
+        std::cout << "Mesh Send Init: " << error << std::endl;
         return false;
     }
     return true;

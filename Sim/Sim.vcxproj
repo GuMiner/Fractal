@@ -133,6 +133,7 @@
     <ClCompile Include="Data\Config\Config.cpp" />
     <ClCompile Include="Data\SaveFile.cpp" />
     <ClCompile Include="Data\Config\SaveConfig.cpp" />
+    <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GLCore\ImguiRenderer.cpp" />
     <ClCompile Include="GLCore\OpenGl.cpp" />
     <ClCompile Include="GLCore\OpenGlCapabilities.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Background\Cube.h" />
     <ClInclude Include="Data\Config\SaveConfig.h" />
     <ClInclude Include="Data\SaveFile.h" />
+    <ClInclude Include="GameMode.h" />
     <ClInclude Include="GLCore\ImguiRenderer.h" />
     <ClInclude Include="GLCore\OpenGl.h" />
     <ClInclude Include="GLCore\OpenGlCapabilities.h" />

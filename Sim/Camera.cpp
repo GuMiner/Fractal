@@ -54,7 +54,7 @@ bool Camera::CheckMouseRotation() {
     bool rotatedAroundUp = false;
     bool rotatedAroundRight = false;
 
-    glm::ivec2 difference = Input::GetMouseDelta();
+    glm::vec2 difference = Input::GetMouseDelta();
 
     glm::vec2 rotation = MOUSE_ROTATION_SPEED * glm::vec2(-(float)difference.x, -(float)difference.y);
     if (difference.x != 0) {

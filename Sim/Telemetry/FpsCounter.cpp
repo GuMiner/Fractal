@@ -24,7 +24,7 @@ void FpsCounter::Update() {
 void FpsCounter::Render() {
     ImGui::Begin("FPS", nullptr);
     ImGui::SetWindowSize(ImVec2(50, 50), ImGuiCond_Once);
-    ImGui::SetWindowPos(ImVec2(10, 130), ImGuiCond_Once);
+    ImGui::SetWindowPos(ImVec2(10, 10), ImGuiCond_Once);
     ImGui::SetCursorPos(ImVec2(5, 20));
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.0f", lastFrameRateToRender);
     ImGui::End();

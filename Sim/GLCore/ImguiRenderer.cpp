@@ -162,8 +162,6 @@ void ImguiRenderer::Update(float currentTime, float frameTime)
     mouseWheelPos = 0.0f;
 
     // Hide OS mouse cursor if ImGui is drawing it
-    glfwSetInputMode(ImguiRenderer::window, GLFW_CURSOR, io.MouseDrawCursor ? GLFW_CURSOR_HIDDEN : GLFW_CURSOR_NORMAL);
-
     ImGui::NewFrame();
 }
 

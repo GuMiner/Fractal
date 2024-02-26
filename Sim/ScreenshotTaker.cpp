@@ -1,17 +1,17 @@
 #include <chrono>
 #include <sstream>
+#include <stb_image_write.h>
 #include "ScreenshotTaker.h"
 
 using namespace std::chrono;
 
-void ScreenshotTaker::Take(sf::RenderWindow& window) {
-    // Replacement to RenderWindow's capture
-    // https://www.sfml-dev.org/documentation/2.6.0/classsf_1_1RenderWindow.php
-    sf::Vector2u windowSize = window.getSize();
-    sf::Texture texture;
-    texture.create(windowSize.x, windowSize.y);
-    texture.update(window);
-    sf::Image screenshot = texture.copyToImage();
+void ScreenshotTaker::Take(GLFWwindow* window) {
+    // Capture image
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+
+    unsigned char* image = new unsigned char[width * height * 4];
+    glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, image);
 
     // Figure out the date to create an appropriate screenshot
     system_clock::time_point now = system_clock::now();
@@ -26,5 +26,7 @@ void ScreenshotTaker::Take(sf::RenderWindow& window) {
         (addZero ? "0" : "") << localTime->tm_mday <<  "-" <<
         (localTime->tm_year - 100) << ".png";
 
-    screenshot.saveToFile(screenshotPath.str());
+
+    stbi_flip_vertically_on_write(true);
+    stbi_write_png(screenshotPath.str().c_str(), width, height, 4, image, 0);
 }

@@ -65,7 +65,7 @@ bool TerrainModel::SendMesh() {
     GLenum error = glGetError();
     if (error != GL_NO_ERROR)
     {
-        std::cout << "Init: " << error << std::endl;
+        std::cout << "Terrain Init: " << error << std::endl;
         return false;
     }
 
