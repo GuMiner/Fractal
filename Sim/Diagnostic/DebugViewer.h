@@ -6,15 +6,15 @@ public:
     static DebugViewer* Global;
 
     glm::vec3 WaterColor;
-    float waterGrassCutoff;
+    float WaterGrassCutoff;
     glm::vec3 GrassColor;
-    float grassForestCutoff;
+    float GrassForestCutoff;
     glm::vec3 ForestColor;
-    float forestTundraCutoff;
+    float ForestTundraCutoff;
     glm::vec3 TundraColor;
-    float tundraRockCutoff;
+    float TundraRockCutoff;
     glm::vec3 RockColor;
-    float rockSnowCutoff;
+    float RockSnowCutoff;
     glm::vec3 SnowColor;
 
     DebugViewer();

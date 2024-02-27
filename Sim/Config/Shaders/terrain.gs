@@ -10,10 +10,12 @@ uniform sampler2D normals;
 uniform mat4 normalMatrix;
 
 in vec3 gs_position [];
+in float heightPercentage [];
 
 // Reproject the position and normals appropriately.
 out vec3 fs_normal;
 out vec3 fs_position;
+out float fs_heightPercentage;
 
 void main() {
     ivec2 normalsSize = textureSize(normals, 0);
@@ -29,6 +31,8 @@ void main() {
     {
         gl_Position = gl_in[i].gl_Position;
         fs_position = gs_position[i];
+        fs_heightPercentage = heightPercentage[i];
+
         fs_normal = fs_normal_cache; // Must be written after every EmitVertex call
         EmitVertex();
     }

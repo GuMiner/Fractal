@@ -16,8 +16,21 @@ uniform vec3 pLightPosition;
 uniform vec3 pLightAmbient;
 uniform vec3 pLightDiffuse;
 
+uniform vec3 WaterColor;
+uniform float WaterGrassCutoff;
+uniform vec3 GrassColor;
+uniform float GrassForestCutoff;
+uniform vec3 ForestColor;
+uniform float ForestTundraCutoff;
+uniform vec3 TundraColor;
+uniform float TundraRockCutoff;
+uniform vec3 RockColor;
+uniform float RockSnowCutoff;
+uniform vec3 SnowColor;
+
 in vec3 fs_position;
 in vec3 fs_normal;
+in float fs_heightPercentage;
 
 out vec4 color;
 
@@ -45,5 +58,18 @@ void main() {
   vec3 overallSpecular = specularColor * (pow(abs(max(dSpecular, 0)), specular) +
       pow(abs(max(pSpecular, 0)), specular));
 
-    color = vec4(overallAmbient + overallDiffuse + overallSpecular, 1.0f); //  + overallSpecular, 1.0f);
+  vec4 colorMultiplier = vec4(WaterColor, 1.0f);
+  if (fs_heightPercentage > RockSnowCutoff) {
+    colorMultiplier = vec4(SnowColor, 1.0f);
+  } else if (fs_heightPercentage > TundraRockCutoff) {
+    colorMultiplier = vec4(RockColor, 1.0f);
+  } else if (fs_heightPercentage > ForestTundraCutoff) {
+    colorMultiplier = vec4(TundraColor, 1.0f);
+  } else if (fs_heightPercentage > GrassForestCutoff) {
+    colorMultiplier = vec4(ForestColor, 1.0f);
+  } else if (fs_heightPercentage > WaterGrassCutoff) {
+    colorMultiplier = vec4(GrassColor, 1.0f);
+  } // else, Water color
+
+  color = colorMultiplier * vec4(overallAmbient + overallDiffuse + overallSpecular, 1.0f); //  + overallSpecular, 1.0f);
 }

@@ -127,7 +127,7 @@ void Terrain::Render(Camera* camera) {
 	}
 
 	int modelsSentToGpu = 0;
-	renderer->StartRender(camera);
+	renderer->StartRender(camera, config.maxHeight); // The max height will be maxHeight, not the scaled Z coordinate post model+view+perspective.
 	for (int x = 0; x < config.width; x++) {
 		for (int y = 0; y < config.height; y++) {
 
