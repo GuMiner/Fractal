@@ -7,7 +7,8 @@
 #include <imgui.h>
 
 #include "Telemetry/Logger.h"
-#include "ScreenshotTaker.h"
+#include "Diagnostic/ScreenshotTaker.h"
+#include "Diagnostic/DebugViewer.h"
 #include "Input/Input.h"
 #include "Data/Config/Config.h"
 #include "Time.h"
@@ -47,6 +48,8 @@ Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr),
     if (runExperiments) {
         Experimental::Test();
     }
+
+    DebugViewer::Global = new DebugViewer();
 
     if (preprocess) {
         GamePreprocessor preprocessor;
@@ -148,6 +151,8 @@ void Sim::Render() {
     testScene->RenderScene();
 
     fpsCounter->Render();
+    DebugViewer::Global->Render();
+    
     guiRenderer->Render();
     opengl->DisplayFrame();
 }

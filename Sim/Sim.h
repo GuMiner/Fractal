@@ -11,8 +11,7 @@
 #include "GLCore/ShaderFactory.h"
 #include "Scene.h"
 
-class Sim
-{
+class Sim {
 	OpenGl* opengl;
 
 	FpsCounter* fpsCounter;

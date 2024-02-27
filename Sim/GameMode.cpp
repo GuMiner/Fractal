@@ -5,20 +5,27 @@ GameMode* GameMode::State;
 
 GameMode::GameMode(): wireframe(false), wireframePressed(false),
 	IsPaused(false), pausePressed(false),
-	IsCaptureRequested(false), WasCaptured(false) {
+	IsCaptureRequested(false), WasCaptured(false), IsDialogMode(false) {
 
 }
 
 void GameMode::HandlePauseChange(GLFWwindow* window) {
-	if (IsPaused) {
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	} else {
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	}
+	// TODO handle
 }
 
 
 void GameMode::Update(GLFWwindow* window) {
+	// Handle dialog mode
+	if (Input::IsKeyPressed(GLFW_KEY_LEFT_ALT) && !IsDialogMode) {
+		IsDialogMode = true;
+
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	} else if (!Input::IsKeyPressed(GLFW_KEY_LEFT_ALT) && IsDialogMode) {
+		IsDialogMode = false;
+
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+
 	// Handle paused
 	if (Input::IsKeyPressed(GLFW_KEY_P) && !pausePressed) {
 		// Transition to paused
@@ -46,7 +53,7 @@ void GameMode::Update(GLFWwindow* window) {
 
 		glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
 	}
-	else if (wireframePressed) {
+	else if (!Input::IsKeyPressed(GLFW_KEY_R) && wireframePressed) {
 		wireframePressed = false;
 	}
 }

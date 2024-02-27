@@ -19,5 +19,7 @@ public:
     bool IsPaused;
     bool IsCaptureRequested;
     bool WasCaptured;
+
+    bool IsDialogMode;
 };
 

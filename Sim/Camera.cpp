@@ -4,8 +4,9 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Time.h"
 #include "Data/Config/CameraConfig.h"
+#include "Time.h"
+#include "GameMode.h"
 #include "Camera.h"
 
 Camera::Camera() {
@@ -51,6 +52,9 @@ void Camera::UpdateNormalsAndMatrixes() {
 #define KEYBOARD_ROLL_SPEED 0.5f
 
 bool Camera::CheckMouseRotation() {
+    if (GameMode::State->IsDialogMode) {
+        return false; // No mouse motion in dialog mode
+    }
     bool rotatedAroundUp = false;
     bool rotatedAroundRight = false;
 

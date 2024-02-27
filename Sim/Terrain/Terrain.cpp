@@ -71,6 +71,9 @@ TerrainModel* Terrain::TryCacheTile(int x, int y, int mipsIndex, int* gpuCounter
 	int tileIdx = GetTileIndex(x, y, mipsLevel);
 	if (models.count(tileIdx) != 0) {
 		auto model = models[tileIdx];
+		if (model == nullptr) {
+			return nullptr; // Can rarely occur if there's a timing discrepancy between the threads
+		}
 		if (!model->ReadyToRender() && model->ReadyToSync()) {
 			if (*gpuCounter < MAX_SYNC_PER_FRAME) {
 				(*gpuCounter)++;

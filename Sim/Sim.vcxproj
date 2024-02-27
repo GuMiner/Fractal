@@ -133,6 +133,7 @@
     <ClCompile Include="Data\Config\Config.cpp" />
     <ClCompile Include="Data\SaveFile.cpp" />
     <ClCompile Include="Data\Config\SaveConfig.cpp" />
+    <ClCompile Include="Diagnostic\DebugViewer.cpp" />
     <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GLCore\ImguiRenderer.cpp" />
     <ClCompile Include="GLCore\OpenGl.cpp" />
@@ -154,7 +155,7 @@
     <ClCompile Include="GLCore\ShaderFactory.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="ScreenshotTaker.cpp" />
+    <ClCompile Include="Diagnostic\ScreenshotTaker.cpp" />
     <ClCompile Include="Random2DFiller.cpp" />
     <ClCompile Include="Sim.cpp" />
     <ClCompile Include="Data\StringExtensions.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Background\Cube.h" />
     <ClInclude Include="Data\Config\SaveConfig.h" />
     <ClInclude Include="Data\SaveFile.h" />
+    <ClInclude Include="Diagnostic\DebugViewer.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="GLCore\ImguiRenderer.h" />
     <ClInclude Include="GLCore\OpenGl.h" />
@@ -190,7 +192,7 @@
     <ClInclude Include="Terrain\TerrainModel.h" />
     <ClInclude Include="Tests\Experimental.h" />
     <ClInclude Include="GLCore\ShaderFactory.h" />
-    <ClInclude Include="ScreenshotTaker.h" />
+    <ClInclude Include="Diagnostic\ScreenshotTaker.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Random2DFiller.h" />
@@ -256,7 +258,7 @@
     <None Include="Config\save.json" />
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="DebugObjectFormats.natvis" />
+    <Natvis Include="Diagnostic\DebugObjectFormats.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
