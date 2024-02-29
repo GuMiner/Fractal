@@ -1,17 +1,16 @@
 #pragma once
 #include "../GLCore/ShaderFactory.h"
+#include "../GLCore/ShaderUniforms.h"
 #include "../Camera.h"
 #include "TerrainModel.h"
 
 class TerrainRenderer
 {
     GLuint modelProgram;
+    ShaderUniforms uniforms;
 
     GLint modelShaderPos;
     GLint normalMatrixShaderPos;
-
-    void SetFloat(const char* name, float value);
-    void SetVec3(const char* name, glm::vec3 value);
 
 public:
     TerrainRenderer();

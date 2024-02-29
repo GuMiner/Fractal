@@ -135,6 +135,7 @@
     <ClCompile Include="Data\Config\SaveConfig.cpp" />
     <ClCompile Include="Diagnostic\DebugViewer.cpp" />
     <ClCompile Include="GameMode.cpp" />
+    <ClCompile Include="GLCore\ShaderUniforms.cpp" />
     <ClCompile Include="GLCore\ImguiRenderer.cpp" />
     <ClCompile Include="GLCore\OpenGl.cpp" />
     <ClCompile Include="GLCore\OpenGlCapabilities.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Preprocessor\stb_implementations.cpp" />
     <ClCompile Include="Preprocessor\TerrainTriangulator.cpp" />
+    <ClCompile Include="Terrain\InfiniGrid.cpp" />
     <ClCompile Include="Terrain\Terrain.cpp" />
     <ClCompile Include="Terrain\TerrainRenderer.cpp" />
     <ClCompile Include="Terrain\TerrainModel.cpp" />
@@ -170,6 +172,7 @@
     <ClInclude Include="Data\SaveFile.h" />
     <ClInclude Include="Diagnostic\DebugViewer.h" />
     <ClInclude Include="GameMode.h" />
+    <ClInclude Include="GLCore\ShaderUniforms.h" />
     <ClInclude Include="GLCore\ImguiRenderer.h" />
     <ClInclude Include="GLCore\OpenGl.h" />
     <ClInclude Include="GLCore\OpenGlCapabilities.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="Preprocessor\GamePreprocessor.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Preprocessor\TerrainTriangulator.h" />
+    <ClInclude Include="Terrain\InfiniGrid.h" />
     <ClInclude Include="Terrain\TerrainMips.h" />
     <ClInclude Include="Terrain\Terrain.h" />
     <ClInclude Include="Terrain\TerrainRenderer.h" />

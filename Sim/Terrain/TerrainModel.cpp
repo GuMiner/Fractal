@@ -61,11 +61,11 @@ bool TerrainModel::SendMesh() {
     glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Order important!
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+    
     GLenum error = glGetError();
     if (error != GL_NO_ERROR)
     {
-        std::cout << "Terrain Init: " << error << std::endl;
+        std::cout << "Terrain Init: " << error << " " << glewGetErrorString(error) << std::endl;
         return false;
     }
 

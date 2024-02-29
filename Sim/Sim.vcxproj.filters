@@ -120,6 +120,12 @@
     <ClCompile Include="Diagnostic\DebugViewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain\InfiniGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLCore\ShaderUniforms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Telemetry\Logger.h">
@@ -237,6 +243,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Diagnostic\DebugViewer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain\InfiniGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLCore\ShaderUniforms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

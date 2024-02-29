@@ -5,7 +5,7 @@
 #include "../Diagnostic/DebugViewer.h"
 #include "TerrainRenderer.h"
 
-TerrainRenderer::TerrainRenderer() {
+TerrainRenderer::TerrainRenderer(): uniforms() {
 
 }
 
@@ -16,17 +16,9 @@ bool TerrainRenderer::Init(ShaderFactory* shaderFactory) {
         return false;
     }
 
+    uniforms.SetProgramId(modelProgram);
+
     return true;
-}
-
-void TerrainRenderer::SetFloat(const char* name, float value) {
-    GLint loc = glGetUniformLocation(modelProgram, name);
-    glUniform1f(loc, value);
-}
-
-void TerrainRenderer::SetVec3(const char* name, glm::vec3 value) {
-    GLint loc = glGetUniformLocation(modelProgram, name);
-    glUniform3f(loc, value.x, value.y, value.z);
 }
 
 void TerrainRenderer::StartRender(Camera* camera, float maxHeight) {
@@ -38,19 +30,19 @@ void TerrainRenderer::StartRender(Camera* camera, float maxHeight) {
     glUniform1i(normalsTexture, 0);
 
     // Colorations
-    SetFloat("maxHeight", maxHeight);
+    uniforms.SetFloat("maxHeight", maxHeight);
 
-    SetVec3("WaterColor", DebugViewer::Global->WaterColor);
-    SetFloat("WaterGrassCutoff", DebugViewer::Global->WaterGrassCutoff);
-    SetVec3("GrassColor", DebugViewer::Global->GrassColor);
-    SetFloat("GrassForestCutoff", DebugViewer::Global->GrassForestCutoff);
-    SetVec3("ForestColor", DebugViewer::Global->ForestColor);
-    SetFloat("ForestTundraCutoff", DebugViewer::Global->ForestTundraCutoff);
-    SetVec3("TundraColor", DebugViewer::Global->TundraColor);
-    SetFloat("TundraRockCutoff", DebugViewer::Global->TundraRockCutoff);
-    SetVec3("RockColor", DebugViewer::Global->RockColor);
-    SetFloat("RockSnowCutoff", DebugViewer::Global->RockSnowCutoff);
-    SetVec3("SnowColor", DebugViewer::Global->SnowColor);
+    uniforms.SetVec3("WaterColor", DebugViewer::Global->WaterColor);
+    uniforms.SetFloat("WaterGrassCutoff", DebugViewer::Global->WaterGrassCutoff);
+    uniforms.SetVec3("GrassColor", DebugViewer::Global->GrassColor);
+    uniforms.SetFloat("GrassForestCutoff", DebugViewer::Global->GrassForestCutoff);
+    uniforms.SetVec3("ForestColor", DebugViewer::Global->ForestColor);
+    uniforms.SetFloat("ForestTundraCutoff", DebugViewer::Global->ForestTundraCutoff);
+    uniforms.SetVec3("TundraColor", DebugViewer::Global->TundraColor);
+    uniforms.SetFloat("TundraRockCutoff", DebugViewer::Global->TundraRockCutoff);
+    uniforms.SetVec3("RockColor", DebugViewer::Global->RockColor);
+    uniforms.SetFloat("RockSnowCutoff", DebugViewer::Global->RockSnowCutoff);
+    uniforms.SetVec3("SnowColor", DebugViewer::Global->SnowColor);
 
     // Projection 
     modelShaderPos = glGetUniformLocation(modelProgram, "model");
