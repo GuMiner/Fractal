@@ -129,7 +129,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Background\Cube.cpp" />
+    <ClCompile Include="Data\Shapes\Plane.cpp" />
+    <ClCompile Include="Data\Shapes\Cube.cpp" />
     <ClCompile Include="Data\Config\Config.cpp" />
     <ClCompile Include="Data\SaveFile.cpp" />
     <ClCompile Include="Data\Config\SaveConfig.cpp" />
@@ -167,7 +168,8 @@
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Background\Cube.h" />
+    <ClInclude Include="Data\Shapes\Plane.h" />
+    <ClInclude Include="Data\Shapes\Cube.h" />
     <ClInclude Include="Data\Config\SaveConfig.h" />
     <ClInclude Include="Data\SaveFile.h" />
     <ClInclude Include="Diagnostic\DebugViewer.h" />
@@ -235,6 +237,8 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\Shaders\grid.fs" />
+    <None Include="Config\Shaders\grid.vs" />
     <None Include="Config\Shaders\compass.fs" />
     <None Include="Config\Shaders\compass.vs" />
     <None Include="Config\Shaders\imgui.fs" />

@@ -23,3 +23,8 @@ void ShaderUniforms::SetVec3(const std::string& name, const glm::vec3& value) {
 	EnsureUniformCached(name);
 	glUniform3f(uniformMapping[name], value.x, value.y, value.z);
 }
+
+void ShaderUniforms::SendMat4(const std::string& name, const glm::mat4& value) {
+	EnsureUniformCached(name);
+	glUniformMatrix4fv(uniformMapping[name], 1, GL_FALSE, &value[0][0]);
+}

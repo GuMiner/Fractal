@@ -7,7 +7,7 @@
 #include <gl/glew.h>
 
 #include "../Time.h"
-#include "Cube.h"
+#include "../Data/Shapes/Cube.h"
 #include "Sky.h"
 
 bool Sky::Init(ShaderFactory* shaderFactory) {

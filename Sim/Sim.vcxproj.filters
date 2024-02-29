@@ -90,7 +90,7 @@
     <ClCompile Include="Telemetry\Compass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Background\Cube.cpp">
+    <ClCompile Include="Data\Shapes\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
@@ -124,6 +124,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GLCore\ShaderUniforms.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\Shapes\Plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -212,7 +215,7 @@
     <ClInclude Include="Telemetry\Compass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Background\Cube.h">
+    <ClInclude Include="Data\Shapes\Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
@@ -251,6 +254,9 @@
     <ClInclude Include="GLCore\ShaderUniforms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Data\Shapes\Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Config\graphics.json" />
@@ -275,6 +281,8 @@
     <None Include="Config\save.json" />
     <None Include="Config\Shaders\imgui.fs" />
     <None Include="Config\Shaders\imgui.vs" />
+    <None Include="Config\Shaders\grid.vs" />
+    <None Include="Config\Shaders\grid.fs" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Diagnostic\DebugObjectFormats.natvis" />

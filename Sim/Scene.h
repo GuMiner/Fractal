@@ -4,6 +4,8 @@
 #include "Model.h"
 #include "Data/SaveFile.h"
 #include "Terrain/Terrain.h"
+
+#include "Terrain/InfiniGrid.h"
 #include "Background/Sky.h"
 
 // TODO move to a debug area
@@ -15,8 +17,10 @@ class Scene {
 
     Camera* camera;
     Model* testModel;
+
     Terrain* testTerrain;
 
+    InfiniGrid* grid;
     Sky* sky;
 
     Fractal* fractal;

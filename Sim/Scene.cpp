@@ -4,6 +4,8 @@
 Scene::Scene() : camera(nullptr) {
 	testModel = new Model();
 	testTerrain = new Terrain();
+
+	grid = new InfiniGrid();
 	sky = new Sky(); 
 
 	fractal = new Fractal();
@@ -23,6 +25,10 @@ bool Scene::Init(ShaderFactory* shaderFactory) {
 	camera->Reset(save->Config.position, save->Config.forwards, save->Config.up);
 
 	if (!sky->Init(shaderFactory)) {
+		return false;
+	}
+
+	if (!grid->Init(shaderFactory)) {
 		return false;
 	}
 
@@ -64,6 +70,7 @@ void Scene::RenderScene() {
 	testTerrain->Render(camera);
 
 	// fractal->Render(currentTime);
+	grid->Render(camera);
 	sky->Render(camera);
 }
 
