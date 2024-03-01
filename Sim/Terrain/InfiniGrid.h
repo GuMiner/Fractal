@@ -9,10 +9,12 @@ class InfiniGrid {
 
     GLuint partialCubeVao;
     GLuint partialCubeVbo;
+    GLuint partialCubeNormalsVbo;
 
     float tileSize;
 
     std::vector<glm::vec3> planeInstance;
+    std::vector<glm::vec3> planeInstanceNormals;
 
 public:
     InfiniGrid();

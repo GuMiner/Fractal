@@ -3,7 +3,7 @@
 #define AddVertex(x, y, z) vertices.push_back(glm::vec3(x, y, z)) 
 
 void Cube::Create(std::vector<glm::vec3>& vertices, float scale) {
-		// Bottom
+	// Bottom
 	AddVertex(-scale, -scale, -scale);
 	AddVertex(scale, -scale, -scale);
 	AddVertex(-scale, -scale, scale);
@@ -11,7 +11,7 @@ void Cube::Create(std::vector<glm::vec3>& vertices, float scale) {
 	AddVertex(scale, -scale, scale);
 	AddVertex(-scale, -scale, scale);
 
-		// Top
+	// Top
 	AddVertex(-scale, scale, -scale);
 	AddVertex(-scale, scale, scale);
 	AddVertex(scale, scale, -scale);
@@ -19,7 +19,7 @@ void Cube::Create(std::vector<glm::vec3>& vertices, float scale) {
 	AddVertex(-scale, scale, scale);
 	AddVertex(scale, scale, scale);
 
-		// Front
+	// Front
 	AddVertex(-scale, -scale, scale);
 	AddVertex(scale, -scale, scale);
 	AddVertex(-scale, scale, scale);
@@ -27,7 +27,7 @@ void Cube::Create(std::vector<glm::vec3>& vertices, float scale) {
 	AddVertex(scale, scale, scale);
 	AddVertex(-scale, scale, scale);
 
-		// Back
+	// Back
 	AddVertex(-scale, -scale, -scale);
 	AddVertex(-scale, scale, -scale);
 	AddVertex(scale, -scale, -scale);
@@ -35,7 +35,7 @@ void Cube::Create(std::vector<glm::vec3>& vertices, float scale) {
 	AddVertex(-scale, scale, -scale);
 	AddVertex(scale, scale, -scale);
 
-		// Left
+	// Left
 	AddVertex(-scale, -scale, scale);
 	AddVertex(-scale, scale, -scale);
 	AddVertex(-scale, -scale, -scale);
@@ -43,11 +43,62 @@ void Cube::Create(std::vector<glm::vec3>& vertices, float scale) {
 	AddVertex(-scale, scale, scale);
 	AddVertex(-scale, scale, -scale);
 
-		// Right
+	// Right
 	AddVertex(scale, -scale, scale);
 	AddVertex(scale, -scale, -scale);
 	AddVertex(scale, scale, -scale);
 	AddVertex(scale, -scale, scale);
 	AddVertex(scale, scale, -scale);
 	AddVertex(scale, scale, scale);
+}
+
+
+void Cube::CreateNormals(std::vector<glm::vec3>& vertices) {
+	// Bottom
+	AddVertex(0.0f, -1.0f, 0.0f);
+	AddVertex(0.0f, -1.0f, 0.0f);
+	AddVertex(0.0f, -1.0f, 0.0f);
+	AddVertex(0.0f, -1.0f, 0.0f);
+	AddVertex(0.0f, -1.0f, 0.0f);
+	AddVertex(0.0f, -1.0f, 0.0f);
+
+	// Top
+	AddVertex(0.0f, 1.0f, 0.0f);
+	AddVertex(0.0f, 1.0f, 0.0f);
+	AddVertex(0.0f, 1.0f, 0.0f);
+	AddVertex(0.0f, 1.0f, 0.0f);
+	AddVertex(0.0f, 1.0f, 0.0f);
+	AddVertex(0.0f, 1.0f, 0.0f);
+
+	// Front
+	AddVertex(0.0f, 0.0f, 1.0f);
+	AddVertex(0.0f, 0.0f, 1.0f);
+	AddVertex(0.0f, 0.0f, 1.0f);
+	AddVertex(0.0f, 0.0f, 1.0f);
+	AddVertex(0.0f, 0.0f, 1.0f);
+	AddVertex(0.0f, 0.0f, 1.0f);
+
+	// Back
+	AddVertex(0.0f, 0.0f, -1.0f);
+	AddVertex(0.0f, 0.0f, -1.0f);
+	AddVertex(0.0f, 0.0f, -1.0f);
+	AddVertex(0.0f, 0.0f, -1.0f);
+	AddVertex(0.0f, 0.0f, -1.0f);
+	AddVertex(0.0f, 0.0f, -1.0f);
+
+	// Left
+	AddVertex(-1.0f, 0.0f, 0.0f);
+	AddVertex(-1.0f, 0.0f, 0.0f);
+	AddVertex(-1.0f, 0.0f, 0.0f);
+	AddVertex(-1.0f, 0.0f, 0.0f);
+	AddVertex(-1.0f, 0.0f, 0.0f);
+	AddVertex(-1.0f, 0.0f, 0.0f);
+
+	// Right
+	AddVertex(1.0f, 0.0f, 0.0f);
+	AddVertex(1.0f, 0.0f, 0.0f);
+	AddVertex(1.0f, 0.0f, 0.0f);
+	AddVertex(1.0f, 0.0f, 0.0f);
+	AddVertex(1.0f, 0.0f, 0.0f);
+	AddVertex(1.0f, 0.0f, 0.0f);
 }
