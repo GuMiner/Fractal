@@ -4,8 +4,9 @@
 #include "../Telemetry/Logger.h"
 #include "../Data/Shapes/Plane.h"
 #include "InfiniGrid.h"
+#include "../Time.h"
 
-InfiniGrid::InfiniGrid(): instanceCount(10000), uniforms() { // TODO configurable instance count + fog info. Consider putting in debug area
+InfiniGrid::InfiniGrid(): uniforms() { // TODO configurable instance count + fog info. Consider putting in debug area
 	
 }
 
@@ -27,7 +28,8 @@ bool InfiniGrid::Init(ShaderFactory* shaderFactory) {
     glEnableVertexAttribArray(0);
 
     // Send the data over to OpenGL / GPU
-    Plane::Create(planeInstance, 1.0f);
+    tileSize = 40.0f;
+    Plane::Create(planeInstance, tileSize);
     glBufferData(GL_ARRAY_BUFFER, planeInstance.size() * sizeof(glm::vec3), &planeInstance[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -36,13 +38,19 @@ bool InfiniGrid::Init(ShaderFactory* shaderFactory) {
 	return true;
 }
 
-
 void InfiniGrid::Render(Camera* camera) {
     glUseProgram(gridProgram);
     glBindVertexArray(partialCubeVao);
 
     uniforms.SendMat4("view", camera->View);
     uniforms.SendMat4("perspective", camera->Perspective);
+    
+    // TODO configurable
+    int width = 1000;
+    int instanceCount = width * width;
+    uniforms.SetInt("width", width);
+    uniforms.SetFloat("tileSize", tileSize * 2);
+    uniforms.SetFloat("time", Time::GlobalTime->GameTime());
 
     glDrawArraysInstanced(GL_TRIANGLES, 0, planeInstance.size(), instanceCount);
 

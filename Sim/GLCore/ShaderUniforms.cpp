@@ -14,6 +14,11 @@ void ShaderUniforms::EnsureUniformCached(const std::string& name) {
 	}
 }
 
+void ShaderUniforms::SetInt(const std::string& name, int value) {
+	EnsureUniformCached(name);
+	glUniform1i(uniformMapping[name], value);
+}
+
 void ShaderUniforms::SetFloat(const std::string& name, float value) {
 	EnsureUniformCached(name);
 	glUniform1f(uniformMapping[name], value);

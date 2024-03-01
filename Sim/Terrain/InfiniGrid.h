@@ -4,13 +4,13 @@
 #include "../Camera.h"
 
 class InfiniGrid {
-    GLsizei instanceCount;
-
     GLuint gridProgram;
     ShaderUniforms uniforms;
 
     GLuint partialCubeVao;
     GLuint partialCubeVbo;
+
+    float tileSize;
 
     std::vector<glm::vec3> planeInstance;
 
