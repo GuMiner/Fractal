@@ -1,6 +1,8 @@
 #include <gl/glew.h>
 #include "Scene.h"
 
+bool disableTerrain = true;
+
 Scene::Scene() : camera(nullptr) {
 	testModel = new Model();
 	testTerrain = new Terrain();
@@ -37,8 +39,10 @@ bool Scene::Init(ShaderFactory* shaderFactory) {
 		return false;
 	}
 
-	if (!testTerrain->Init(shaderFactory)) {
-		return false;
+	if (!disableTerrain) {
+		if (!testTerrain->Init(shaderFactory)) {
+			return false;
+		}
 	}
 
 	if (!testModel->Init(shaderFactory)) {
@@ -72,7 +76,9 @@ void Scene::RenderScene() {
 	compass->Render(camera);
 	testModel->Render(camera);
 
-	testTerrain->Render(camera);
+	if (!disableTerrain) {
+		testTerrain->Render(camera);
+	}
 
 	// fractal->Render(currentTime);
 	grid->Render(camera);

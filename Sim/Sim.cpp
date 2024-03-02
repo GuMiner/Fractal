@@ -39,6 +39,7 @@ void Sim::SetupDiagnostics() {
 Sim::Sim() : fpsCounter(nullptr), threadProcessor(nullptr), filler(nullptr),
     shaderFactory(nullptr)
 {
+    lobby = new Lobby();
     Time::GlobalTime = new Time();
     GameMode::State = new GameMode();
 
@@ -99,6 +100,7 @@ bool Sim::Init() {
 }
 
 Sim::~Sim() {
+    delete lobby;
     delete Time::GlobalTime;
 
     delete fpsCounter;
@@ -148,6 +150,7 @@ void Sim::Update() {
 }
 
 void Sim::Render() {
+    lobby->Render(); // TODO render a backup scene if the lobby is in play.
     testScene->RenderScene();
 
     fpsCounter->Render();

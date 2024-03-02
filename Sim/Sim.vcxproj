@@ -141,6 +141,7 @@
     <ClCompile Include="GLCore\ImguiRenderer.cpp" />
     <ClCompile Include="GLCore\OpenGl.cpp" />
     <ClCompile Include="GLCore\OpenGlCapabilities.cpp" />
+    <ClCompile Include="Network\Lobby.cpp" />
     <ClCompile Include="Telemetry\Compass.cpp" />
     <ClCompile Include="Data\BinaryModel.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="GLCore\OpenGlCapabilities.h" />
     <ClInclude Include="Input\IGlfwKeyHandler.h" />
     <ClInclude Include="Input\IGlfwMouseHandler.h" />
+    <ClInclude Include="Network\Lobby.h" />
     <ClInclude Include="Telemetry\Compass.h" />
     <ClInclude Include="Data\BinaryModel.h" />
     <ClInclude Include="Camera.h" />

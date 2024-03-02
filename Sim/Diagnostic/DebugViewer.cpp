@@ -24,24 +24,28 @@ void DebugViewer::Update() {
 
 void DebugViewer::Render() {
     ImGui::Begin("Debug", nullptr);
-    ImGui::SetWindowSize(ImVec2(280, 300), ImGuiCond_Once);
+
     ImGui::SetWindowPos(ImVec2(10, 50), ImGuiCond_Once);
+    ImGui::SetWindowSize(ImVec2(280, 350), ImGuiCond_Once);
     ImGui::SetCursorPos(ImVec2(5, 20));
-    ImGui::ColorEdit3("Water", &WaterColor[0]);
-    ImGui::SliderFloat("W <-> G", &WaterGrassCutoff, 0.0f, GrassForestCutoff);
-    
-    ImGui::ColorEdit3("Grass", &GrassColor[0]);
-    ImGui::SliderFloat("G <-> F", &GrassForestCutoff, WaterGrassCutoff, ForestTundraCutoff);
 
-    ImGui::ColorEdit3("Forest", &ForestColor[0]);
-    ImGui::SliderFloat("F <-> T", &ForestTundraCutoff, GrassForestCutoff, TundraRockCutoff);
+    if (ImGui::CollapsingHeader("Terrain Colors")) {
+        ImGui::ColorEdit3("Water", &WaterColor[0]);
+        ImGui::SliderFloat("W <-> G", &WaterGrassCutoff, 0.0f, GrassForestCutoff);
 
-    ImGui::ColorEdit3("Tundra", &TundraColor[0]);
-    ImGui::SliderFloat("T <-> R", &TundraRockCutoff, ForestTundraCutoff, RockSnowCutoff);
+        ImGui::ColorEdit3("Grass", &GrassColor[0]);
+        ImGui::SliderFloat("G <-> F", &GrassForestCutoff, WaterGrassCutoff, ForestTundraCutoff);
 
-    ImGui::ColorEdit3("Rock", &RockColor[0]);
-    ImGui::SliderFloat("R <-> S", &RockSnowCutoff, TundraRockCutoff, 1.0f);
+        ImGui::ColorEdit3("Forest", &ForestColor[0]);
+        ImGui::SliderFloat("F <-> T", &ForestTundraCutoff, GrassForestCutoff, TundraRockCutoff);
 
-    ImGui::ColorEdit3("Snow", &SnowColor[0]);
+        ImGui::ColorEdit3("Tundra", &TundraColor[0]);
+        ImGui::SliderFloat("T <-> R", &TundraRockCutoff, ForestTundraCutoff, RockSnowCutoff);
+
+        ImGui::ColorEdit3("Rock", &RockColor[0]);
+        ImGui::SliderFloat("R <-> S", &RockSnowCutoff, TundraRockCutoff, 1.0f);
+
+        ImGui::ColorEdit3("Snow", &SnowColor[0]);
+    }
     ImGui::End();
 }

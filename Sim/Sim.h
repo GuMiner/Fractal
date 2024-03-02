@@ -10,6 +10,7 @@
 #include "GLCore/ImguiRenderer.h"
 #include "GLCore/ShaderFactory.h"
 #include "Scene.h"
+#include "Network/Lobby.h"
 
 class Sim {
 	OpenGl* opengl;
@@ -23,6 +24,8 @@ class Sim {
 	ShaderFactory* shaderFactory;
 	ImguiRenderer* guiRenderer;
 
+	// Game mode scenese
+	Lobby* lobby;
 	Scene* testScene;
 
 	void SetupDiagnostics();
