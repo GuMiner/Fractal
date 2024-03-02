@@ -7,6 +7,7 @@
 
 #include "Terrain/InfiniGrid.h"
 #include "Background/Sky.h"
+#include "Background/Clouds.h"
 
 // TODO move to a debug area
 #include "Background/Fractal.h"
@@ -21,6 +22,7 @@ class Scene {
     Terrain* testTerrain;
 
     InfiniGrid* grid;
+    Clouds* clouds;
     Sky* sky;
 
     Fractal* fractal;

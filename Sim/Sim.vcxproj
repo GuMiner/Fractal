@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Background\Clouds.cpp" />
     <ClCompile Include="Data\Shapes\Plane.cpp" />
     <ClCompile Include="Data\Shapes\Cube.cpp" />
     <ClCompile Include="Data\Config\Config.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Background\Clouds.h" />
     <ClInclude Include="Data\Shapes\Plane.h" />
     <ClInclude Include="Data\Shapes\Cube.h" />
     <ClInclude Include="Data\Config\SaveConfig.h" />
@@ -237,6 +239,8 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\Shaders\clouds.fs" />
+    <None Include="Config\Shaders\clouds.vs" />
     <None Include="Config\Shaders\grid.fs" />
     <None Include="Config\Shaders\grid.vs" />
     <None Include="Config\Shaders\compass.fs" />
