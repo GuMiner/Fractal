@@ -3,8 +3,8 @@
 // Material properties
 uniform vec3 ambient;
 uniform vec3 diffuse;
-uniform vec3 specularColor;
-uniform float specular;
+uniform vec3 specular;
+uniform float specularMult;
 
 // Directional light properties
 uniform vec3 dLightDirection;
@@ -42,8 +42,8 @@ void main() {
   float dSpecular = dot(dReflection, -normalize(fs_position));
   float pSpecular = dot(pReflection, -normalize(fs_position));
 
-  vec3 overallSpecular = specularColor * (pow(abs(max(dSpecular, 0)), specular) +
-      pow(abs(max(pSpecular, 0)), specular));
+  vec3 overallSpecular = specular * (pow(abs(max(dSpecular, 0)), specularMult) +
+      pow(abs(max(pSpecular, 0)), specularMult));
 
     color = vec4(overallAmbient + overallDiffuse + overallSpecular, 1.0f); //  + overallSpecular, 1.0f);
 }

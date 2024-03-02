@@ -1,3 +1,4 @@
+#include <iostream>
 #include <glm\gtc\matrix_transform.hpp>
 #include <gl/glew.h>
 #include "../Telemetry/Logger.h"
@@ -48,46 +49,33 @@ void TerrainRenderer::StartRender(Camera* camera, float maxHeight) {
     modelShaderPos = glGetUniformLocation(modelProgram, "model");
     normalMatrixShaderPos = glGetUniformLocation(modelProgram, "normalMatrix");
 
-    GLint view = glGetUniformLocation(modelProgram, "view");
-    glUniformMatrix4fv(view, 1, GL_FALSE, &camera->View[0][0]);
-
-    GLint perspective = glGetUniformLocation(modelProgram, "perspective");
-    glUniformMatrix4fv(perspective, 1, GL_FALSE, &camera->Perspective[0][0]);
-
+    uniforms.SetMat4("view", camera->View);
+    uniforms.SetMat4("perspective", camera->Perspective);
+    
     // Lighting
-    GLint ambient = glGetUniformLocation(modelProgram, "ambient");
-    glUniform3f(ambient, 0.501f, 0.501f, 0.501f);
-
-    GLint diffuse = glGetUniformLocation(modelProgram, "diffuse");
-    glUniform3f(diffuse, 0.51f, 0.51f, 0.51f);
-
-    GLint specularColor = glGetUniformLocation(modelProgram, "specularColor");
-    glUniform3f(specularColor, 0.51f, 0.51f, 0.51f);
-
-    GLint specular = glGetUniformLocation(modelProgram, "specular");
-    glUniform1f(specular, 4.0f);
+    uniforms.SetMaterialLighting(
+        glm::vec3(0.4f, 0.4f, 0.4f), // ambient
+        glm::vec3(0.6f, 0.6f, 0.6f), // diffuse
+        glm::vec3(0.5f, 0.5f, 0.5f), // specular
+        4.0f); // specular strength
 
     auto lightDirection = Time::GlobalTime->SunDirection();
     auto lightIntensity = Time::GlobalTime->SunIntensity() * 0.9f;
 
-    GLint dLightDirection = glGetUniformLocation(modelProgram, "dLightDirection");
-    glUniform3f(dLightDirection, lightDirection.x, lightDirection.y, lightDirection.z);
+    auto viewLightDirection = camera->View * glm::vec4(lightDirection, 1.0f);
+    uniforms.SetDirectionalLighting(
+        glm::normalize(glm::vec3(viewLightDirection)),
+        glm::vec3(lightIntensity / 2),
+        glm::vec3(lightIntensity)
+    );
 
-    GLint dLightAmbient = glGetUniformLocation(modelProgram, "dLightAmbient");
-    glUniform3f(dLightAmbient, lightIntensity / 2, lightIntensity / 2, lightIntensity / 2);
-
-    GLint dLightDiffuse = glGetUniformLocation(modelProgram, "dLightDiffuse");
-    glUniform3f(dLightDiffuse, lightIntensity, lightIntensity, lightIntensity);
-
-    GLint pLightPosition = glGetUniformLocation(modelProgram, "pLightPosition");
-    auto lightPosition = glm::vec3(5.0f, 5.0f, -5.0);
-    glUniform3f(pLightPosition, lightPosition.x, lightPosition.y, lightPosition.z);
-
-    GLint pLightAmbient = glGetUniformLocation(modelProgram, "pLightAmbient");
-    glUniform3f(pLightAmbient, 0.002f, 0.002f, 0.002f);
-
-    GLint pLightDiffuse = glGetUniformLocation(modelProgram, "pLightDiffuse");
-    glUniform3f(pLightDiffuse, 0.008f, 0.008f, 0.008f);
+    auto pointOnePosition = camera->Position() + (10.0f * camera->Forwards());
+    auto pointOneViewPos = camera->View * glm::vec4(pointOnePosition, 1.0f);
+    uniforms.SetPointOneLighting(
+        glm::vec3(pointOneViewPos),
+        glm::vec3(0.2f, 0.2f, 0.2f),
+        glm::vec3(0.9f, 0.8f, 0.4f)
+    );
 }
 
 void TerrainRenderer::StopRender() {
@@ -103,6 +91,7 @@ void TerrainRenderer::Render(Camera* camera, glm::mat4 position, TerrainModel* m
 
     glUniformMatrix4fv(modelShaderPos, 1, GL_FALSE, &position[0][0]);
 
+    // TODO both for this and the grid, this only works if all *lights* (like the sun) are also moved around.
     glm::mat4 normalMatrixComputed = glm::transpose(glm::inverse(camera->View * position));
     glUniformMatrix4fv(normalMatrixShaderPos, 1, GL_FALSE, &normalMatrixComputed[0][0]);
 

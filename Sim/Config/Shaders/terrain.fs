@@ -1,10 +1,11 @@
 #version 330 core
 
+//// Standard lighting uniforms
 // Material properties
 uniform vec3 ambient;
 uniform vec3 diffuse;
-uniform vec3 specularColor;
-uniform float specular;
+uniform vec3 specular;
+uniform float specularMult;
 
 // Directional light properties
 uniform vec3 dLightDirection;
@@ -15,6 +16,7 @@ uniform vec3 dLightDiffuse;
 uniform vec3 pLightPosition;
 uniform vec3 pLightAmbient;
 uniform vec3 pLightDiffuse;
+//// End of standard lighting uniforms
 
 uniform vec3 WaterColor;
 uniform float WaterGrassCutoff;
@@ -35,28 +37,37 @@ in float fs_heightPercentage;
 out vec4 color;
 
 void main() {
+    //// Standard lighting block
     vec3 normal = normalize(fs_normal);
 
-    vec3 overallAmbient = ambient * (dLightAmbient + pLightAmbient);
+    vec3 pointLightDistance = pLightPosition - fs_position;
+    float pointLightStrength = max(1.0, 100.0 / (length(pointLightDistance) + 0.01));
 
-    vec3 directionToPointLight = normalize(pLightPosition - fs_position);
-    //
+    // Ambient (diffuse + point light reduction)
+    vec3 overallAmbient = ambient * (dLightAmbient + pLightAmbient * pointLightStrength);
+
+    vec3 directionToPointLight = normalize(pointLightDistance);
+    
     float dLightDotProd = dot(dLightDirection, normal);
     float pLightDotProd = dot(directionToPointLight, normal);
-    //
-    //// Max of 0 to not light interior surfaces
+    
+    // Diffuse
     vec3 overallDiffuse = diffuse * (
         dLightDiffuse * abs(max(dLightDotProd, 0)) + 
-        pLightDiffuse * abs(max(pLightDotProd, 0)));
-    //
-  vec3 dReflection = reflect(-dLightDirection, normal);
-  vec3 pReflection = reflect(-directionToPointLight, normal);
-  
-  float dSpecular = dot(dReflection, -normalize(fs_position));
-  float pSpecular = dot(pReflection, -normalize(fs_position));
+        pLightDiffuse * pointLightStrength * abs(max(pLightDotProd, 0)));
 
-  vec3 overallSpecular = specularColor * (pow(abs(max(dSpecular, 0)), specular) +
-      pow(abs(max(pSpecular, 0)), specular));
+    // Specular
+    vec3 dReflection = reflect(-dLightDirection, normal);
+    vec3 pReflection = reflect(-directionToPointLight, normal);
+  
+    float dSpecular = dot(dReflection, -normalize(fs_position));
+    float pSpecular = dot(pReflection, -normalize(fs_position));
+
+    vec3 overallSpecular = specular * (pow(abs(max(dSpecular, 0)), specularMult) +
+        pointLightStrength * pow(abs(max(pSpecular, 0)), specularMult));
+
+    vec3 defaultLighting = overallAmbient + overallDiffuse + overallSpecular;
+    //// End of standard lighting block
 
   vec4 colorMultiplier = vec4(WaterColor, 1.0f);
   if (fs_heightPercentage > RockSnowCutoff) {
@@ -71,5 +82,6 @@ void main() {
     colorMultiplier = vec4(GrassColor, 1.0f);
   } // else, Water color
 
-  color = colorMultiplier * vec4(overallAmbient + overallDiffuse + overallSpecular, 1.0f); //  + overallSpecular, 1.0f);
+  colorMultiplier = vec4(1.0f); // TODO remove to add back in colors
+  color = colorMultiplier * vec4(defaultLighting, 1.0f);
 }

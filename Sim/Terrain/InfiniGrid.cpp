@@ -52,33 +52,33 @@ void InfiniGrid::Render(Camera* camera) {
     glUseProgram(gridProgram);
     glBindVertexArray(partialCubeVao);
 
-    uniforms.SendMat4("view", camera->View);
-    uniforms.SendMat4("perspective", camera->Perspective);
+    uniforms.SetMat4("view", camera->View);
+    uniforms.SetMat4("perspective", camera->Perspective);
 
-
-    GLint ambient = glGetUniformLocation(gridProgram, "ambient");
-    glUniform3f(ambient, 0.501f, 0.801f, 0.501f);
-
-    GLint diffuse = glGetUniformLocation(gridProgram, "diffuse");
-    glUniform3f(diffuse, 0.51f, 0.81f, 0.51f);
-
-    GLint specularColor = glGetUniformLocation(gridProgram, "specularColor");
-    glUniform3f(specularColor, 0.51f, 0.51f, 0.81f);
-
-    GLint specular = glGetUniformLocation(gridProgram, "specular");
-    glUniform1f(specular, 4.0f);
+    uniforms.SetMaterialLighting(
+        glm::vec3(0.2f, 0.2f, 0.2f), // ambient
+        glm::vec3(0.3f, 0.6f, 0.3f), // diffuse
+        glm::vec3(0.5f, 0.5f, 0.8f), // specular
+        2.0f); // specular strength
 
     auto lightDirection = Time::GlobalTime->SunDirection();
-    auto lightIntensity = Time::GlobalTime->SunIntensity() * 2.0f;
+    auto lightIntensity = Time::GlobalTime->SunIntensity() * 0.5f;
 
-    GLint dLightDirection = glGetUniformLocation(gridProgram, "dLightDirection");
-    glUniform3f(dLightDirection, lightDirection.x, lightDirection.y, lightDirection.z);
+    auto viewLightDirection = camera->View * glm::vec4(lightDirection, 1.0f);
+   uniforms.SetDirectionalLighting(
+       glm::normalize(glm::vec3(viewLightDirection)),
+       glm::vec3(lightIntensity / 2),
+       glm::vec3(lightIntensity)
+   );
 
-    GLint dLightAmbient = glGetUniformLocation(gridProgram, "dLightAmbient");
-    glUniform3f(dLightAmbient, lightIntensity / 2, lightIntensity / 2, lightIntensity / 2);
-
-    GLint dLightDiffuse = glGetUniformLocation(gridProgram, "dLightDiffuse");
-    glUniform3f(dLightDiffuse, lightIntensity, lightIntensity, lightIntensity);
+   // TODO move to a lighting area somewhere.
+   auto pointOnePosition = camera->Position() + (10.0f * camera->Forwards());
+   auto pointOneViewPos = camera->View * glm::vec4(pointOnePosition, 1.0f);
+   uniforms.SetPointOneLighting(
+       glm::vec3(pointOneViewPos),
+       glm::vec3(0.2f, 0.2f, 0.2f),
+       glm::vec3(0.9f, 0.8f, 0.4f)
+   );
     
     // TODO configurable
     int width = 1000;

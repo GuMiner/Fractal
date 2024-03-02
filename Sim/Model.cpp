@@ -109,10 +109,10 @@ void Model::Render(Camera* camera) {
     GLint diffuse = glGetUniformLocation(modelProgram, "diffuse");
     glUniform3f(diffuse, 0.51f, 0.51f, 0.51f);
 
-    GLint specularColor = glGetUniformLocation(modelProgram, "specularColor");
+    GLint specularColor = glGetUniformLocation(modelProgram, "specular");
     glUniform3f(specularColor, 0.51f, 0.51f, 0.51f);
 
-    GLint specular = glGetUniformLocation(modelProgram, "specular");
+    GLint specular = glGetUniformLocation(modelProgram, "specularMult");
     glUniform1f(specular, 4.0f);
 
     GLint dLightDirection = glGetUniformLocation(modelProgram, "dLightDirection");
