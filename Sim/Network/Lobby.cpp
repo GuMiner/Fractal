@@ -60,7 +60,7 @@ void Lobby::SyncLobbyDetails() {
         bool foundPeersList = false;
 
         // Mark ourselves as active in the lobby + check the server for active users
-        cpr::Response response = cpr::Post(cpr::Url("https://helium24.net/SimServer"),
+        cpr::Response response = cpr::Post(cpr::Url("https://helium24.net/api/SimServer/LobbySync"),
             cpr::Body(client.str().c_str()),
             cpr::Header{ {"Content-Type", "application/json"} });
 
@@ -72,6 +72,7 @@ void Lobby::SyncLobbyDetails() {
                 peerLock.lock();
                 peers = std::move(serverPeers.peers);
                 peerLock.unlock();
+                foundPeersList = true;
             } catch (json::parse_error& ex) {
                 std::cout << "  Lobby server did not return valid JSON. Error at: " << ex.byte << ": " << response.text << std::endl;
             }
@@ -90,7 +91,9 @@ void Lobby::SyncLobbyDetails() {
         }
 
         // Check periodically
-        std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+        for (int i = 0; i < 6 && !stopSync; i++) { // 3 seconds total 
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        }
     }
 }
 
