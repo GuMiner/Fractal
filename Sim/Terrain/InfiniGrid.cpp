@@ -29,7 +29,7 @@ bool InfiniGrid::Init(ShaderFactory* shaderFactory) {
     glEnableVertexAttribArray(0);
 
     // Send the data over to OpenGL / GPU
-    tileSize = 40.0f;
+    tileSize = 40.0f; // TODO move these to constants so these can be read by the clouds and then processed for moving clouds
     Cube::Create(planeInstance, tileSize);
     glBufferData(GL_ARRAY_BUFFER, planeInstance.size() * sizeof(glm::vec3), &planeInstance[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

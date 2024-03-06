@@ -84,12 +84,17 @@ void Clouds::Render(Camera* camera) {
    );
     
     // TODO configurable
-    int width = 100;
-    int instanceCount = width * width;
+    int width = 5;
+    int instanceCount = width * width * width;
     uniforms.SetInt("width", width);
     uniforms.SetFloat("tileSize", tileSize * 2);
     uniforms.SetFloat("time", Time::GlobalTime->GameTime());
 
+    uniforms.SetVec3("cloudPos", glm::vec3(0, 0, 0));
+
+    glDrawArraysInstanced(GL_TRIANGLES, 0, planeInstance.size(), instanceCount);
+
+    uniforms.SetVec3("cloudPos", glm::vec3(1000, (int)(Time::GlobalTime->GameTime() * 2000) % 20000, 0));
     glDrawArraysInstanced(GL_TRIANGLES, 0, planeInstance.size(), instanceCount);
 
     glBindVertexArray(0);

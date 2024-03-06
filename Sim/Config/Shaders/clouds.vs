@@ -10,17 +10,20 @@ uniform int width;
 uniform float tileSize;
 uniform float time;
 
+uniform vec3 cloudPos;
+
 out vec3 fs_position;
 out vec3 fs_normal;
 
 void main(void) {
     int x = gl_InstanceID % width - width / 2;
-    int y = gl_InstanceID / width - width / 2;
+    int y = (gl_InstanceID / width) % width - width / 2;
+    int z = gl_InstanceID / (width * width);
 
     float tileSizeExp = tileSize + 80.0; // Just a grid of clouds for shadow testing purposes
-    vec3 offset = vec3(x * tileSizeExp, -y * tileSizeExp, 4000 + sin(x - time) * cos(y + time) * 10.0);
+    vec3 offset = vec3(x * tileSizeExp, -y * tileSizeExp, z * tileSizeExp + 4000 + sin(x - time) * cos(y + time) * 10.0);
 
-    vec4 offsetPosition = vec4(position + offset, 1.0f);
+    vec4 offsetPosition = vec4(cloudPos + position + offset, 1.0f);
     fs_position = (view * offsetPosition).xyz;
 
     // Must be computed here because each instance has a different offset.
