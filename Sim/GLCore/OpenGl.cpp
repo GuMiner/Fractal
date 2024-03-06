@@ -1,10 +1,27 @@
 #include <iostream>
+#include <string>
 
+#include "../Data/StringExtensions.h"
 #include "../Input/Input.h"
 #include "OpenGl.h"
 
+// Can be helpful, but is really slow with the instanced rendering
+bool enableDebugMode = false;
+
 OpenGl::OpenGl()
     : capabilities() {
+}
+
+void debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
+    const GLchar* message, const void* userParam)
+{
+    if (StringExtensions::StartsWith(message, "API_ID_LINE_WIDTH deprecated behavior warning")) {
+        // Ignore these warnings as the line width usage is for debugging logic anyways.
+        return;
+    }
+
+    std::cout << message << " S: " << source << " T: " << type << " Id: " << id << " Sv: " << severity <<
+        " L: " << length << std::endl;
 }
 
 bool OpenGl::Load(GraphicsConfig& config) {
@@ -21,6 +38,9 @@ bool OpenGl::Load(GraphicsConfig& config) {
     glfwWindowHint(GLFW_STENCIL_BITS, config.stencilBits);
     glfwWindowHint(GLFW_SAMPLES, config.antialiasingLevel);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    if (enableDebugMode) {
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+    }
 
     window = glfwCreateWindow(config.width, config.height, config.title.c_str(), nullptr, nullptr);
     if (!window) {
@@ -38,6 +58,22 @@ bool OpenGl::Load(GraphicsConfig& config) {
         std::cout << "GLEW startup failure: " << err << std::endl;
         return false;
     }
+
+    if (enableDebugMode) {
+        if (GLEW_ARB_debug_output) {
+            std::cout << "Can use debug output!" << std::endl;
+
+            glEnable(GL_DEBUG_OUTPUT);
+            glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+            glDebugMessageCallback(debugCallback, NULL);
+
+            glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
+        }
+        else {
+            std::cout << "No debug mode found for this hardware! Will not enable debug logging" << std::endl;
+        }
+    }
+
 
     // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
